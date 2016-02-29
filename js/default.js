@@ -75,7 +75,7 @@ function showResult(target){
   boxBody.appendChild(content);
 }
 
-// Search Input
+// Search Input 
 var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
