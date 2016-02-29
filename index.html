@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amazon</title>
+    <meta name="author" content="Chunyen Huang">
+    <meta name="description" content="Reproduce Amazon">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:100,400' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/default.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+          <h3>Amazon Search</h3>
+          <form class="form-inline" method="get">
+            <div class="form-group">
+              <label class="sr-only" for="search">search content</label>
+              <input type="text" name="search" id="search-input" class="form-control" placeholder="what do you need?">
+            </div>
+            <button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div id="searchResult">
+      </div>
+    </div>
+    <script src="js/default.js"></script>
+  </body>
+</html>
