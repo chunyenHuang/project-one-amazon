@@ -22,7 +22,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg'
 }, {
-  name: "dream", price: 35, description: "something", condition: 'New',
+  name: "dream dream dream", price: 35, description: "something", condition: 'New',
   thumbOne: 'images/products/product-04.jpg'
 }, {
   name: "Space Shoes for women", price: 35, description: "something", condition: 'New',
@@ -90,16 +90,13 @@ search.addEventListener('submit', function(evt){
 
   // search compare
   for (var i=0; i < products.length; i +=1){
-    if (searchInput.toLowerCase() === products[i].name.toLowerCase()){
-      results.push(products[i]);
-    }
     var nameArray = products[i].name.split(space);
     for (var x=0; x < nameArray.length; x +=1){
       if (searchInput.toLowerCase() === nameArray[x].toLowerCase()){
         results.push(products[i]);
+        break;
       }
     }
-
   }
 
   // print result
