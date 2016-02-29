@@ -22,7 +22,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg'
 }, {
-  name: "ddddd One", price: 35, description: "something", condition: 'New',
+  name: "dream", price: 35, description: "something", condition: 'New',
   thumbOne: 'images/products/product-04.jpg'
 }, {
   name: "eeeee One", price: 35, description: "something", condition: 'New',
@@ -38,10 +38,63 @@ var products = [{
   thumbOne: 'images/products/product-08.jpg'
 }];
 
+// Product View with Boostrap Default Media
+var searchResult = document.getElementById('search-result');
+
+function showResult(target){
+  // structure
+  var box = document.createElement('div');
+  box.className = "media well";
+  var boxImg = document.createElement('div');
+  boxImg.className = "media-left";
+  var boxBody = document.createElement('div');
+  boxBody.className = "media-body";
+  var title = document.createElement('h4');
+  title.className = "media-heading";
+  var link = document.createElement('a');
+  link.href="#";
+  var image = document.createElement('img');
+  image.src=target.thumbOne;
+  image.alt=target.name;
+  image.className="media-object";
+  image.setAttribute('width', '300px');
+
+  // result value
+  var titleText = document.createTextNode(target.name);
+  var content = document.createElement('p');
+  content.innerHTML = "price: " + target.price + "<br>" + "condition: " + target.condition + "<br>" + target.description;
+
+  // node tree
+  searchResult.appendChild(box);
+  box.appendChild(boxImg);
+  box.appendChild(boxBody);
+  boxImg.appendChild(link);
+  link.appendChild(image);
+  boxBody.appendChild(title);
+  title.appendChild(titleText);
+  boxBody.appendChild(content);
+}
+
 // Search Input
 var search = document.getElementsByTagName('form')[0];
+
 search.addEventListener('submit', function(evt){
+  searchResult.innerHTML ='';
   evt.preventDefault()
+  var results = [];
   var searchInput = document.getElementById('search-input').value;
-  console.log(searchInput);
+  for (var i=0; i < products.length; i +=1){
+    if (searchInput.toLowerCase() === products[i].name.toLowerCase()){
+      results.push(products[i]);
+    }
+  }
+  if (results.length <= 0){
+    var noResult = document.createElement('h4');
+    noResult.innerText = "sorry, no match."
+    searchResult.appendChild(noResult);
+  } else {
+    for (var i=0; i < results.length; i+=1){
+      showResult(results[i]);
+    }
+  }
 });
