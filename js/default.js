@@ -60,6 +60,7 @@ var products = [{
 var pageYield = document.getElementById('yield');
 var productsToCart =[];
 var count = 0;
+var total = 0;
 var cartCount = document.getElementById('cart-count');
 
 function showResult(target){
@@ -116,11 +117,14 @@ function showResult(target){
   // Add to Cart
   addToCart.addEventListener('click', function(){
       productsToCart.push(target);
-      console.log(productsToCart);
       count ++;
-      var cartCountValue = document.createTextNode("(" + count+")");
+      var cartCountValue = document.createTextNode("(" + count + ")");
       cartCount.innerHTML = " ";
       cartCount.appendChild(cartCountValue);
+      showBalance.innerHTML = " ";
+      total = total + target.price;
+      var balanceValue = document.createTextNode("total: $"+total);
+      showBalance.appendChild(balanceValue);
   })
 }
 
@@ -128,12 +132,18 @@ function showResult(target){
 function showCart(target){
   // Structure
   var box = document.createElement('div');
-  box.className = "media";
+  box.className = "row";
   box.setAttribute('id','product-'+target.id);
   var boxImg = document.createElement('div');
-  boxImg.className = "media-left";
+  boxImg.className = "col-md-2";
   var boxBody = document.createElement('div');
-  boxBody.className = "media-body";
+  boxBody.className = "col-md-6";
+  var boxPrice = document.createElement('div');
+  boxPrice.className = "col-md-2";
+  var boxAmount = document.createElement('div');
+  boxAmount.className = "col-md-1";
+  var boxRemove = document.createElement('div');
+  boxAmount.className = "col-md-1";
 
   var title = document.createElement('h4');
   title.className = "media-heading";
@@ -145,17 +155,50 @@ function showCart(target){
   image.className="media-object";
   image.setAttribute('height', '50px');
 
-  var titleText = document.createTextNode(target.name + " ("+ target.condition + ") $" + target.price);
-
+  var titleText = document.createTextNode(target.name + " ("+ target.condition+")");
+  var price = document.createElement('h4');
+  var priceTag = document.createTextNode("$" + target.price);
+  var amount = document.createElement('h4');
+  var amountTag = document.createTextNode('');
+  var remove = document.createElement('button');
+  var removeTag = document.createTextNode('remove');
 
   // Node Tree
   pageYield.appendChild(box);
   box.appendChild(boxImg);
   box.appendChild(boxBody);
+  box.appendChild(boxPrice);
+  box.appendChild(boxAmount);
+  box.appendChild(boxRemove);
   boxImg.appendChild(link);
   link.appendChild(image);
   boxBody.appendChild(title);
   title.appendChild(titleText);
+  boxPrice.appendChild(price);
+  price.appendChild(priceTag);
+  boxAmount.appendChild(amount);
+  amount.appendChild(amountTag);
+  boxAmount.appendChild(remove);
+  remove.appendChild(removeTag);
+
+  // Remove Items from Cart
+  remove.addEventListener('click', function(){
+    // alert(' remove '+ target.name+" ? ");
+    var position = productsToCart.indexOf(target);
+    productsToCart.splice(position, 1);
+    pageYield.innerHTML = " ";
+    for(var i=0; i < productsToCart.length; i++){
+      showCart(productsToCart[i]);
+    }
+    count --;
+    var cartCountValue = document.createTextNode("(" + count + ")");
+    cartCount.innerHTML = " ";
+    cartCount.appendChild(cartCountValue);
+    showBalance.innerHTML = " ";
+    total = total - target.price;
+    var balanceValue = document.createTextNode("total: $"+total);
+    showBalance.appendChild(balanceValue);
+  })
 }
 
 
@@ -165,19 +208,16 @@ var showBalance = document.getElementById('show-balance');
 var hiddenClass = document.getElementsByClassName('hidden');
 
 cart.addEventListener('click',function(evt){
-  pageYield.innerHTML = "";
-  evt.preventDefault()
-  var total = 0 ;
-  for(var i=0; i < productsToCart.length; i++){
-    total = total + productsToCart[i].price;
-    showCart(productsToCart[i]);
+  if (productsToCart.length>0){
+    pageYield.innerHTML = "";
+    for(var i=0; i < productsToCart.length; i++){
+    //  total = total + productsToCart[i].price;
+      showCart(productsToCart[i]);
+    }
+    hiddenClass[0].className = "show";
+    // var balanceValue = document.createTextNode("total: $"+total);
+    // showBalance.appendChild(balanceValue);
   }
-
-  hiddenClass[0].className = "show";
-
-  var balanceValue = document.createTextNode("total: $"+total);
-  showBalance.appendChild(balanceValue);
-  balance.appendChild(showBalance);
 })
 
 
