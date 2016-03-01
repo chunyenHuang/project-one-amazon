@@ -105,7 +105,7 @@ search.addEventListener('submit', function(evt){
   // print result
   if (results.length <= 0){
     var noResult = document.createElement('h4');
-    noResult.innerText = "sorry, no match."
+    noResult.innerText = "sorry, no match found."
     searchResult.appendChild(noResult);
   } else {
     for (var i=0; i < results.length; i+=1){
