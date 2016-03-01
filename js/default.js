@@ -75,7 +75,7 @@ function showResult(target){
   boxBody.appendChild(content);
 }
 
-// String Split
+// String Split //
 var comma = ",";
 var space = " ";
 
@@ -87,14 +87,17 @@ search.addEventListener('submit', function(evt){
   evt.preventDefault()
   var results = [];
   var searchInput = document.getElementById('search-input').value;
+  var searchInputArray = searchInput.split(space);
 
   // search compare
-  for (var i=0; i < products.length; i +=1){
-    var nameArray = products[i].name.split(space);
-    for (var x=0; x < nameArray.length; x +=1){
-      if (searchInput.toLowerCase() === nameArray[x].toLowerCase()){
-        results.push(products[i]);
-        break;
+  for (var t=0; t < searchInputArray.length; t+=1){
+    for (var i=0; i < products.length; i+=1){
+      var nameArray = products[i].name.split(space);
+      for (var x=0; x < nameArray.length; x+=1){
+        if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+          results.push(products[i]);
+          break;
+        }
       }
     }
   }
@@ -110,3 +113,4 @@ search.addEventListener('submit', function(evt){
     }
   }
 });
+// End of Search Input//
