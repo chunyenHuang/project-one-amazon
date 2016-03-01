@@ -1,4 +1,4 @@
-// prodcuts
+// Prodcuts Details
 var products = [{
   id: 1,
   name: "Dream shoes",
@@ -60,7 +60,7 @@ var products = [{
 var searchResult = document.getElementById('search-result');
 
 function showResult(target){
-  // structure
+  // Structure
   var box = document.createElement('div');
   box.className = "media well";
   var boxImg = document.createElement('div');
@@ -77,12 +77,12 @@ function showResult(target){
   image.className="media-object";
   image.setAttribute('width', '300px');
 
-  // result value
+  // Value from Products
   var titleText = document.createTextNode(target.name);
   var content = document.createElement('p');
   content.innerHTML = "condition: " + target.condition + "<br>" + target.description + "<br><hr>" + "<h4>$" + target.price + "</h4>";
 
-  // node tree
+  // Node Tree
   searchResult.appendChild(box);
   box.appendChild(boxImg);
   box.appendChild(boxBody);
@@ -93,11 +93,11 @@ function showResult(target){
   boxBody.appendChild(content);
 }
 
-// String Split //
+// String Splitter
 var comma = ",";
 var space = " ";
 
-// Search Input
+// Search Function //
 var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
@@ -107,7 +107,7 @@ search.addEventListener('submit', function(evt){
   var searchInput = document.getElementById('search-input').value;
   var searchInputArray = searchInput.split(space);
 
-  // search compare
+  // Search Compare
   for (var t=0; t < searchInputArray.length; t++){
     for (var i=0; i < products.length; i++){
       var nameArray = products[i].name.split(space);
@@ -120,14 +120,31 @@ search.addEventListener('submit', function(evt){
     }
   }
 
-  // print result
-  if (results.length <= 0){
+
+  // Remove Duplicates
+  var uniqResult = [];
+  uniqResult.push(results[0]);
+  console.log(uniqResult[0]);
+  for (var i=0; i < results.length; i++){
+    var dupCount = 0;
+    for (var t=0; t < uniqResult.length; t++){
+      if (uniqResult[t].id === results[i].id){
+        dupCount++;
+      }
+    }
+    if(dupCount == 0){
+      uniqResult.push(results[i]);
+    }
+  }
+
+  // Print Result
+  if (uniqResult.length <= 0){
     var noResult = document.createElement('h4');
     noResult.innerText = "sorry, no match found."
     searchResult.appendChild(noResult);
   } else {
-    for (var i=0; i < results.length; i++){
-      showResult(results[i]);
+    for (var i=0; i < uniqResult.length; i++){
+      showResult(uniqResult[i]);
     }
   }
 });
