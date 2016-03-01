@@ -57,16 +57,21 @@ var products = [{
 }];
 
 // Product View with Boostrap Default Media
-var searchResult = document.getElementById('search-result');
+var pageYield = document.getElementById('yield');
+var productsToCart =[];
+var count = 0;
+var cartCount = document.getElementById('cart-count');
 
 function showResult(target){
   // Structure
   var box = document.createElement('div');
   box.className = "media well";
+  box.setAttribute('id','product-'+target.id);
   var boxImg = document.createElement('div');
   boxImg.className = "media-left";
   var boxBody = document.createElement('div');
   boxBody.className = "media-body";
+
   var title = document.createElement('h4');
   title.className = "media-heading";
   var link = document.createElement('a');
@@ -77,13 +82,23 @@ function showResult(target){
   image.className="media-object";
   image.setAttribute('width', '300px');
 
-  // Value from Products
-  var titleText = document.createTextNode(target.name);
+  var titleText = document.createTextNode(target.name + " ("+target.condition+")");
   var content = document.createElement('p');
-  content.innerHTML = "condition: " + target.condition + "<br>" + target.description + "<br><hr>" + "<h4>$" + target.price + "</h4>";
+  var contentText = document.createTextNode(target.description);
+  var addToCart = document.createElement('a');
+
+  var commandBox = document.createElement('div');
+  commandBox.setAttribute('style','padding:20px; text-align:right');
+  var price = document.createElement('h4');
+  var priceTag = document.createTextNode("$" + target.price);
+  addToCart.href='#product-'+target.id;
+  addToCart.className = "add-to-cart";
+  addToCart.setAttribute('id',target.id);
+  var cartIcon = document.createElement('i');
+  cartIcon.className="fa fa-cart-plus fa-4x";
 
   // Node Tree
-  searchResult.appendChild(box);
+  pageYield.appendChild(box);
   box.appendChild(boxImg);
   box.appendChild(boxBody);
   boxImg.appendChild(link);
@@ -91,7 +106,80 @@ function showResult(target){
   boxBody.appendChild(title);
   title.appendChild(titleText);
   boxBody.appendChild(content);
+  content.appendChild(contentText);
+  boxBody.appendChild(commandBox);
+  commandBox.appendChild(price);
+  commandBox.appendChild(addToCart);
+  price.appendChild(priceTag);
+  addToCart.appendChild(cartIcon);
+
+  // Add to Cart
+  addToCart.addEventListener('click', function(){
+      productsToCart.push(target);
+      console.log(productsToCart);
+      count ++;
+      var cartCountValue = document.createTextNode("(" + count+")");
+      cartCount.innerHTML = " ";
+      cartCount.appendChild(cartCountValue);
+  })
 }
+
+// Cart View
+function showCart(target){
+  // Structure
+  var box = document.createElement('div');
+  box.className = "media";
+  box.setAttribute('id','product-'+target.id);
+  var boxImg = document.createElement('div');
+  boxImg.className = "media-left";
+  var boxBody = document.createElement('div');
+  boxBody.className = "media-body";
+
+  var title = document.createElement('h4');
+  title.className = "media-heading";
+  var link = document.createElement('a');
+  link.href="#";
+  var image = document.createElement('img');
+  image.src=target.thumbOne;
+  image.alt=target.name;
+  image.className="media-object";
+  image.setAttribute('height', '50px');
+
+  var titleText = document.createTextNode(target.name + " ("+ target.condition + ") $" + target.price);
+
+
+  // Node Tree
+  pageYield.appendChild(box);
+  box.appendChild(boxImg);
+  box.appendChild(boxBody);
+  boxImg.appendChild(link);
+  link.appendChild(image);
+  boxBody.appendChild(title);
+  title.appendChild(titleText);
+}
+
+
+// The Shopping Cart
+var cart = document.getElementById('cart');
+var showBalance = document.getElementById('show-balance');
+var hiddenClass = document.getElementsByClassName('hidden');
+
+cart.addEventListener('click',function(evt){
+  pageYield.innerHTML = "";
+  evt.preventDefault()
+  var total = 0 ;
+  for(var i=0; i < productsToCart.length; i++){
+    total = total + productsToCart[i].price;
+    showCart(productsToCart[i]);
+  }
+
+  hiddenClass[0].className = "show";
+
+  var balanceValue = document.createTextNode("total: $"+total);
+  showBalance.appendChild(balanceValue);
+  balance.appendChild(showBalance);
+})
+
 
 // String Splitter
 var comma = ",";
@@ -101,7 +189,7 @@ var space = " ";
 var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
-  searchResult.innerHTML ='';
+  pageYield.innerHTML ='';
   evt.preventDefault()
   var results = [];
   var searchInput = document.getElementById('search-input').value;
@@ -122,7 +210,6 @@ search.addEventListener('submit', function(evt){
   // Remove Duplicates
   var uniqResult = [];
   uniqResult.push(results[0]);
-  console.log(uniqResult[0]);
   for (var i=0; i < results.length; i++){
     var dupCount = 0;
     for (var t=0; t < uniqResult.length; t++){
@@ -139,11 +226,12 @@ search.addEventListener('submit', function(evt){
   if (uniqResult.length <= 0){
     var noResult = document.createElement('h4');
     noResult.innerText = "sorry, no match found."
-    searchResult.appendChild(noResult);
+    pageYield.appendChild(noResult);
   } else {
     for (var i=0; i < uniqResult.length; i++){
       showResult(uniqResult[i]);
     }
   }
 });
-// End of Search Input//
+// End of Search Function //
+// Add to Cart
