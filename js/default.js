@@ -114,7 +114,6 @@ search.addEventListener('submit', function(evt){
       for (var x=0; x < nameArray.length; x++){
         if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
           results.push(products[i]);
-          break;
         }
       }
     }
