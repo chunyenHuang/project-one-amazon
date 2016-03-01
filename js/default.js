@@ -56,6 +56,14 @@ var products = [{
   thumbOne: 'images/products/product-08.jpg'
 }];
 
+
+// Global Functions
+function removeAllChild(node){
+  while (node.firstChild) {
+      node.removeChild(node.firstChild);
+  }
+}
+
 // Product View with Boostrap Default Media
 var pageYield = document.getElementById('yield');
 var productsToCart =[];
@@ -63,6 +71,7 @@ var count = 0;
 var total = 0;
 var cartCount = document.getElementById('cart-count');
 
+// Show Seartched Product
 function showResult(target){
   // Structure
   var box = document.createElement('div');
@@ -118,9 +127,9 @@ function showResult(target){
       productsToCart.push(target);
       count ++;
       var cartCountValue = document.createTextNode("(" + count + ")");
-      cartCount.innerHTML = " ";
+      removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
-      showBalance.innerHTML = " ";
+      removeAllChild(showBalance);
       total = total + target.price;
       var balanceValue = document.createTextNode("total: $"+total);
       showBalance.appendChild(balanceValue);
@@ -186,15 +195,15 @@ function showCart(target){
     // alert(' remove '+ target.name+" ? ");
     var position = productsToCart.indexOf(target);
     productsToCart.splice(position, 1);
-    pageYield.innerHTML = " ";
+    removeAllChild(pageYield);
     for(var i=0; i < productsToCart.length; i++){
       showCart(productsToCart[i]);
     }
     count --;
     var cartCountValue = document.createTextNode("(" + count + ")");
-    cartCount.innerHTML = " ";
+    removeAllChild(cartCount);
     cartCount.appendChild(cartCountValue);
-    showBalance.innerHTML = " ";
+    removeAllChild(showBalance)
     total = total - target.price;
     var balanceValue = document.createTextNode("total: $"+total);
     showBalance.appendChild(balanceValue);
@@ -209,14 +218,11 @@ var hiddenClass = document.getElementsByClassName('hidden');
 
 cart.addEventListener('click',function(evt){
   if (productsToCart.length>0){
-    pageYield.innerHTML = "";
+    removeAllChild(pageYield);
+    console.log(pageYield);
     for(var i=0; i < productsToCart.length; i++){
-    //  total = total + productsToCart[i].price;
       showCart(productsToCart[i]);
     }
-    // hiddenClass[0].className = "show";
-    // var balanceValue = document.createTextNode("total: $"+total);
-    // showBalance.appendChild(balanceValue);
   }
 })
 
@@ -229,7 +235,7 @@ var space = " ";
 var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
-  pageYield.innerHTML ='';
+  removeAllChild(pageYield);
   evt.preventDefault()
   var results = [];
   var searchInput = document.getElementById('search-input').value;
@@ -265,7 +271,8 @@ search.addEventListener('submit', function(evt){
   // Print Result
   if (uniqResult.length <= 0){
     var noResult = document.createElement('h4');
-    noResult.innerText = "sorry, no match found."
+    var text = document.createTextNode("sorry, no match found.");
+    noResult.appendChild(text);
     pageYield.appendChild(noResult);
   } else {
     for (var i=0; i < uniqResult.length; i++){
