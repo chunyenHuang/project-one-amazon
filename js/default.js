@@ -62,7 +62,7 @@ function showResult(target){
   // result value
   var titleText = document.createTextNode(target.name);
   var content = document.createElement('p');
-  content.innerHTML = "price: " + target.price + "<br>" + "condition: " + target.condition + "<br>" + target.description;
+  content.innerHTML = "condition: " + target.condition + "<br>" + target.description + "<br><hr>" + "<h4>$" + target.price + "</h4>";
 
   // node tree
   searchResult.appendChild(box);
