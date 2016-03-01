@@ -1,40 +1,58 @@
 // prodcuts
 var products = [{
+  id: 1,
   name: "Dream shoes",
   price: 45,
   description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
   condition: 'New',
   thumbOne: 'images/products/product-01-01.jpg',
-  thumbTwo: 'images/products/product-01-02.png',
-  thumbThree: 'images/products/product-01-03.png'
 }, {
+  id: 2,
   name: "Metal Chain Flats Thick Sole Shoes Sneakers shoes",
   price: 30,
   description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
   condition: 'New',
   thumbOne: 'images/products/product-02-01.jpg',
-  thumbTwo: 'images/products/product-02-02.png',
-  thumbThree: 'images/products/product-02-03.png'
 }, {
+  id: 3,
   name: "EpicStep Women's Casual Slip On Loafers Metal Chain Flats Thick Sole Shoes Sneakers shoes",
   price: 30,
   description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg'
 }, {
-  name: "dream dream dream", price: 35, description: "something", condition: 'New',
+  id: 4,
+  name: "dream dream dream",
+  price: 28,
+  description: "something",
+  condition: 'Old',
   thumbOne: 'images/products/product-04.jpg'
 }, {
-  name: "Space Shoes for women", price: 35, description: "something", condition: 'New',
+  id: 5,
+  name: "Space Shoes for women",
+  price: 63, description: "something",
+  condition: 'New',
   thumbOne: 'images/products/product-05.jpg'
 }, {
-  name: "Cotton Shoes for men", price: 35, description: "something", condition: 'New',
+  id: 6,
+  name: "Cotton Shoes for men",
+  price: 45,
+  description: "something",
+  condition: 'New',
   thumbOne: 'images/products/product-06.jpg'
 }, {
-  name: "High Heels", price: 35, description: "something", condition: 'New',
+  id: 7,
+  name: "High Heels",
+  price: 150,
+  description: "something",
+  condition: 'New',
   thumbOne: 'images/products/product-07.jpg'
 }, {
-  name: "High Heels brown color", price: 35, description: "something", condition: 'New',
+  id: 8,
+  name: "High Heels brown color",
+  price: 70,
+  description: "something",
+  condition: 'New',
   thumbOne: 'images/products/product-08.jpg'
 }];
 
@@ -90,10 +108,10 @@ search.addEventListener('submit', function(evt){
   var searchInputArray = searchInput.split(space);
 
   // search compare
-  for (var t=0; t < searchInputArray.length; t+=1){
-    for (var i=0; i < products.length; i+=1){
+  for (var t=0; t < searchInputArray.length; t++){
+    for (var i=0; i < products.length; i++){
       var nameArray = products[i].name.split(space);
-      for (var x=0; x < nameArray.length; x+=1){
+      for (var x=0; x < nameArray.length; x++){
         if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
           results.push(products[i]);
           break;
@@ -108,7 +126,7 @@ search.addEventListener('submit', function(evt){
     noResult.innerText = "sorry, no match found."
     searchResult.appendChild(noResult);
   } else {
-    for (var i=0; i < results.length; i+=1){
+    for (var i=0; i < results.length; i++){
       showResult(results[i]);
     }
   }
