@@ -119,7 +119,6 @@ search.addEventListener('submit', function(evt){
     }
   }
 
-
   // Remove Duplicates
   var uniqResult = [];
   uniqResult.push(results[0]);
