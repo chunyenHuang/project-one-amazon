@@ -14,12 +14,12 @@
   </head>
   <body>
     <div class="container">
-      <div style="position:fixed; right:50px">
+      <div style="position:fixed; right:50px; top:50px;">
         <button id="cart" class="btn btn-primary btn-block">
           <i class="fa fa-shopping-cart fa-3x"></i>Cart<span id="cart-count"></span>
           <div id="show-balance"></div>
         </button>
-        <div id="checkout"><h4><button class="btn btn-success btn-block">Checkout now</button></h4></div>
+        <button class="btn btn-success btn-block" id="checkout">Checkout now</button>
       </div>
       <div class="row">
         <div class="col-md-3 col-md-offset-5">
@@ -38,6 +38,13 @@
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
           <div id="yield">
+          </div>
+          <div id="checkout-content" class="hidden">
+            <div class="well">
+              <h3>Check Out</h3>
+              <hr>
+              <p>
+            </div>
           </div>
         </div>
       </div>

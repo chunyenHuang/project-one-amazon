@@ -56,8 +56,10 @@ var products = [{
   thumbOne: 'images/products/product-08.jpg'
 }];
 
-
 // Global Functions
+var comma = ",";
+var space = " ";
+
 function removeAllChild(node){
   while (node.firstChild) {
       node.removeChild(node.firstChild);
@@ -71,7 +73,6 @@ var count = 0;
 var total = 0;
 var cartCount = document.getElementById('cart-count');
 
-// Show Seartched Product
 function showResult(target){
   // Structure
   var box = document.createElement('div');
@@ -124,6 +125,7 @@ function showResult(target){
 
   // Add to Cart
   addToCart.addEventListener('click', function(){
+      checkout.removeAttribute('disabled');
       productsToCart.push(target);
       count ++;
       var cartCountValue = document.createTextNode("(" + count + ")");
@@ -207,9 +209,11 @@ function showCart(target){
     total = total - target.price;
     var balanceValue = document.createTextNode("total: $"+total);
     showBalance.appendChild(balanceValue);
+    if(count==0){
+      checkout.setAttribute('disabled','disabled')
+    }
   })
 }
-
 
 // The Shopping Cart
 var cart = document.getElementById('cart');
@@ -225,11 +229,6 @@ cart.addEventListener('click',function(evt){
     }
   }
 })
-
-
-// String Splitter
-var comma = ",";
-var space = " ";
 
 // Search Function //
 var search = document.getElementsByTagName('form')[0];
@@ -281,4 +280,18 @@ search.addEventListener('submit', function(evt){
   }
 });
 // End of Search Function //
-// Add to Cart
+
+// Checkout
+var checkout = document.getElementById('checkout');
+checkout.setAttribute('disabled','disabled');
+
+var checkoutContent = document.getElementById('checkout-content');
+
+checkout.addEventListener('click',function(){
+  console.log(total);
+  console.log(productsToCart);
+  removeAllChild(pageYield);
+  checkoutContent.className = '';
+  pageYield.appendChild(checkoutContent);
+
+})
