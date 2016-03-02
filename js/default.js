@@ -185,7 +185,7 @@ function showResult(target){
 }
 
 // Cart View
-function showCart(location, target, removable){
+function showCart(location, target, editable){
   for(var i=0; i < products.length; i++){
     if (target.id === products[i].id){
       target.name = products[i].name;
@@ -224,8 +224,11 @@ function showCart(location, target, removable){
   var titleText = document.createTextNode(target.name + " ("+ target.condition+")");
   var price = document.createElement('h4');
   var priceTag = document.createTextNode("$" + target.price);
-  var amount = document.createElement('h4');
-  var amountTag = document.createTextNode("x" + target.qty);
+  var amount = document.createElement('input');
+  amount.setAttribute('disabled','disabled');
+  amount.setAttribute('value', target.qty);
+  amount.setAttribute('class', 'form-control');
+
   var total = document.createElement('h4');
   var totalTag = document.createTextNode("$" + target.qty * target.price);
 
@@ -244,12 +247,37 @@ function showCart(location, target, removable){
   boxPrice.appendChild(price);
   price.appendChild(priceTag);
   boxAmount.appendChild(amount);
-  amount.appendChild(amountTag);
   boxTotal.appendChild(total);
   total.appendChild(totalTag);
 
+  // Change Qty
+  if (editable == true){
+    amount.removeAttribute('disabled');
+    amount.addEventListener('input',function(e){
+      e.preventDefault();
+      target.qty = parseFloat(amount.value);
+      inCartCount = 0;
+      inCartTotal = 0;
+      for(var i=0; i<inCart.length; i++){
+        inCartCount = inCartCount + inCart[i].qty;
+        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      }
+      var cartCountValue = document.createTextNode("(" + inCartCount + ")");
+      removeAllChild(cartCount);
+      cartCount.appendChild(cartCountValue);
+      removeAllChild(showBalance);
+      var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
+      showBalance.appendChild(balanceValue);
+
+      if(inCartCount==0){
+        checkout.setAttribute('disabled','disabled')
+      }
+      pageYield.appendChild(checkout);
+    })
+  }
+
   // Remove Items from Cart
-  if (removable == true){
+  if (editable == true){
     var remove = document.createElement('button');
     remove.setAttribute('class','btn btn-danger')
     var removeTag = document.createTextNode('remove');
@@ -264,7 +292,6 @@ function showCart(location, target, removable){
       for(var i=0; i < inCart.length; i++){
         showCart(pageYield, inCart[i], true);
       }
-
       inCartCount = 0;
       inCartTotal = 0;
       for(var i=0; i<inCart.length; i++){
