@@ -241,6 +241,8 @@ function showCart(location, target, removable){
       if(count==0){
         checkout.setAttribute('disabled','disabled')
       }
+      pageYield.appendChild(checkout);
+
     })
   }
 }
