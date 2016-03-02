@@ -152,7 +152,6 @@ function showResult(target){
 
   // Add to Cart
   addToCart.addEventListener('click', function(){
-      checkout.removeAttribute('disabled');
       productsToCart.push(target);
       count ++;
       var cartCountValue = document.createTextNode("(" + count + ")");
@@ -258,6 +257,7 @@ cart.addEventListener('click',function(){
     for(var i=0; i < productsToCart.length; i++){
       showCart(pageYield, productsToCart[i], true);
     }
+    pageYield.appendChild(checkout);
   }
 })
 
@@ -310,8 +310,11 @@ search.addEventListener('submit', function(evt){
 // End of Search Function //
 
 // Checkout Content
-var checkout = document.getElementById('checkout');
-checkout.setAttribute('disabled','disabled');
+var checkout = document.createElement('button');
+checkout.className = "btn btn-success btn-block";
+var checkoutText = document.createTextNode('Checkout!');
+checkout.appendChild(checkoutText);
+
 var checkoutList = document.getElementById('checkout-list');
 var checkoutContent = document.getElementById('checkout-content');
 var checkoutBalance = document.getElementById('checkout-balance');
@@ -435,7 +438,6 @@ payPlaceorder.addEventListener('click', function(){
   total = 0;
   count = 0;
   productsToCart = [];
-  checkout.setAttribute('disabled','disabled');
   cartCount.removeChild(cartCount.firstChild);
   showBalance.removeChild(showBalance.firstChild);
   appendMessage(pageYield, "Thanks for shopping with us!")
