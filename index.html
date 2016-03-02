@@ -27,7 +27,7 @@
           <form class="form-inline" method="get">
             <div class="form-group">
               <label class="sr-only" for="search">search content</label>
-              <input type="text" name="search" id="search-input" class="form-control" placeholder="what do you need?" value="dream women shoes">
+              <input type="text" name="search" id="search-input" class="form-control" placeholder="what do you need? (dream women shoes)">
             </div>
             <button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button>
           </form>
@@ -41,9 +41,20 @@
           </div>
           <div id="checkout-content" class="hidden">
             <div class="well">
-              <h3>Check Out</h3>
+              <h4>Check Out</h4>
               <hr>
-              <p>
+              <div id="checkout-balance">
+              </div>
+              <hr>
+              <form class="form">
+                <input name="name" type="text" id="name" placeholder="Name on the Card">
+                <input name="card-number" type="text" id="card-number" placeholder="Card Number">
+                <br>
+                <input name="expire-date" type="text" id="expire-date" placeholder="Expire Date">
+                <input name="cvv" type="text" id="cvv" placeholder="CVV">
+                <hr>
+                <button id="pay-button" class="btn btn-danger">Pay Now</button>
+              </form>
             </div>
           </div>
         </div>

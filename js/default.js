@@ -77,7 +77,6 @@ function showResult(target){
   // Structure
   var box = document.createElement('div');
   box.className = "media well";
-  box.setAttribute('id','product-'+target.id);
   var boxImg = document.createElement('div');
   boxImg.className = "media-left";
   var boxBody = document.createElement('div');
@@ -133,7 +132,7 @@ function showResult(target){
       cartCount.appendChild(cartCountValue);
       removeAllChild(showBalance);
       total = total + target.price;
-      var balanceValue = document.createTextNode("total: $"+total);
+      var balanceValue = document.createTextNode("total: $"+total.toFixed(2));
       showBalance.appendChild(balanceValue);
   })
 }
@@ -235,7 +234,7 @@ var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
   removeAllChild(pageYield);
-  evt.preventDefault()
+  evt.preventDefault();
   var results = [];
   var searchInput = document.getElementById('search-input').value;
   var searchInputArray = searchInput.split(space);
@@ -268,11 +267,11 @@ search.addEventListener('submit', function(evt){
   }
 
   // Print Result
-  if (uniqResult.length <= 0){
-    var noResult = document.createElement('h4');
-    var text = document.createTextNode("sorry, no match found.");
-    noResult.appendChild(text);
-    pageYield.appendChild(noResult);
+  if (results.length <= 0){
+    var msgBox = document.createElement('h4');
+    var msg = document.createTextNode("sorry, no match found.");
+    msgBox.appendChild(msg);
+    pageYield.appendChild(msgBox);
   } else {
     for (var i=0; i < uniqResult.length; i++){
       showResult(uniqResult[i]);
@@ -284,14 +283,43 @@ search.addEventListener('submit', function(evt){
 // Checkout
 var checkout = document.getElementById('checkout');
 checkout.setAttribute('disabled','disabled');
-
 var checkoutContent = document.getElementById('checkout-content');
+var checkoutBalance = document.getElementById('checkout-balance');
 
 checkout.addEventListener('click',function(){
-  console.log(total);
-  console.log(productsToCart);
   removeAllChild(pageYield);
+  removeAllChild(checkoutBalance);
   checkoutContent.className = '';
+
+  var showSubTotal = document.createElement('p');
+  var showTax = document.createElement('p');
+  var showTotal = document.createElement('p');
+  var showSubTotalText = document.createTextNode("subtotal:" + total.toFixed(2));
+  var showTaxText = document.createTextNode("tax:" + (total*0.07).toFixed(2));
+  var showTotalText = document.createTextNode("total:" + (total*1.07).toFixed(2));
   pageYield.appendChild(checkoutContent);
+  checkoutBalance.appendChild(showSubTotal);
+  checkoutBalance.appendChild(showTax);
+  checkoutBalance.appendChild(showTotal);
+  showSubTotal.appendChild(showSubTotalText);
+  showTax.appendChild(showTaxText);
+  showTotal.appendChild(showTotalText);
+})
+
+// Pay
+var pay = document.getElementById('pay-button');
+pay.addEventListener('click', function(){
+  removeAllChild(pageYield);
+  total = 0;
+  count = 0;
+  productsToCart = [];
+  checkout.setAttribute('disabled','disabled');
+  cartCount.removeChild(cartCount.firstChild);
+  showBalance.removeChild(showBalance.firstChild);
+
+  var msgBox = document.createElement('h4');
+  var msg = document.createTextNode("Thanks for your payment!");
+  msgBox.appendChild(msg);
+  pageYield.appendChild(msgBox);
 
 })
