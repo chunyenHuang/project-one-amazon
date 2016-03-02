@@ -53,37 +53,86 @@
                 <button class="btn btn-default btn-block" id="checkout-customer-button">
                   <h5>Customer Information</h5>
                 </button>
-                <div class="hidden" id="checkout-customer-form">
-                  <form class="form" class="hidden">
-                    <input name="name" type="text" placeholder="Name on the Card">
-                    <input name="card-number" type="text" placeholder="Card Number">
-                    <input name="expire-date" type="text" placeholder="Expire Date">
-                    <input name="cvv" type="text" placeholder="CVV">
+                <div class="well" id="checkout-customer-form">
+                  <form class="form">
+                    <div class="form-group">
+                      <label for="name">Name:</label>
+                      <input id="customer-name" class="form-control" type="text" placeholder="Your Name" value="John Doe">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input id="email" class="form-control" type="text" placeholder="email" value="litui@gmail.com">
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Address:</label>
+                      <input id="address" class="form-control" type="text" placeholder="Adress" value="9850 MacArthur Blvd, Irvine, CA92018">
+                    </div>
                   </form>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <button class="btn btn-default btn-block" id="checkout-payment">
+                <button class="btn btn-default btn-block" id="checkout-payment-button">
                   <h5>Payment</h5>
                 </button>
-                <div class="hidden">
+                <div class="well" id="checkout-payment">
                   <div id="checkout-balance">
                   </div>
                   <hr>
-                  <form class="form" id="payment-method">
-                    <input name="name" type="text" placeholder="Name on the Card">
-                    <input name="card-number" type="text" placeholder="Card Number">
-                    <br>
-                    <input name="expire-date" type="text" placeholder="Expire Date">
-                    <input name="cvv" type="text" placeholder="CVV">
-                    <hr>
-                    <button id="pay-button" class="btn btn-danger btn-block">Pay Now</button>
+                  <form class="form">
+                    <div class="form-group">
+                      <label for="payment-name">Name on the Card:</label>
+                      <input id="payment-name" class="form-control" type="text" placeholder="Name" value="Doe John">
+                    </div>
+                    <div class="form-group">
+                      <label for="payment-cardnumber">Card Number:</label>
+                      <input id="payment-cardnumber" class="form-control" type="text" placeholder="Card Number" value="1234 4123 3214 2312">
+                    </div>
+                    <div class="form-group">
+                      <label for="payment-expire-date">Expire Date:</label>
+                      <input id="payment-expire-date" class="form-control" type="text" placeholder="Expire Date" value="12/18">
+                    </div>
+                    <div class="form-group">
+                      <label for="payment-cvv">Security Code:</label>
+                      <input id="payment-cvv" class="form-control" type="password" placeholder="CVV" value="123">
+                    </div>
+                    <div class="form-group">
+                      <label for="payment-address">Billing Address:</label><br>
+                      <label>
+                        <input type="checkbox" id="check-address"> Same as my address.
+                      </label>
+                      <input id="payment-address" class="form-control" type="text" placeholder="Adress">
+                    </div>
+                    <button id="pay-continue-button" type="button" class="btn btn-danger btn-block">Continue</button>
                   </form>
                 </div>
               </div>
             </div>
+          </div>
+          <div id="confirm-page" class="hidden">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Orders
+              </div>
+              <div class="panel-body" id="confirm-list">
+              </div>
+            </div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Customer Information
+              </div>
+              <div class="panel-body" id="confirm-user">
+              </div>
+            </div>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                Payment Method
+              </div>
+              <div class="panel-body" id="confirm-payment">
+              </div>
+            </div>
+            <button id="pay-placeorder-button" class="btn btn-danger btn-block">Confirm & Placeorder</button>
           </div>
         </div>
       </div>
