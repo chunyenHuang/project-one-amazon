@@ -96,9 +96,10 @@ function appendMessage(location, value){
 
 // Product View with Boostrap Default Media
 var pageYield = document.getElementById('yield');
-var productsToCart =[];
+var inCart = [];
+var inCartCount = 0;
+var inCartTotal = 0;
 var count = 0;
-var total = 0;
 var cartCount = document.getElementById('cart-count');
 
 function showResult(target){
@@ -125,11 +126,18 @@ function showResult(target){
   var contentText = document.createTextNode(target.description);
   var addToCart = document.createElement('button');
   addToCart.className = "add-to-cart btn btn-primary";
+  addToCart.setAttribute('style', 'display:block');
 
   var commandBox = document.createElement('div');
   commandBox.setAttribute('style','padding:20px; text-align:right');
   var price = document.createElement('h4');
   var priceTag = document.createTextNode("$" + target.price);
+  var quantity = document.createElement('input');
+  quantity.setAttribute('style', 'display:block');
+  quantity.setAttribute('type', 'number');
+  quantity.setAttribute('value', 1);
+  quantity.setAttribute('min', 1);
+  quantity.setAttribute('max', 100);
 
   var cartIcon = document.createElement('i');
   cartIcon.className="fa fa-cart-plus fa-3x";
@@ -146,26 +154,46 @@ function showResult(target){
   content.appendChild(contentText);
   boxBody.appendChild(commandBox);
   commandBox.appendChild(price);
+  commandBox.appendChild(quantity);
   commandBox.appendChild(addToCart);
   price.appendChild(priceTag);
   addToCart.appendChild(cartIcon);
 
   // Add to Cart
+  function item(id, qty, price){
+    this.id = id;
+    this.qty = parseFloat(qty);
+    this.price = price;
+  }
+
   addToCart.addEventListener('click', function(){
-      productsToCart.push(target);
-      count ++;
-      var cartCountValue = document.createTextNode("(" + count + ")");
-      removeAllChild(cartCount);
-      cartCount.appendChild(cartCountValue);
-      removeAllChild(showBalance);
-      total = total + target.price;
-      var balanceValue = document.createTextNode("total: $"+total.toFixed(2));
-      showBalance.appendChild(balanceValue);
+    var addThis = new item(target.id, quantity.value, target.price);
+    inCart.push(addThis);
+    var inCartCount = 0;
+    var inCartTotal = 0;
+    for(var i=0; i<inCart.length; i++){
+      inCartCount = inCartCount + inCart[i].qty;
+      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+    }
+    var cartCountValue = document.createTextNode("(" + inCartCount + ")");
+    removeAllChild(cartCount);
+    cartCount.appendChild(cartCountValue);
+    removeAllChild(showBalance);
+    var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
+    showBalance.appendChild(balanceValue);
   })
 }
 
 // Cart View
 function showCart(location, target, removable){
+  for(var i=0; i < products.length; i++){
+    if (target.id === products[i].id){
+      target.name = products[i].name;
+      target.condition = products[i].condition;
+      target.thumbOne = products[i].thumbOne;
+    }
+  }
+
   // Structure
   var box = document.createElement('div');
   box.className = "row";
@@ -173,13 +201,15 @@ function showCart(location, target, removable){
   var boxImg = document.createElement('div');
   boxImg.className = "col-md-2";
   var boxBody = document.createElement('div');
-  boxBody.className = "col-md-6";
+  boxBody.className = "col-md-5";
   var boxPrice = document.createElement('div');
-  boxPrice.className = "col-md-2";
+  boxPrice.className = "col-md-1";
   var boxAmount = document.createElement('div');
   boxAmount.className = "col-md-1";
+  var boxTotal = document.createElement('div');
+  boxTotal.className = "col-md-2";
   var boxRemove = document.createElement('div');
-  boxAmount.className = "col-md-1";
+  boxRemove.className = "col-md-1";
 
   var title = document.createElement('h4');
   title.className = "media-heading";
@@ -195,8 +225,9 @@ function showCart(location, target, removable){
   var price = document.createElement('h4');
   var priceTag = document.createTextNode("$" + target.price);
   var amount = document.createElement('h4');
-  var amountTag = document.createTextNode('');
-
+  var amountTag = document.createTextNode("x" + target.qty);
+  var total = document.createElement('h4');
+  var totalTag = document.createTextNode("$" + target.qty * target.price);
 
   // Node Tree
   location.appendChild(box);
@@ -204,6 +235,7 @@ function showCart(location, target, removable){
   box.appendChild(boxBody);
   box.appendChild(boxPrice);
   box.appendChild(boxAmount);
+  box.appendChild(boxTotal);
   box.appendChild(boxRemove);
   boxImg.appendChild(link);
   link.appendChild(image);
@@ -213,32 +245,40 @@ function showCart(location, target, removable){
   price.appendChild(priceTag);
   boxAmount.appendChild(amount);
   amount.appendChild(amountTag);
+  boxTotal.appendChild(total);
+  total.appendChild(totalTag);
 
   // Remove Items from Cart
   if (removable == true){
     var remove = document.createElement('button');
     remove.setAttribute('class','btn btn-danger')
     var removeTag = document.createTextNode('remove');
-    boxAmount.appendChild(remove);
+    boxRemove.appendChild(remove);
     remove.appendChild(removeTag);
 
     remove.addEventListener('click', function(){
       // alert(' remove '+ target.name+" ? ");
-      var position = productsToCart.indexOf(target);
-      productsToCart.splice(position, 1);
+      var position = inCart.indexOf(target);
+      inCart.splice(position, 1);
       removeAllChild(pageYield);
-      for(var i=0; i < productsToCart.length; i++){
-        showCart(pageYield, productsToCart[i], true);
+      for(var i=0; i < inCart.length; i++){
+        showCart(pageYield, inCart[i], true);
       }
-      count --;
-      var cartCountValue = document.createTextNode("(" + count + ")");
+
+      inCartCount = 0;
+      inCartTotal = 0;
+      for(var i=0; i<inCart.length; i++){
+        inCartCount = inCartCount + inCart[i].qty;
+        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      }
+      var cartCountValue = document.createTextNode("(" + inCartCount + ")");
       removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
-      removeAllChild(showBalance)
-      total = total - target.price;
-      var balanceValue = document.createTextNode("total: $"+total);
+      removeAllChild(showBalance);
+      var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
       showBalance.appendChild(balanceValue);
-      if(count==0){
+
+      if(inCartCount==0){
         checkout.setAttribute('disabled','disabled')
       }
       pageYield.appendChild(checkout);
@@ -250,13 +290,21 @@ function showCart(location, target, removable){
 var cart = document.getElementById('cart');
 var showBalance = document.getElementById('show-balance');
 var hiddenClass = document.getElementsByClassName('hidden');
+var inCart = [];
 
 cart.addEventListener('click',function(){
-  if (productsToCart.length>0){
+  if (inCart.length>0){
     removeAllChild(pageYield);
-    for(var i=0; i < productsToCart.length; i++){
-      showCart(pageYield, productsToCart[i], true);
+
+    for(var i=0; i<inCart.length; i++){
+      inCartCount = inCartCount + inCart[i].qty;
+      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
     }
+
+    for(var i=0; i < inCart.length; i++){
+      showCart(pageYield, inCart[i], true);
+    }
+
     checkout.removeAttribute('disabled');
     pageYield.appendChild(checkout);
   }
@@ -321,6 +369,7 @@ var checkoutContent = document.getElementById('checkout-content');
 var checkoutBalance = document.getElementById('checkout-balance');
 
 checkout.addEventListener('click',function(){
+  console.log(inCartTotal);
   removeAllChild(pageYield);
   removeAllChild(checkoutList);
   removeAllChild(checkoutBalance);
@@ -329,9 +378,9 @@ checkout.addEventListener('click',function(){
   var showSubTotal = document.createElement('p');
   var showTax = document.createElement('p');
   var showTotal = document.createElement('p');
-  var showSubTotalText = document.createTextNode("subtotal:" + total.toFixed(2));
-  var showTaxText = document.createTextNode("tax:" + (total*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total:" + (total*1.07).toFixed(2));
+  var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
+  var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
+  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
   checkoutBalance.appendChild(showSubTotal);
   checkoutBalance.appendChild(showTax);
   checkoutBalance.appendChild(showTotal);
@@ -339,8 +388,8 @@ checkout.addEventListener('click',function(){
   showTax.appendChild(showTaxText);
   showTotal.appendChild(showTotalText);
 
-  for(var i=0; i < productsToCart.length; i++){
-    showCart(checkoutList, productsToCart[i], false);
+  for(var i=0; i < inCart.length; i++){
+    showCart(checkoutList, inCart[i], false);
   }
 })
 
@@ -384,8 +433,8 @@ payContinue.addEventListener('click', function(){
   removeAllChild(confirmPayment);
   confirmPage.setAttribute('class','well');
   pageYield.appendChild(confirmPage);
-  for(var i=0; i < productsToCart.length; i++){
-    showCart(confirmList, productsToCart[i], false);
+  for(var i=0; i < inCart.length; i++){
+    showCart(confirmList, inCart[i], false);
   }
   var printName = document.createTextNode('Name: ' + customerName.value);
   var printEmail = document.createTextNode('Email: ' + email.value);
@@ -416,9 +465,9 @@ payContinue.addEventListener('click', function(){
   var showSubTotal = document.createElement('h5');
   var showTax = document.createElement('h5');
   var showTotal = document.createElement('h5');
-  var showSubTotalText = document.createTextNode("subtotal: $" + total.toFixed(2));
-  var showTaxText = document.createTextNode("tax: $" + (total*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total: $" + (total*1.07).toFixed(2));
+  var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
+  var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
+  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
   confirmList.appendChild(hrline);
   confirmList.appendChild(showSubTotal);
   confirmList.appendChild(showTax);
@@ -436,9 +485,9 @@ payContinue.addEventListener('click', function(){
 var payPlaceorder = document.getElementById('pay-placeorder-button');
 payPlaceorder.addEventListener('click', function(){
   removeAllChild(pageYield);
-  total = 0;
-  count = 0;
-  productsToCart = [];
+  inCartTotal = 0;
+  inCartCount = 0;
+  inCart = [];
   cartCount.removeChild(cartCount.firstChild);
   showBalance.removeChild(showBalance.firstChild);
   appendMessage(pageYield, "Thanks for shopping with us!")
