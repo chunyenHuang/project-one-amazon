@@ -205,9 +205,9 @@ function showCart(location, target, editable){
   var boxPrice = document.createElement('div');
   boxPrice.className = "col-md-1";
   var boxAmount = document.createElement('div');
-  boxAmount.className = "col-md-1";
+  boxAmount.className = "col-md-2";
   var boxTotal = document.createElement('div');
-  boxTotal.className = "col-md-2";
+  boxTotal.className = "col-md-1";
   var boxRemove = document.createElement('div');
   boxRemove.className = "col-md-1";
 
@@ -228,6 +228,9 @@ function showCart(location, target, editable){
   amount.setAttribute('disabled','disabled');
   amount.setAttribute('value', target.qty);
   amount.setAttribute('class', 'form-control');
+  amount.setAttribute('type',"number");
+  amount.setAttribute('min', 1);
+  amount.setAttribute('max', 100);
 
   var total = document.createElement('h4');
   var totalTag = document.createTextNode("$" + target.qty * target.price);
@@ -256,6 +259,9 @@ function showCart(location, target, editable){
     amount.addEventListener('input',function(e){
       e.preventDefault();
       target.qty = parseFloat(amount.value);
+      total.removeChild(totalTag);
+      totalTag = document.createTextNode("$" + target.qty * target.price);
+      total.appendChild(totalTag);
       inCartCount = 0;
       inCartTotal = 0;
       for(var i=0; i<inCart.length; i++){
