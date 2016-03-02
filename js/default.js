@@ -242,7 +242,6 @@ function showCart(location, target, removable){
         checkout.setAttribute('disabled','disabled')
       }
       pageYield.appendChild(checkout);
-
     })
   }
 }
@@ -255,10 +254,10 @@ var hiddenClass = document.getElementsByClassName('hidden');
 cart.addEventListener('click',function(){
   if (productsToCart.length>0){
     removeAllChild(pageYield);
-    console.log(pageYield);
     for(var i=0; i < productsToCart.length; i++){
       showCart(pageYield, productsToCart[i], true);
     }
+    checkout.removeAttribute('disabled');
     pageYield.appendChild(checkout);
   }
 })
