@@ -318,7 +318,7 @@ pay.addEventListener('click', function(){
   showBalance.removeChild(showBalance.firstChild);
 
   var msgBox = document.createElement('h4');
-  var msg = document.createTextNode("Thanks for your payment!");
+  var msg = document.createTextNode("Thanks for shopping with us!");
   msgBox.appendChild(msg);
   pageYield.appendChild(msgBox);
 
