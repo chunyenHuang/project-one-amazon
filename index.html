@@ -40,21 +40,49 @@
           <div id="yield">
           </div>
           <div id="checkout-content" class="hidden">
-            <div class="well">
-              <h4>Check Out</h4>
-              <hr>
-              <div id="checkout-balance">
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-default btn-block" id="checkout-list-button">
+                  <h5>Items</h5>
+                </button>
+                <div id="checkout-list" class="hidden well"></div>
               </div>
-              <hr>
-              <form class="form">
-                <input name="name" type="text" id="name" placeholder="Name on the Card">
-                <input name="card-number" type="text" id="card-number" placeholder="Card Number">
-                <br>
-                <input name="expire-date" type="text" id="expire-date" placeholder="Expire Date">
-                <input name="cvv" type="text" id="cvv" placeholder="CVV">
-                <hr>
-                <button id="pay-button" class="btn btn-danger">Pay Now</button>
-              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-default btn-block" id="checkout-customer-button">
+                  <h5>Customer Information</h5>
+                </button>
+                <div class="hidden" id="checkout-customer-form">
+                  <form class="form" class="hidden">
+                    <input name="name" type="text" placeholder="Name on the Card">
+                    <input name="card-number" type="text" placeholder="Card Number">
+                    <input name="expire-date" type="text" placeholder="Expire Date">
+                    <input name="cvv" type="text" placeholder="CVV">
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-default btn-block" id="checkout-payment">
+                  <h5>Payment</h5>
+                </button>
+                <div class="hidden">
+                  <div id="checkout-balance">
+                  </div>
+                  <hr>
+                  <form class="form" id="payment-method">
+                    <input name="name" type="text" placeholder="Name on the Card">
+                    <input name="card-number" type="text" placeholder="Card Number">
+                    <br>
+                    <input name="expire-date" type="text" placeholder="Expire Date">
+                    <input name="cvv" type="text" placeholder="CVV">
+                    <hr>
+                    <button id="pay-button" class="btn btn-danger btn-block">Pay Now</button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>

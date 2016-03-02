@@ -219,7 +219,7 @@ var cart = document.getElementById('cart');
 var showBalance = document.getElementById('show-balance');
 var hiddenClass = document.getElementsByClassName('hidden');
 
-cart.addEventListener('click',function(evt){
+cart.addEventListener('click',function(){
   if (productsToCart.length>0){
     removeAllChild(pageYield);
     console.log(pageYield);
@@ -306,7 +306,26 @@ checkout.addEventListener('click',function(){
   showTotal.appendChild(showTotalText);
 })
 
-// Pay
+// Payment
+function toggleClass(value, target){
+  var classes = target.className.split(' ');
+  var position = classes.indexOf(value);
+  if (position === -1 ){
+    classes.push(value);
+  } else {
+    classes.splice(position, 1);
+  }
+  target.className = classes.join(' ');
+  console.log(target.className);
+}
+
+var checkoutBtnList = document.getElementById('checkout-list-button');
+var checkoutList = document.getElementById('checkout-list');
+checkoutBtnList.addEventListener('click', function(){
+  toggleClass('active', checkoutBtnList);
+  toggleClass('hidden', checkoutList);
+})
+
 var pay = document.getElementById('pay-button');
 pay.addEventListener('click', function(){
   removeAllChild(pageYield);
