@@ -269,9 +269,7 @@ function showCart(location, target, editable){
       var cartCountValue = document.createTextNode("(" + inCartCount + ")");
       removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
-      removeAllChild(showBalance);
-      var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
-      showBalance.appendChild(balanceValue);
+      calculate(showBalance, inCartTotal);
 
       if(inCartCount==0){
         checkout.setAttribute('disabled','disabled')
@@ -503,12 +501,12 @@ payContinue.addEventListener('click', function(){
 // Place order
 var payPlaceorder = document.getElementById('pay-placeorder-button');
 payPlaceorder.addEventListener('click', function(){
-  removeAllChild(pageYield);
   inCartTotal = 0;
   inCartCount = 0;
   inCart = [];
-  cartCount.removeChild(cartCount.firstChild);
-  showBalance.removeChild(showBalance.firstChild);
+  removeAllChild(pageYield);
+  removeAllChild(cartCount);
+  removeAllChild(showBalance);
   appendMessage(pageYield, "Thanks for shopping with us!")
 
 })
