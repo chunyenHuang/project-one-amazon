@@ -28,23 +28,25 @@ towardRight.addEventListener('click', function(){
 })
 
 // Details Image Gallery
-var imgDisplay = document.getElementById('img-display');
-var thumbOne = document.getElementById('thumb-01');
-var thumbTwo = document.getElementById('thumb-02');
-var thumbThree = document.getElementById('thumb-03');
+function toggleImg() {
+  var imgDisplay = document.getElementById('img-display');
+  var thumbOne = document.getElementById('thumb-01');
+  var thumbTwo = document.getElementById('thumb-02');
+  var thumbThree = document.getElementById('thumb-03');
 
-thumbOne.addEventListener('mouseover', function () {
-  var route = thumbOne.getAttribute('src');
-  imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
-});
-thumbTwo.addEventListener('mouseover', function () {
-  var route = thumbTwo.getAttribute('src');
-  imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
-});
-thumbThree.addEventListener('mouseover', function () {
-  var route = thumbThree.getAttribute('src');
-  imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
-});
+  thumbOne.addEventListener('mouseover', function () {
+    var route = thumbOne.getAttribute('src');
+    imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
+  });
+  thumbTwo.addEventListener('mouseover', function () {
+    var route = thumbTwo.getAttribute('src');
+    imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
+  });
+  thumbThree.addEventListener('mouseover', function () {
+    var route = thumbThree.getAttribute('src');
+    imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
+  });
+}
 
 // Select Payment Method
  var paymentList = document.getElementsByTagName('li');
@@ -68,16 +70,23 @@ thumbThree.addEventListener('mouseover', function () {
 
  // Page Cover Gallery
 
- var imgBoxes = document.getElementsByClassName('img-box');
- var productName = document.getElementById('product-name');
+ var imgGallerys = document.getElementsByClassName('img-gallery');
+ var sampleProducts = [];
+ for (var i=0; i < imgGallerys.length; i++){
+   var sampleProducts = _.difference(products, sampleProducts);
+   var sampleProducts = _.sample(sampleProducts, 4)
 
- for (var i=0; i < imgBoxes.length; i += 1){
-
-   imgBoxes[i].innerHTML = '<a href="product.html"><img src="' + products[i].thumbOne + '"></a>';
-   imgBoxes[i].addEventListener('click', function(){
-     window.location.href = "product.html";
-     productName.appendChild(products[i].name);
-   })
+   for(var t=0; t<4; t++){
+     var imgBox = document.createElement('div');
+     imgBox.className = "img-box";
+     var link = document.createElement('a');
+     link.href = "#";
+     var img = document.createElement('img');
+     img.src =  sampleProducts[t].thumbOne;
+     imgBox.appendChild(link);
+     link.appendChild(img);
+     imgGallerys[i].appendChild(imgBox);
+   }
  }
 
  // Search Input

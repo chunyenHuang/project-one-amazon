@@ -349,19 +349,7 @@ search.addEventListener('submit', function(evt){
   }
 
   // Remove Duplicates
-  var uniqResult = [];
-  uniqResult.push(results[0]);
-  for (var i=0; i < results.length; i++){
-    var dupCount = 0;
-    for (var t=0; t < uniqResult.length; t++){
-      if (uniqResult[t].id === results[i].id){
-        dupCount++;
-      }
-    }
-    if(dupCount == 0){
-      uniqResult.push(results[i]);
-    }
-  }
+  var uniqResult = _.uniq(results);
 
   // Print Result
   if (results.length <= 0){
@@ -377,7 +365,7 @@ search.addEventListener('submit', function(evt){
 // Checkout Content
 var checkout = document.createElement('button');
 checkout.className = "btn btn-success";
-checkout.setAttribute('style', 'margin-top:30px;position:absolute;right:30px');
+checkout.setAttribute('style', 'margin-top:5px;position:absolute;right:30px');
 var checkoutText = document.createTextNode('Checkout!');
 checkout.appendChild(checkoutText);
 
@@ -415,7 +403,6 @@ addShippingFee(shipOptionStandard, 0);
 addShippingFee(shipOptionTwoDays, 3.50);
 addShippingFee(shipOptionSameDay, 12.10);
 
-
 toggleClassButton("checkout-list-button", "checkout-list");
 toggleClassButton("checkout-customer-button", "checkout-customer-form");
 toggleClassButton("checkout-payment-button", "checkout-payment");
@@ -426,7 +413,6 @@ confirmAddress.addEventListener('click', function(){
   toggleClass('hidden', checkoutForm);
   toggleClass('hidden', checkoutPayment);
 })
-
 
 // form values
 var customerName = document.getElementById('customer-name');
