@@ -178,9 +178,7 @@ function showResult(target){
     var cartCountValue = document.createTextNode("(" + inCartCount + ")");
     removeAllChild(cartCount);
     cartCount.appendChild(cartCountValue);
-    removeAllChild(showBalance);
-    var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
-    showBalance.appendChild(balanceValue);
+    calculate(showBalance, inCartTotal);
   })
 }
 
@@ -307,9 +305,7 @@ function showCart(location, target, editable){
       var cartCountValue = document.createTextNode("(" + inCartCount + ")");
       removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
-      removeAllChild(showBalance);
-      var balanceValue = document.createTextNode("total: $" + inCartTotal.toFixed(2));
-      showBalance.appendChild(balanceValue);
+      calculate(showBalance, inCartTotal);
 
       if(inCartCount==0){
         checkout.setAttribute('disabled','disabled')
@@ -322,6 +318,23 @@ function showCart(location, target, editable){
 // The Shopping Cart
 var cart = document.getElementById('cart');
 var showBalance = document.getElementById('show-balance');
+
+function calculate(location, inCartTotal){
+  removeAllChild(location);
+  var showSubTotal = document.createElement('p');
+  var showTax = document.createElement('p');
+  var showTotal = document.createElement('p');
+  var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
+  var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
+  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
+  location.appendChild(showSubTotal);
+  location.appendChild(showTax);
+  location.appendChild(showTotal);
+  showSubTotal.appendChild(showSubTotalText);
+  showTax.appendChild(showTaxText);
+  showTotal.appendChild(showTotalText);
+}
+
 var hiddenClass = document.getElementsByClassName('hidden');
 var inCart = [];
 
@@ -399,28 +412,14 @@ checkout.appendChild(checkoutText);
 
 var checkoutList = document.getElementById('checkout-list');
 var checkoutContent = document.getElementById('checkout-content');
-var checkoutBalance = document.getElementById('checkout-balance');
 
 checkout.addEventListener('click',function(){
   console.log(inCartTotal);
   removeAllChild(pageYield);
   removeAllChild(checkoutList);
-  removeAllChild(checkoutBalance);
   checkoutContent.className = '';
   pageYield.appendChild(checkoutContent);
-  var showSubTotal = document.createElement('p');
-  var showTax = document.createElement('p');
-  var showTotal = document.createElement('p');
-  var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
-  var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
-  checkoutBalance.appendChild(showSubTotal);
-  checkoutBalance.appendChild(showTax);
-  checkoutBalance.appendChild(showTotal);
-  showSubTotal.appendChild(showSubTotalText);
-  showTax.appendChild(showTaxText);
-  showTotal.appendChild(showTotalText);
-
+  calculate(showBalance, inCartTotal);
   for(var i=0; i < inCart.length; i++){
     showCart(checkoutList, inCart[i], false);
   }
@@ -429,6 +428,8 @@ checkout.addEventListener('click',function(){
 toggleClassButton("checkout-list-button", "checkout-list");
 toggleClassButton("checkout-customer-button", "checkout-customer-form");
 toggleClassButton("checkout-payment-button", "checkout-payment");
+
+
 
 // form values
 var customerName = document.getElementById('customer-name');
@@ -453,7 +454,6 @@ checkBillingAddress.addEventListener('click',function(){
 
 // Confirm Page
 var payContinue = document.getElementById('pay-continue-button');
-
 var confirmPage = document.getElementById('confirm-page');
 var confirmList = document.getElementById('confirm-list');
 var confirmUser = document.getElementById('confirm-user');
@@ -466,6 +466,7 @@ payContinue.addEventListener('click', function(){
   removeAllChild(confirmPayment);
   confirmPage.setAttribute('class','well');
   pageYield.appendChild(confirmPage);
+  calculate(confirmList, inCartTotal);
   for(var i=0; i < inCart.length; i++){
     showCart(confirmList, inCart[i], false);
   }
@@ -493,21 +494,6 @@ payContinue.addEventListener('click', function(){
   confirmPayment.appendChild(showPaymentName);
   confirmPayment.appendChild(showPaymentCardNumber);
   confirmPayment.appendChild(showPaymentAddress);
-
-  var hrline = document.createElement('hr');
-  var showSubTotal = document.createElement('h5');
-  var showTax = document.createElement('h5');
-  var showTotal = document.createElement('h5');
-  var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
-  var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
-  confirmList.appendChild(hrline);
-  confirmList.appendChild(showSubTotal);
-  confirmList.appendChild(showTax);
-  confirmList.appendChild(showTotal);
-  showSubTotal.appendChild(showSubTotalText);
-  showTax.appendChild(showTaxText);
-  showTotal.appendChild(showTotalText);
 
 })
 
