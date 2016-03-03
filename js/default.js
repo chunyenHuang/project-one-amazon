@@ -325,16 +325,19 @@ function calculate(location, inCartTotal){
   var showTax = document.createElement('p');
   var showTotal = document.createElement('p');
   var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
-  var shippingFee = document.createTextNode("Shipping & handling: $" + shippingFee);
+  var showShippingFeeText = document.createTextNode("Shipping & handling: $" + shippingFee);
   var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07 ).toFixed(2));
+  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07 + shippingFee).toFixed(2) );
 
   location.appendChild(showSubTotal);
   location.appendChild(showTax);
+  location.appendChild(showShippingFee);
   location.appendChild(showTotal);
   showSubTotal.appendChild(showSubTotalText);
   showTax.appendChild(showTaxText);
   showTotal.appendChild(showTotalText);
+  showShippingFee.appendChild(showShippingFeeText);
+
 }
 
 var hiddenClass = document.getElementsByClassName('hidden');
@@ -427,6 +430,26 @@ checkout.addEventListener('click',function(){
   }
 })
 
+// Shipping Options
+var shipOptionStandard = document.getElementById('shipping-options-standard');
+var shipOptionTwoDays = document.getElementById('shipping-options-twodays');
+var shipOptionSameDay = document.getElementById('shipping-options-sameday');
+
+function addShippingFee (element, fee){
+  var showFee = document.createElement('span');
+  var showFeeText = document.createTextNode("$"+fee);
+  showFee.appendChild(showFeeText);
+  element.appendChild(showFee);
+  element.addEventListener('click', function(){
+    shippingFee = fee;
+    calculate(showBalance, inCartTotal);
+  })
+}
+addShippingFee(shipOptionStandard, 0);
+addShippingFee(shipOptionTwoDays, 3.50);
+addShippingFee(shipOptionSameDay, 12.10);
+
+
 toggleClassButton("checkout-list-button", "checkout-list");
 toggleClassButton("checkout-customer-button", "checkout-customer-form");
 toggleClassButton("checkout-payment-button", "checkout-payment");
@@ -437,6 +460,7 @@ confirmAddress.addEventListener('click', function(){
   toggleClass('hidden', checkoutForm);
   toggleClass('hidden', checkoutPayment);
 })
+
 
 // form values
 var customerName = document.getElementById('customer-name');
