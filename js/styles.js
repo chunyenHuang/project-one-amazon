@@ -66,10 +66,8 @@ function toggleImg() {
       form.setAttribute('class', 'active');
    })
  }
- console.log(paymentInput);
 
  // Page Cover Gallery
-
  var imgGallerys = document.getElementsByClassName('img-gallery');
  var sampleProducts = [];
  for (var i=0; i < imgGallerys.length; i++){
@@ -80,40 +78,16 @@ function toggleImg() {
      var imgBox = document.createElement('div');
      imgBox.className = "img-box";
      var link = document.createElement('a');
-     link.href = "#";
+     link.href="#"+sampleProducts[t].id;
      var img = document.createElement('img');
-     img.src =  sampleProducts[t].thumbOne;
+     img.src = sampleProducts[t].thumbOne;
      imgBox.appendChild(link);
      link.appendChild(img);
      imgGallerys[i].appendChild(imgBox);
    }
  }
 
- // Search Input
- var search = document.getElementById('search-bar');
- var searchValue;
- search.addEventListener('submit', function () {
-     //window.location.href = "search.html";
-     //var searchInput = document.getElementById('search-input');
-   var searchValue = document.getElementById('search-input').value;
-   var searchResult = [];
-   function searchProducts(value){
-     value.preventDefault();
-     for(var i=0; i < products.length; i +=1){
-       if (value == products[i].name){
-         searchResult.push(products[i]);
-       }
-       if (searchResult.length == 0 ){
-         return "N/A";
-       } else {
-         return searchResult;
-       }
-     }
-   }
-
-   searchResult = searchProducts("Dream")
-   console.log(searchValue);
-   console.log(searchResult[0].description);
- })
-
- // Search Result
+ // Product Individual Detail
+ function showDetail(element){
+   console.log(element.id);
+ }
