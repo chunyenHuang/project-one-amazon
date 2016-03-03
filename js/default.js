@@ -316,15 +316,19 @@ function showCart(location, target, editable){
 // The Shopping Cart
 var cart = document.getElementById('cart');
 var showBalance = document.getElementById('show-balance');
+var shippingFee = 0;
 
 function calculate(location, inCartTotal){
   removeAllChild(location);
   var showSubTotal = document.createElement('p');
+  var showShippingFee = document.createElement('p');
   var showTax = document.createElement('p');
   var showTotal = document.createElement('p');
   var showSubTotalText = document.createTextNode("subtotal: $" + inCartTotal.toFixed(2));
+  var shippingFee = document.createTextNode("Shipping & handling: $" + shippingFee);
   var showTaxText = document.createTextNode("tax: $" + (inCartTotal*0.07).toFixed(2));
-  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07).toFixed(2));
+  var showTotalText = document.createTextNode("total: $" + (inCartTotal*1.07 ).toFixed(2));
+
   location.appendChild(showSubTotal);
   location.appendChild(showTax);
   location.appendChild(showTotal);
@@ -492,11 +496,7 @@ payContinue.addEventListener('click', function(){
   confirmPayment.appendChild(showPaymentName);
   confirmPayment.appendChild(showPaymentCardNumber);
   confirmPayment.appendChild(showPaymentAddress);
-
 })
-
-
-
 
 // Place order
 var payPlaceorder = document.getElementById('pay-placeorder-button');
