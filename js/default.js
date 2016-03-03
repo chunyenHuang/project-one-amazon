@@ -430,8 +430,13 @@ checkout.addEventListener('click',function(){
 toggleClassButton("checkout-list-button", "checkout-list");
 toggleClassButton("checkout-customer-button", "checkout-customer-form");
 toggleClassButton("checkout-payment-button", "checkout-payment");
-
-
+var confirmAddress = document.getElementById('confirm-address');
+var checkoutForm = document.getElementById('checkout-customer-form')
+var checkoutPayment = document.getElementById('checkout-payment')
+confirmAddress.addEventListener('click', function(){
+  toggleClass('hidden', checkoutForm);
+  toggleClass('hidden', checkoutPayment);
+})
 
 // form values
 var customerName = document.getElementById('customer-name');

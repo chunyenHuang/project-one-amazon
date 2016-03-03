@@ -9,8 +9,7 @@
     <meta name="description" content="Reproduce Amazon">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:100,400' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   </head>
   <body>
     <div class="container">
@@ -72,27 +71,34 @@
                       <label for="address">Address:</label>
                       <input id="address" class="form-control" type="text" placeholder="Adress" value="9850 MacArthur Blvd, Irvine, CA92018">
                     </div>
-                    <hr>
-                    <h5>Choose a delivery option:</h5>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="shipping-options" id="shipping-options-1" value="option1" checked>
-                        Standard
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="shipping-options" id="shipping-options-2" value="option2">
-                        Two Day Delivery
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="shipping-options" id="shipping-options-3" value="option3">
-                        Same Day Delivery
-                      </label>
-                    </div>
                   </form>
+                  <hr>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h5>Choose a delivery option:</h5>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="shipping-options" id="shipping-options-1" value="option1" checked>
+                          Standard
+                        </label>
+                      </div>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="shipping-options" id="shipping-options-2" value="option2">
+                          Two Day Delivery
+                        </label>
+                      </div>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="shipping-options" id="shipping-options-3" value="option3">
+                          Same Day Delivery
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" class="btn btn-warning" id="confirm-address">Use this Address</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
