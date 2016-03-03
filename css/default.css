@@ -1,0 +1,196 @@
+/* global */
+body {
+  margin: 0;
+}
+a i {
+  color:rgb(212, 212, 212);
+}
+a i:hover {
+  color: rgb(255, 255, 255);
+}
+
+/* page -top */
+
+#page-top {
+  width: 100%;
+  margin-right: 0;
+  min-width: 980px;
+}
+
+#top-banner {
+  margin-left: 0px;
+  padding: 0px;
+  background-image: url('../images/ads/ad-top-banner-01.png');
+  background-size: auto;
+  height: 50px;
+}
+
+#function-bar {
+  background-color: rgb(41, 46, 64);
+  height: 80px;
+}
+
+#logo {
+  position: absolute;
+  top: -20px;
+  display: inline-block;
+}
+
+#search-bar {
+  position: absolute;
+  top:20px;
+  right:250px;
+  left:200px;
+}
+
+#menu-icons {
+  position: absolute;
+  top:20px;
+  right:50px;
+}
+
+#menu-icons > .fa {
+  color: white;
+}
+#menu-icons li {
+  padding-right: 30px;
+}
+
+.input-group-addon-search-icon {
+  background-color: rgb(245, 198, 93);
+}
+.input-group-addon-search-icon:hover {
+  background-color: rgb(240, 176, 34);
+}
+
+/* main */
+#main {
+  min-width: 980px;
+}
+
+#main-ads {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+}
+
+#toward-left {
+  position: absolute;
+  top: 40%;
+  left:5%;
+}
+
+#toward-right {
+  position: absolute;
+  top: 40%;
+  right:5%;
+}
+
+#sidebar {
+  background: rgb(251, 251, 251);
+  text-align: center;
+}
+
+#sidebar .col-md-12 {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(186, 186, 186);
+}
+
+#content {
+  padding-left: 50px;
+  padding-right: 50px;
+  min-width:700px;
+}
+
+
+#content a > img {
+  display: inline-block;
+}
+
+.img-gallery {
+  width: 1024px;
+  border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.img-box {
+  display: inline-block;
+  margin-top:auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 216px;
+  background: black;
+  vertical-align: middle;
+}
+
+#content img {
+  margin-top:auto;
+  margin-bottom: auto;
+  width: 100%;
+  vertical-align: middle;
+}
+
+/* footer */
+#footer {
+  text-align: center;
+}
+
+.clickable-bar .well:hover {
+  background-color: #e8e8e8;
+  transition: 0.5 ease;
+}
+
+.clickable-bar a {
+  color: rgb(34, 34, 34);
+  text-decoration: none;
+}
+
+.clickable-bar a:hover {
+  color: rgb(34, 34, 34);
+}
+
+.clickable-bar a:active {
+  color: rgb(34, 34, 34);
+}
+
+/* Producs Details */
+.thumb {
+  width: 100%;
+  margin-bottom: 20px;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.thumb:hover {
+  opacity: 1;
+  box-shadow: 2 2 2 1 rgb(217, 139, 22);
+}
+
+#img-display {
+  min-height: 600px;
+}
+
+/* Payment Page */
+#payment-input-box {
+  padding-top: 10px;
+  padding-left: 20px;
+  height: 300px;
+  background-color: rgb(245, 245, 245);
+}
+
+.payment-box {
+  margin-bottom: 100px;
+
+}
+
+#content img {
+  width: 100%;
+  height: 100%;
+}
+/* footer */
+
+#footer {
+  text-align: center;
+}

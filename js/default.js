@@ -1,61 +1,3 @@
-// Prodcuts Details
-var products = [{
-  id: 1,
-  name: "Dream shoes",
-  price: 45,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
-  condition: 'New',
-  thumbOne: 'images/products/product-01-01.jpg',
-}, {
-  id: 2,
-  name: "Metal Chain Flats Thick Sole Shoes Sneakers shoes",
-  price: 30,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
-  condition: 'New',
-  thumbOne: 'images/products/product-02-01.jpg',
-}, {
-  id: 3,
-  name: "EpicStep Women's Casual Slip On Loafers Metal Chain Flats Thick Sole Shoes Sneakers shoes",
-  price: 30,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
-  condition: 'New',
-  thumbOne: 'images/products/product-03.jpg'
-}, {
-  id: 4,
-  name: "dream dream dream",
-  price: 28,
-  description: "something",
-  condition: 'Old',
-  thumbOne: 'images/products/product-04.jpg'
-}, {
-  id: 5,
-  name: "Space Shoes for women",
-  price: 63, description: "something",
-  condition: 'New',
-  thumbOne: 'images/products/product-05.jpg'
-}, {
-  id: 6,
-  name: "Cotton Shoes for men",
-  price: 45,
-  description: "something",
-  condition: 'New',
-  thumbOne: 'images/products/product-06.jpg'
-}, {
-  id: 7,
-  name: "High Heels",
-  price: 150,
-  description: "something",
-  condition: 'New',
-  thumbOne: 'images/products/product-07.jpg'
-}, {
-  id: 8,
-  name: "High Heels brown color",
-  price: 70,
-  description: "something",
-  condition: 'New',
-  thumbOne: 'images/products/product-08.jpg'
-}];
-
 // Global Functions
 var comma = ",";
 var space = " ";
@@ -105,31 +47,38 @@ var cartCount = document.getElementById('cart-count');
 function showResult(target){
   // Structure
   var box = document.createElement('div');
-  box.className = "media well";
+  box.className = "row well";
   var boxImg = document.createElement('div');
-  boxImg.className = "media-left";
+  boxImg.className = "col-md-4";
   var boxBody = document.createElement('div');
-  boxBody.className = "media-body";
+  boxBody.className = "col-md-8";
 
-  var title = document.createElement('h4');
-  title.className = "media-heading";
   var link = document.createElement('a');
   link.href="#";
   var image = document.createElement('img');
   image.src=target.thumbOne;
   image.alt=target.name;
-  image.className="media-object";
-  image.setAttribute('width', '300px');
+  image.setAttribute('width', '100%');
 
-  var titleText = document.createTextNode(target.name + " ("+target.condition+")");
   var content = document.createElement('p');
   var contentText = document.createTextNode(target.description);
-  var addToCart = document.createElement('button');
-  addToCart.className = "add-to-cart btn btn-primary";
-  addToCart.setAttribute('style', 'display:block');
 
   var commandBox = document.createElement('div');
-  commandBox.setAttribute('style','padding:20px; text-align:right');
+  commandBox.className = "row";
+  commandBox.setAttribute('style', 'padding-bottom:15px;');
+  var commandBoxTitle = document.createElement('div');
+  commandBoxTitle.className = "col-md-6";
+  var commandBoxPrice = document.createElement('div');
+  commandBoxPrice.className = "col-md-2";
+  var commandBoxQty = document.createElement('div');
+  commandBoxQty.className = "col-md-2";
+  var commandBoxAdd = document.createElement('div');
+  commandBoxAdd.className = "col-md-2";
+
+
+  var title = document.createElement('h4');
+  title.className = "media-heading";
+  var titleText = document.createTextNode(target.name + " ("+target.condition+")");
   var price = document.createElement('h4');
   var priceTag = document.createTextNode("$" + target.price);
   var quantity = document.createElement('input');
@@ -138,9 +87,12 @@ function showResult(target){
   quantity.setAttribute('value', 1);
   quantity.setAttribute('min', 1);
   quantity.setAttribute('max', 100);
-
   var cartIcon = document.createElement('i');
-  cartIcon.className="fa fa-cart-plus fa-3x";
+  cartIcon.className="fa fa-cart-plus fa-2x";
+  var addToCart = document.createElement('button');
+  addToCart.className = "add-to-cart btn btn-primary";
+  addToCart.setAttribute('style', 'display:block');
+
 
   // Node Tree
   pageYield.appendChild(box);
@@ -148,14 +100,21 @@ function showResult(target){
   box.appendChild(boxBody);
   boxImg.appendChild(link);
   link.appendChild(image);
-  boxBody.appendChild(title);
-  title.appendChild(titleText);
+  boxBody.appendChild(commandBox);
   boxBody.appendChild(content);
   content.appendChild(contentText);
-  boxBody.appendChild(commandBox);
-  commandBox.appendChild(price);
-  commandBox.appendChild(quantity);
-  commandBox.appendChild(addToCart);
+
+  commandBox.appendChild(commandBoxTitle);
+  commandBox.appendChild(commandBoxPrice);
+  commandBox.appendChild(commandBoxQty);
+  commandBox.appendChild(commandBoxAdd);
+
+  commandBoxTitle.appendChild(title);
+  commandBoxPrice.appendChild(price);
+  commandBoxQty.appendChild(quantity);
+  commandBoxAdd.appendChild(addToCart);
+
+  title.appendChild(titleText);
   price.appendChild(priceTag);
   addToCart.appendChild(cartIcon);
 
@@ -196,10 +155,11 @@ function showCart(location, target, editable){
   var box = document.createElement('div');
   box.className = "row";
   box.setAttribute('id','product-'+target.id);
+  box.setAttribute('style','padding-top:15px; padding-bottom:15px; border-bottom:1px solid gray')
   var boxImg = document.createElement('div');
   boxImg.className = "col-md-2";
   var boxBody = document.createElement('div');
-  boxBody.className = "col-md-5";
+  boxBody.className = "col-md-4";
   var boxPrice = document.createElement('div');
   boxPrice.className = "col-md-1";
   var boxAmount = document.createElement('div');
@@ -342,10 +302,12 @@ function calculate(location, inCartTotal){
 
 var hiddenClass = document.getElementsByClassName('hidden');
 var inCart = [];
+var cartPanel = document.getElementById('cart-panel');
 
 cart.addEventListener('click',function(){
   if (inCart.length>0){
     removeAllChild(pageYield);
+    cartPanel.className = ' ';
 
     for(var i=0; i<inCart.length; i++){
       inCartCount = inCartCount + inCart[i].qty;
@@ -362,11 +324,14 @@ cart.addEventListener('click',function(){
 })
 
 // Search Function //
+var homepage = document.getElementById('main');
 var search = document.getElementsByTagName('form')[0];
 
 search.addEventListener('submit', function(evt){
   removeAllChild(pageYield);
+  main.className = "hidden";
   evt.preventDefault();
+  cartPanel.className = 'hidden';
   var results = [];
   var searchInput = document.getElementById('search-input').value;
   var searchInputArray = searchInput.split(space);
@@ -411,7 +376,8 @@ search.addEventListener('submit', function(evt){
 
 // Checkout Content
 var checkout = document.createElement('button');
-checkout.className = "btn btn-success btn-block";
+checkout.className = "btn btn-success";
+checkout.setAttribute('style', 'margin-top:30px;position:absolute;right:30px');
 var checkoutText = document.createTextNode('Checkout!');
 checkout.appendChild(checkoutText);
 
@@ -533,6 +499,7 @@ payPlaceorder.addEventListener('click', function(){
   inCartTotal = 0;
   inCartCount = 0;
   inCart = [];
+  cartPanel.className = 'hidden';
   removeAllChild(pageYield);
   removeAllChild(cartCount);
   removeAllChild(showBalance);
