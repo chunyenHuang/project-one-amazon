@@ -37,7 +37,8 @@ function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
   outline.setAttribute('style','padding:5px');
-  outline.className = "col-md-"+12/row;
+  outline.className = "col-xs-"+12/row +" " +"col-sm-"+12/row +" " + "col-md-"+12/row;
+
   console.log(outline.className);
   var box = document.createElement('div');
   box.className = "col-md-12";
@@ -121,7 +122,16 @@ function showResult(location, target, row){
 
   addToCart.addEventListener('click', function(){
     var addThis = new item(target.id, quantity.value, target.price);
-    inCart.push(addThis);
+    var added = false;
+    for(var x=0; x < inCart.length; x++){
+      if (addThis.id === inCart[x].id){
+        inCart[x].qty = inCart[x].qty + addThis.qty;
+        added = true;
+      }
+    }
+    if(added == false){
+      inCart.push(addThis);
+    }
     var inCartCount = 0;
     var inCartTotal = 0;
     for(var i=0; i<inCart.length; i++){
@@ -136,7 +146,7 @@ function showResult(location, target, row){
 }
 
 // Cart View
-function showCart(location, target, editable){
+function showCart(location, target, editable, reviewable){
   for(var i=0; i < products.length; i++){
     if (target.id === products[i].id){
       target.name = products[i].name;
@@ -147,7 +157,7 @@ function showCart(location, target, editable){
 
   // Structure
   var box = document.createElement('div');
-  box.className = "col-md-10";
+  box.className = "col-md-12";
   box.setAttribute('id','product-'+target.id);
   box.setAttribute('style','padding-top:15px; padding-bottom:15px; border-bottom:1px solid gray')
   var boxImg = document.createElement('div');
@@ -162,6 +172,10 @@ function showCart(location, target, editable){
   boxTotal.className = "col-md-1";
   var boxRemove = document.createElement('div');
   boxRemove.className = "col-md-1";
+
+  var boxReview = document.createElement('div');
+  boxReview.className = 'col-md-6 col-md-offset-6';
+
 
   var title = document.createElement('h4');
   title.className = "media-heading";
@@ -185,7 +199,7 @@ function showCart(location, target, editable){
   amount.setAttribute('max', 100);
 
   var total = document.createElement('h4');
-  var totalTag = document.createTextNode("$" + target.qty * target.price);
+  var totalTag = document.createTextNode("$" + (target.qty * target.price).toFixed(2));
 
   // Node Tree
   location.appendChild(box);
@@ -212,7 +226,7 @@ function showCart(location, target, editable){
       e.preventDefault();
       target.qty = parseFloat(amount.value);
       total.removeChild(totalTag);
-      totalTag = document.createTextNode("$" + target.qty * target.price);
+      totalTag = document.createTextNode("$" + (target.qty * target.price).toFixed(2));
       total.appendChild(totalTag);
       inCartCount = 0;
       inCartTotal = 0;
@@ -245,8 +259,25 @@ function showCart(location, target, editable){
       var position = inCart.indexOf(target);
       inCart.splice(position, 1);
       removeAllChild(pageYield);
+      var currentBox = document.createElement('div');
+      currentBox.className= "col-md-10";
+      var panel = document.createElement('div');
+      panel.className = 'panel panel-default'
+      var panelHeading = document.createElement('div');
+      panelHeading.className = 'panel-heading';
+      var panelBody = document.createElement('div');
+      panelBody.className = 'panel-body';
+      var title = document.createElement('p');
+      var titleText = document.createTextNode("Shopping Cart");
+      pageYield.appendChild(currentBox);
+      currentBox.appendChild(panel);
+      panel.appendChild(panelHeading);
+      panel.appendChild(panelBody);
+      panelHeading.appendChild(title);
+      title.appendChild(titleText);
+
       for(var i=0; i < inCart.length; i++){
-        showCart(pageYield, inCart[i], true);
+        showCart(panelBody, inCart[i], true, false);
       }
       inCartCount = 0;
       inCartTotal = 0;
@@ -261,8 +292,22 @@ function showCart(location, target, editable){
 
       if(inCartCount==0){
         checkout.setAttribute('disabled','disabled')
+        removeAllChild(pageYield);
+        main.className = "container";
       }
       pageYield.appendChild(checkout);
+    })
+  }
+
+  // Review Purchased Items
+  if (reviewable == true){
+    var review = document.createElement('button');
+    review.setAttribute('class','btn btn-success')
+    var reviewTag = document.createTextNode('review');
+    boxRemove.appendChild(review);
+    review.appendChild(reviewTag);
+    review.addEventListener('click', function(){
+      console.log("review?");
     })
   }
 }
@@ -318,48 +363,73 @@ cart.addEventListener('mouseover',function(){
       main.className="hidden";
       cartPanel.className = ' ';
 
+      checkout.removeAttribute('disabled');
+      var checkoutButton = document.getElementById('checkout-button');
+      checkoutButton.appendChild(checkout);
+      var currentBox = document.createElement('div');
+      currentBox.className= "col-md-10";
+      var panel = document.createElement('div');
+      panel.className = 'panel panel-default'
+      var panelHeading = document.createElement('div');
+      panelHeading.className = 'panel-heading';
+      var panelBody = document.createElement('div');
+      panelBody.className = 'panel-body';
+      var title = document.createElement('p');
+      var titleText = document.createTextNode("Shopping Cart");
+
       for(var i=0; i<inCart.length; i++){
         inCartCount = inCartCount + inCart[i].qty;
         inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
       }
       for(var i=0; i < inCart.length; i++){
-        showCart(pageYield, inCart[i], true);
+        showCart(panelBody, inCart[i], true, false);
       }
-      checkout.removeAttribute('disabled');
-      var checkoutButton = document.getElementById('checkout-button');
-      checkoutButton.appendChild(checkout);
+
+      pageYield.appendChild(currentBox);
+      currentBox.appendChild(panel);
+      panel.appendChild(panelHeading);
+      panel.appendChild(panelBody);
+      panelHeading.appendChild(title);
+      title.appendChild(titleText);
     })
   }
 
   if (pastInCart.length>0){
     past.removeAttribute('disabled')
+
     past.addEventListener('click', function(){
       removeAllChild(pageYield);
       main.className="hidden";
       cartPanel.className = ' ';
-
+      pastInCart = _.sortBy(pastInCart, date);
+      pastInCart = pastInCart.reverse();
       for(var x=0; x < pastInCart.length; x++){
         var pastbox = document.createElement('div');
         pastbox.className= "col-md-12";
         var panel = document.createElement('div');
-        panel.className = 'panel panel-dafault'
+        panel.className = 'panel panel-default'
         var panelHeading = document.createElement('div');
         panelHeading.className = 'panel-heading';
         var panelBody = document.createElement('div');
         panelBody.className = 'panel-body';
 
         for(var y=0; y < pastInCart[x].cart.length; y++){
-          showCart(panelBody, pastInCart[x].cart[y], false);
+          showCart(panelBody, pastInCart[x].cart[y], false, true);
         }
-
-        var heading = document.createTextNode(pastInCart[x].total);
-
+        var paraTotal = document.createElement('p');
+        var paraDate = document.createElement('p');
+        var total = document.createTextNode("Total(w/ Tax & Shipping): $" + pastInCart[x].total);
+        var date = document.createTextNode("Purchased Date: " + timeStamp(pastInCart[x].date));
 
         pageYield.appendChild(pastbox);
         pastbox.appendChild(panel);
         panel.appendChild(panelHeading);
         panel.appendChild(panelBody);
-        panelHeading.appendChild(heading);
+        panelHeading.appendChild(paraTotal);
+        panelHeading.appendChild(paraDate);
+        paraTotal.appendChild(total);
+        paraDate.appendChild(date);
+
       }
       cartPanel.className = 'hidden';
     })
@@ -426,7 +496,7 @@ checkout.addEventListener('click',function(){
   pageYield.appendChild(checkoutContent);
   calculate(showBalance, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(checkoutList, inCart[i], false);
+    showCart(checkoutList, inCart[i], false, false);
   }
 })
 
@@ -475,7 +545,7 @@ payContinue.addEventListener('click', function(){
   pageYield.appendChild(confirmPage);
   calculate(confirmList, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(confirmList, inCart[i], false);
+    showCart(confirmList, inCart[i], false, false);
   }
   var printName = document.createTextNode('Name: ' + customerName.value);
   var printEmail = document.createTextNode('Email: ' + email.value);
@@ -510,10 +580,17 @@ function order(cart, total, date){
   this.date = date;
 }
 
+function timeStamp() {
+  var now = new Date();
+  var date = [ now.getMonth() + 1, now.getDate(), now.getFullYear() ];
+  return date.join("/");
+}
+
 payPlaceorder.addEventListener('click', function(){
   var orderTime = Date.now();
-  var addThisCart = new order(inCart, inCartTotal, orderTime);
+  var addThisCart = new order(inCart, ((inCartTotal*1.07 + shippingFee).toFixed(2)), orderTime);
   pastInCart.push(addThisCart);
+
   console.log(inCart);
   console.log(pastInCart);
   inCartTotal = 0;
