@@ -70,7 +70,6 @@ function showResult(location, target, row){
   var commandBoxAdd = document.createElement('div');
   commandBoxAdd.className = "col-md-4";
 
-
   var title = document.createElement('p');
   title.className = "media-heading";
   var titleText = document.createTextNode(target.name + " ("+target.condition+")");
@@ -288,27 +287,82 @@ function calculate(location, inCartTotal){
   showTax.appendChild(showTaxText);
   showTotal.appendChild(showTotalText);
   showShippingFee.appendChild(showShippingFeeText);
-
 }
 
-cart.addEventListener('click',function(){
+
+cart.addEventListener('mouseover',function(){
+  var viewbox = document.createElement('div');
+  viewbox.className = "view-cart-box";
+  var current = document.createElement('button');
+  current.className = 'btn btn-default btn-block'
+  current.setAttribute('disabled', 'disabled');
+  currentText = document.createTextNode('My Cart')
+  var past = document.createElement('button');
+  past.className = 'btn btn-default btn-block'
+  past.setAttribute('disabled', 'disabled');
+  pastText = document.createTextNode('Order History');
+  pageTop.appendChild(viewbox);
+  viewbox.appendChild(current);
+  viewbox.appendChild(past);
+  current.appendChild(currentText);
+  past.appendChild(pastText);
+
+  viewbox.addEventListener('mouseleave', function(){
+    pageTop.removeChild(viewbox);
+  })
+
   if (inCart.length>0){
-    removeAllChild(pageYield);
-    main.className="hidden";
-    cartPanel.className = ' ';
+    current.removeAttribute('disabled')
+    current.addEventListener('click', function(){
+      removeAllChild(pageYield);
+      main.className="hidden";
+      cartPanel.className = ' ';
 
-    for(var i=0; i<inCart.length; i++){
-      inCartCount = inCartCount + inCart[i].qty;
-      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
-    }
+      for(var i=0; i<inCart.length; i++){
+        inCartCount = inCartCount + inCart[i].qty;
+        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      }
+      for(var i=0; i < inCart.length; i++){
+        showCart(pageYield, inCart[i], true);
+      }
+      checkout.removeAttribute('disabled');
+      var checkoutButton = document.getElementById('checkout-button');
+      checkoutButton.appendChild(checkout);
+    })
+  }
 
-    for(var i=0; i < inCart.length; i++){
-      showCart(pageYield, inCart[i], true);
-    }
+  if (pastInCart.length>0){
+    past.removeAttribute('disabled')
+    past.addEventListener('click', function(){
+      removeAllChild(pageYield);
+      main.className="hidden";
+      cartPanel.className = ' ';
 
-    checkout.removeAttribute('disabled');
-    var checkoutButton = document.getElementById('checkout-button');
-    checkoutButton.appendChild(checkout);
+      for(var x=0; x < pastInCart.length; x++){
+        var pastbox = document.createElement('div');
+        pastbox.className= "col-md-12";
+        var panel = document.createElement('div');
+        panel.className = 'panel panel-dafault'
+        var panelHeading = document.createElement('div');
+        panelHeading.className = 'panel-heading';
+        var panelBody = document.createElement('div');
+        panelBody.className = 'panel-body';
+
+        for(var y=0; y < pastInCart[x].cart.length; y++){
+          showCart(panelBody, pastInCart[x].cart[y], false);
+        }
+
+        var heading = document.createTextNode(pastInCart[x].total);
+
+
+        pageYield.appendChild(pastbox);
+        pastbox.appendChild(panel);
+        panel.appendChild(panelHeading);
+        panel.appendChild(panelBody);
+        panelHeading.appendChild(heading);
+      }
+      cartPanel.className = 'hidden';
+    })
   }
 })
 
@@ -450,7 +504,18 @@ payContinue.addEventListener('click', function(){
 })
 
 // Place order
+function order(cart, total, date){
+  this.cart = cart;
+  this.total = parseFloat(total);
+  this.date = date;
+}
+
 payPlaceorder.addEventListener('click', function(){
+  var orderTime = Date.now();
+  var addThisCart = new order(inCart, inCartTotal, orderTime);
+  pastInCart.push(addThisCart);
+  console.log(inCart);
+  console.log(pastInCart);
   inCartTotal = 0;
   inCartCount = 0;
   inCart = [];

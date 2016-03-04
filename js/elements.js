@@ -4,9 +4,11 @@ var space = " ";
 var inCart = [];
 var inCartCount = 0;
 var inCartTotal = 0;
+var pastInCart = [];
 var count = 0;
 var shippingFee = 0;
 
+var pageTop = document.getElementById('page-top');
 var pageYield = document.getElementById('yield');
 
 var cart = document.getElementById('cart');
