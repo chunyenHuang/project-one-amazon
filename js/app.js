@@ -38,8 +38,6 @@ function showResult(location, target, row){
   var outline = document.createElement('div');
   outline.setAttribute('style','padding:5px');
   outline.className = "col-xs-"+12/row +" " +"col-sm-"+12/row +" " + "col-md-"+12/row;
-
-  console.log(outline.className);
   var box = document.createElement('div');
   box.className = "col-md-12";
   box.setAttribute('style', 'border:1px solid rgb(213, 213, 213)');
@@ -71,6 +69,29 @@ function showResult(location, target, row){
   var commandBoxAdd = document.createElement('div');
   commandBoxAdd.className = "col-md-4";
 
+  var reviewBox = document.createElement('div');
+  reviewBox.className = "col-md-12";
+  reviewBox.setAttribute('style', "padding:0px; padding-bottom:10px;");
+  var reviewRating = 0;
+  var theReview = _.where(reviews, {id: target.id})
+  console.log(reviews);
+
+  if (theReview.length>0){
+    for (var i=0; i < theReview.length; i++){
+      reviewRating = reviewRating + theReview[i].rating
+    }
+    var average = reviewRating/(theReview.length);
+    var showReview = document.createElement('img');
+    showReview.src = "images/rating-" + Math.floor(average) + ".png";
+    showReview.setAttribute('style','display:inline; max-width: 70%; height: auto;');
+    reviewBox.appendChild(showReview);
+    var reviewCount = document.createTextNode("("+theReview.length+")");
+    reviewBox.appendChild(reviewCount);
+  } else {
+    var noReview = document.createTextNode("N/A");
+    reviewBox.appendChild(noReview);
+  }
+
   var title = document.createElement('p');
   title.className = "media-heading";
   var titleText = document.createTextNode(target.name + " ("+target.condition+")");
@@ -97,6 +118,7 @@ function showResult(location, target, row){
   link.appendChild(image);
   boxBody.appendChild(commandBox);
   boxBody.appendChild(content);
+  boxBody.appendChild(reviewBox);
   content.appendChild(contentText);
 
   commandBox.appendChild(commandBoxTitle);
@@ -161,7 +183,7 @@ function showCart(location, target, editable, reviewable){
   box.setAttribute('id','product-'+target.id);
   box.setAttribute('style','padding-top:15px; padding-bottom:15px; border-bottom:1px solid gray')
   var boxImg = document.createElement('div');
-  boxImg.className = "col-md-2";
+  boxImg.className = "col-md-1";
   var boxBody = document.createElement('div');
   boxBody.className = "col-md-4";
   var boxPrice = document.createElement('div');
@@ -169,13 +191,51 @@ function showCart(location, target, editable, reviewable){
   var boxAmount = document.createElement('div');
   boxAmount.className = "col-md-2";
   var boxTotal = document.createElement('div');
-  boxTotal.className = "col-md-1";
+  boxTotal.className = "col-md-2";
   var boxRemove = document.createElement('div');
   boxRemove.className = "col-md-1";
 
   var boxReview = document.createElement('div');
-  boxReview.className = 'col-md-6 col-md-offset-6';
+  boxReview.className = 'col-md-12 well hidden';
+  boxReview.setAttribute('style','transition: 0.5')
+  var boxReviewLeft = document.createElement('div');
+  boxReviewLeft.className = "col-md-4";
+  var boxReviewMid = document.createElement('div');
+  boxReviewMid.className = "col-md-6";
+  var boxReviewRight = document.createElement('div');
+  boxReviewRight.className = "col-md-2";
+  var reviewForm = document.createElement('form');
 
+  var review = document.createElement('textarea');
+  review.setAttribute('cols','50');
+  review.setAttribute('rows','3');
+  review.setAttribute('autofocus', true);
+  review.setAttribute('name', 'review');
+  review.setAttribute('style', 'resize: none');
+  review.setAttribute('placeholder', 'write your review');
+  var submitReview = document.createElement('button');
+  submitReview.className = "btn btn-warning";
+  submitReviewText = document.createTextNode('wite my review!');
+
+  var rating = document.createElement('div');
+  var ratingText = document.createTextNode('Your rating ( 5 is the best) :');
+  rating.appendChild(ratingText);
+  var ratingContent = document.createElement('p');
+  rating.appendChild(ratingContent);
+
+  for (var i=1; i<=5; i++){
+    var ratingLable = document.createElement('label');
+    ratingLable.className = "radio-inline"
+    var input = document.createElement('input');
+    input.setAttribute('type', 'radio');
+    input.setAttribute('name', 'rating');
+    input.setAttribute('id', "rating"+i);
+    input.setAttribute('value', i);
+    var num = document.createTextNode(i);
+    ratingLable.appendChild(input);
+    ratingLable.appendChild(num);
+    ratingContent.appendChild(ratingLable);
+  }
 
   var title = document.createElement('h4');
   title.className = "media-heading";
@@ -218,6 +278,18 @@ function showCart(location, target, editable, reviewable){
   boxAmount.appendChild(amount);
   boxTotal.appendChild(total);
   total.appendChild(totalTag);
+
+  location.appendChild(reviewForm);
+  reviewForm.appendChild(boxReview);
+  boxReview.appendChild(boxReviewLeft);
+  boxReview.appendChild(boxReviewMid);
+  boxReview.appendChild(boxReviewRight);
+  boxReviewLeft.appendChild(rating);
+  boxReviewMid.appendChild(review);
+  boxReviewRight.appendChild(submitReview);
+  submitReview.appendChild(submitReviewText);
+
+
 
   // Change Qty
   if (editable == true){
@@ -307,9 +379,11 @@ function showCart(location, target, editable, reviewable){
     boxRemove.appendChild(review);
     review.appendChild(reviewTag);
     review.addEventListener('click', function(){
-      console.log("review?");
+      toggleClass('hidden', boxReview);
     })
   }
+
+  // Review submit
 }
 
 // The Shopping Cart

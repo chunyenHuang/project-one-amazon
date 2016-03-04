@@ -1,3 +1,5 @@
+
+//
 var comma = ",";
 var space = " ";
 
@@ -7,6 +9,8 @@ var inCartTotal = 0;
 var pastInCart = [];
 var count = 0;
 var shippingFee = 0;
+
+
 
 var pageTop = document.getElementById('page-top');
 var pageYield = document.getElementById('yield');
