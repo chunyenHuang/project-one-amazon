@@ -15,14 +15,14 @@
   <body>
     <div class="container-fluid" id="page-top">
       <div class="row">
-        <a href="index.html">
+        <a href="#">
           <div class="col-lg-12" id="top-banner">
           </div>
         </a>
       </div>
       <div class="row" id="function-bar">
         <div class="col-lg-12">
-          <a href="index.html">
+          <a id='link-home' href="#">
             <img src="images/logos/amazon.png" height="120px" id="logo">
           </a>
           <form class="form" id="search-bar" method="get" action="search.html">
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div class="container" id="main">
+    <div class="container" id="main" class="">
       <div class="row">
         <div class="col-md-12" style="padding:0px;">
           <a href="#"><div id="main-ads" style=''></div></a>
@@ -80,16 +80,16 @@
     </div>
     <div class="container" style="margin-top:30px">
       <div class="row">
-        <div class="col-md-8 col-md-offset-1">
-          <div id="yield">
-          </div>
-          <div id="checkout-content" class="hidden">
+        <div id="yield">
+        </div>
+        <div id="checkout-content" class="hidden">
+          <div class="col-md-10">
             <div class="row">
               <div class="col-md-12">
                 <button class="btn btn-primary btn-block active" id="checkout-list-button">
                   <h5>Items</h5>
                 </button>
-                <div id="checkout-list" class="well"></div>
+                <div id="checkout-list"></div>
               </div>
             </div>
             <div class="row">
@@ -178,7 +178,9 @@
               </div>
             </div>
           </div>
-          <div id="confirm-page" class="hidden">
+        </div>
+        <div id="confirm-page" class="hidden">
+          <div class="col-md-10">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 Orders
@@ -203,8 +205,8 @@
             <button id="pay-placeorder-button" class="btn btn-danger btn-block">Confirm & Placeorder</button>
           </div>
         </div>
-        <div class="col-md-2">
-          <div id="cart-panel" class="hidden">
+        <div id="cart-panel" class="hidden">
+          <div class="col-md-2">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 Your Cart
@@ -213,6 +215,7 @@
                 <div id="show-balance"></div>
               </div>
             </div>
+            <div id="checkout-button"></div>
           </div>
         </div>
       </div>

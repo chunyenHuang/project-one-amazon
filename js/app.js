@@ -33,14 +33,19 @@ function appendMessage(location, value){
 }
 
 // Product View with Boostrap Default Media
-function showResult(target){
+function showResult(location, target, row){
   // Structure
+  var outline = document.createElement('div');
+  outline.setAttribute('style','padding:5px');
+  outline.className = "col-md-"+12/row;
+  console.log(outline.className);
   var box = document.createElement('div');
-  box.className = "row well";
+  box.className = "col-md-12";
+  box.setAttribute('style', 'border:1px solid rgb(213, 213, 213)');
   var boxImg = document.createElement('div');
-  boxImg.className = "col-md-4";
+  boxImg.className = "col-md-12";
   var boxBody = document.createElement('div');
-  boxBody.className = "col-md-8";
+  boxBody.className = "col-md-12";
 
   var link = document.createElement('a');
   link.href="#";
@@ -50,25 +55,26 @@ function showResult(target){
   image.setAttribute('width', '100%');
 
   var content = document.createElement('p');
-  var contentText = document.createTextNode(target.description);
+  var contentText = document.createTextNode(' ');
 
   var commandBox = document.createElement('div');
   commandBox.className = "row";
   commandBox.setAttribute('style', 'padding-bottom:15px;');
   var commandBoxTitle = document.createElement('div');
-  commandBoxTitle.className = "col-md-6";
+  commandBoxTitle.className = "col-md-12";
   var commandBoxPrice = document.createElement('div');
-  commandBoxPrice.className = "col-md-2";
+  commandBoxPrice.className = "col-md-4";
+  commandBoxPrice.setAttribute('style','color:red;')
   var commandBoxQty = document.createElement('div');
-  commandBoxQty.className = "col-md-2";
+  commandBoxQty.className = "col-md-4";
   var commandBoxAdd = document.createElement('div');
-  commandBoxAdd.className = "col-md-2";
+  commandBoxAdd.className = "col-md-4";
 
 
-  var title = document.createElement('h4');
+  var title = document.createElement('p');
   title.className = "media-heading";
   var titleText = document.createTextNode(target.name + " ("+target.condition+")");
-  var price = document.createElement('h4');
+  var price = document.createElement('h5');
   var priceTag = document.createTextNode("$" + target.price);
   var quantity = document.createElement('input');
   quantity.setAttribute('style', 'display:block');
@@ -77,14 +83,14 @@ function showResult(target){
   quantity.setAttribute('min', 1);
   quantity.setAttribute('max', 100);
   var cartIcon = document.createElement('i');
-  cartIcon.className="fa fa-cart-plus fa-2x";
+  cartIcon.className="fa fa-cart-plus fa-lg";
   var addToCart = document.createElement('button');
   addToCart.className = "add-to-cart btn btn-primary";
   addToCart.setAttribute('style', 'display:block');
 
-
   // Node Tree
-  pageYield.appendChild(box);
+  location.appendChild(outline);
+  outline.appendChild(box);
   box.appendChild(boxImg);
   box.appendChild(boxBody);
   boxImg.appendChild(link);
@@ -142,7 +148,7 @@ function showCart(location, target, editable){
 
   // Structure
   var box = document.createElement('div');
-  box.className = "row";
+  box.className = "col-md-10";
   box.setAttribute('id','product-'+target.id);
   box.setAttribute('style','padding-top:15px; padding-bottom:15px; border-bottom:1px solid gray')
   var boxImg = document.createElement('div');
@@ -288,6 +294,7 @@ function calculate(location, inCartTotal){
 cart.addEventListener('click',function(){
   if (inCart.length>0){
     removeAllChild(pageYield);
+    main.className="hidden";
     cartPanel.className = ' ';
 
     for(var i=0; i<inCart.length; i++){
@@ -300,15 +307,15 @@ cart.addEventListener('click',function(){
     }
 
     checkout.removeAttribute('disabled');
-    pageYield.appendChild(checkout);
+    var checkoutButton = document.getElementById('checkout-button');
+    checkoutButton.appendChild(checkout);
   }
 })
 
 // Search Function //
-
 search.addEventListener('submit', function(evt){
   removeAllChild(pageYield);
-  main.className = "hidden";
+  main.className = "container hidden";
   evt.preventDefault();
   cartPanel.className = 'hidden';
   var results = [];
@@ -334,11 +341,26 @@ search.addEventListener('submit', function(evt){
   if (results.length <= 0){
     appendMessage(pageYield, "sorry, no match found.");
   } else {
-    for (var i=0; i < uniqResult.length; i++){
-      showResult(uniqResult[i]);
+    var rowSix = [];
+    var showed = [];
+    var perRow = 6;
+
+    for(var t=0; t < (uniqResult.length/perRow); t++){
+      var row = document.createElement('div');
+      row.className="row";
+      pageYield.appendChild(row);
+      take = _.difference(uniqResult, showed);
+      if(take.length >= perRow){
+        take = _.sample(take, perRow);
+      }
+      for(var x=0;x<take.length; x++){
+        showed.push(take[x]);
+        showResult(row, take[x], perRow);
+      }
     }
   }
 });
+
 // End of Search Function //
 
 // Checkout Content
@@ -395,7 +417,7 @@ payContinue.addEventListener('click', function(){
   removeAllChild(confirmList);
   removeAllChild(confirmUser);
   removeAllChild(confirmPayment);
-  confirmPage.setAttribute('class','well');
+  confirmPage.className = '';
   pageYield.appendChild(confirmPage);
   calculate(confirmList, inCartTotal);
   for(var i=0; i < inCart.length; i++){
@@ -437,5 +459,4 @@ payPlaceorder.addEventListener('click', function(){
   removeAllChild(cartCount);
   removeAllChild(showBalance);
   appendMessage(pageYield, "Thanks for shopping with us!")
-
 })

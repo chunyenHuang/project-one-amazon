@@ -91,3 +91,10 @@ function toggleImg() {
  function showDetail(element){
    console.log(element.id);
  }
+
+ // link home and page reload
+ var linkHome = document.getElementById('link-home');
+ linkHome.addEventListener('click', function(){
+   removeAllChild(pageYield);
+   main.className = "container";
+ })
