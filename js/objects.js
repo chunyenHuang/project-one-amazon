@@ -297,7 +297,7 @@ function review(id, rating, comment, date, userId){
 }
 
 // push a random reviews
-for (var i=1; i<=1;i++){
+for (var i=1; i<=1000;i++){
   var randomProduct = _.sample(products, 1);
   var randomRating = Math.floor(Math.random() * (5)) + 1;
   var randomeUserId = Math.floor(Math.random() * (100)) + 2;

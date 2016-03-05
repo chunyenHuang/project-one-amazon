@@ -13,7 +13,6 @@ function toggleClass(value, target){
     classes.splice(position, 1);
   }
   target.className = classes.join(' ');
-  console.log(target.className);
 }
 
 function toggleClassButton(button, target){
@@ -86,8 +85,24 @@ function showResult(location, target, row){
     reviewBox.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     reviewBox.appendChild(reviewCount);
+
+    var displayReviews = document.createElement('div');
+    displayReviews.className = 'float-review-box hidden';
+    reviewBox.appendChild(displayReviews);
+    for(var i=5; i >=1; i--){
+      theReviewRatings = _.where(theReview, {rating: i});
+      var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
+      var showRating = document.createElement('img');
+      showRating.src = "images/rating-" + i + ".png";
+      showRating.setAttribute('style','display:inline; max-width: 70%; height: auto;');
+      displayReviews.appendChild(showRating);
+      displayReviews.appendChild(ratingCount);
+    }
     reviewBox.addEventListener('mouseenter',function(){
-      console.log("show the review distribution");
+      toggleClass('hidden', displayReviews);
+    })
+    reviewBox.addEventListener('mouseleave',function(){
+      toggleClass('hidden', displayReviews);
     })
   } else {
     var noReview = document.createTextNode("N/A");
