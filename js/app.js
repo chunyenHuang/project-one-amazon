@@ -74,7 +74,6 @@ function showResult(location, target, row){
   reviewBox.setAttribute('style', "padding:0px; padding-bottom:10px;");
   var reviewRating = 0;
   var theReview = _.where(reviews, {id: target.id})
-  console.log(reviews);
 
   if (theReview.length>0){
     for (var i=0; i < theReview.length; i++){
@@ -87,6 +86,9 @@ function showResult(location, target, row){
     reviewBox.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     reviewBox.appendChild(reviewCount);
+    reviewBox.addEventListener('mouseenter',function(){
+      console.log("show the review distribution");
+    })
   } else {
     var noReview = document.createTextNode("N/A");
     reviewBox.appendChild(noReview);
@@ -156,9 +158,9 @@ function showResult(location, target, row){
     }
     var inCartCount = 0;
     var inCartTotal = 0;
-    for(var i=0; i<inCart.length; i++){
-      inCartCount = inCartCount + inCart[i].qty;
-      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+    for(var x=0; x<inCart.length; x++){
+      inCartCount = inCartCount + inCart[x].qty;
+      inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
     }
     var cartCountValue = document.createTextNode("(" + inCartCount + ")");
     removeAllChild(cartCount);
@@ -168,12 +170,13 @@ function showResult(location, target, row){
 }
 
 // Cart View
-function showCart(location, target, editable, reviewable){
-  for(var i=0; i < products.length; i++){
-    if (target.id === products[i].id){
-      target.name = products[i].name;
-      target.condition = products[i].condition;
-      target.thumbOne = products[i].thumbOne;
+function showCart(location, target, editable, reviewable, orderCount){
+  console.log(orderCount);
+  for(var x=0; x < products.length; x++){
+    if (target.id === products[x].id){
+      target.name = products[x].name;
+      target.condition = products[x].condition;
+      target.thumbOne = products[x].thumbOne;
     }
   }
 
@@ -193,7 +196,7 @@ function showCart(location, target, editable, reviewable){
   var boxTotal = document.createElement('div');
   boxTotal.className = "col-md-2";
   var boxRemove = document.createElement('div');
-  boxRemove.className = "col-md-1";
+  boxRemove.className = "col-md-2";
 
   var boxReview = document.createElement('div');
   boxReview.className = 'col-md-12 well hidden';
@@ -206,13 +209,13 @@ function showCart(location, target, editable, reviewable){
   boxReviewRight.className = "col-md-2";
   var reviewForm = document.createElement('form');
 
-  var review = document.createElement('textarea');
-  review.setAttribute('cols','50');
-  review.setAttribute('rows','3');
-  review.setAttribute('autofocus', true);
-  review.setAttribute('name', 'review');
-  review.setAttribute('style', 'resize: none');
-  review.setAttribute('placeholder', 'write your review');
+  var reviewComment = document.createElement('textarea');
+  reviewComment.setAttribute('cols','50');
+  reviewComment.setAttribute('rows','3');
+  reviewComment.setAttribute('autofocus', true);
+  reviewComment.setAttribute('name', 'review');
+  reviewComment.setAttribute('style', 'resize: none');
+  reviewComment.setAttribute('placeholder', 'write your review');
   var submitReview = document.createElement('button');
   submitReview.className = "btn btn-warning";
   submitReviewText = document.createTextNode('wite my review!');
@@ -223,15 +226,14 @@ function showCart(location, target, editable, reviewable){
   var ratingContent = document.createElement('p');
   rating.appendChild(ratingContent);
 
-  for (var i=1; i<=5; i++){
+  for (var x=1; x<=5; x++){
     var ratingLable = document.createElement('label');
     ratingLable.className = "radio-inline"
     var input = document.createElement('input');
     input.setAttribute('type', 'radio');
-    input.setAttribute('name', 'rating');
-    input.setAttribute('id', "rating"+i);
-    input.setAttribute('value', i);
-    var num = document.createTextNode(i);
+    input.setAttribute('name', 'rating' + orderCount);
+    input.setAttribute('value', x);
+    var num = document.createTextNode(x);
     ratingLable.appendChild(input);
     ratingLable.appendChild(num);
     ratingContent.appendChild(ratingLable);
@@ -285,11 +287,9 @@ function showCart(location, target, editable, reviewable){
   boxReview.appendChild(boxReviewMid);
   boxReview.appendChild(boxReviewRight);
   boxReviewLeft.appendChild(rating);
-  boxReviewMid.appendChild(review);
+  boxReviewMid.appendChild(reviewComment);
   boxReviewRight.appendChild(submitReview);
   submitReview.appendChild(submitReviewText);
-
-
 
   // Change Qty
   if (editable == true){
@@ -302,9 +302,9 @@ function showCart(location, target, editable, reviewable){
       total.appendChild(totalTag);
       inCartCount = 0;
       inCartTotal = 0;
-      for(var i=0; i<inCart.length; i++){
-        inCartCount = inCartCount + inCart[i].qty;
-        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      for(var x=0; x<inCart.length; x++){
+        inCartCount = inCartCount + inCart[x].qty;
+        inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
       }
       var cartCountValue = document.createTextNode("(" + inCartCount + ")");
       removeAllChild(cartCount);
@@ -348,14 +348,14 @@ function showCart(location, target, editable, reviewable){
       panelHeading.appendChild(title);
       title.appendChild(titleText);
 
-      for(var i=0; i < inCart.length; i++){
-        showCart(panelBody, inCart[i], true, false);
+      for(var x=0; x < inCart.length; x++){
+        showCart(panelBody, inCart[x], true, false, x);
       }
       inCartCount = 0;
       inCartTotal = 0;
-      for(var i=0; i<inCart.length; i++){
-        inCartCount = inCartCount + inCart[i].qty;
-        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      for(var x=0; x<inCart.length; x++){
+        inCartCount = inCartCount + inCart[x].qty;
+        inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
       }
       var cartCountValue = document.createTextNode("(" + inCartCount + ")");
       removeAllChild(cartCount);
@@ -373,17 +373,41 @@ function showCart(location, target, editable, reviewable){
 
   // Review Purchased Items
   if (reviewable == true){
-    var review = document.createElement('button');
-    review.setAttribute('class','btn btn-success')
+    var writeReview = document.createElement('button');
+    writeReview.setAttribute('class','btn btn-danger')
     var reviewTag = document.createTextNode('review');
-    boxRemove.appendChild(review);
-    review.appendChild(reviewTag);
-    review.addEventListener('click', function(){
+    boxRemove.appendChild(writeReview);
+    writeReview.appendChild(reviewTag);
+    writeReview.addEventListener('click', function(){
       toggleClass('hidden', boxReview);
     })
   }
-
   // Review submit
+  reviewForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ratings = document.getElementsByName('rating'+orderCount);
+    console.log(ratings);
+    for(var x=0; x < ratings.length; x++){
+      if(ratings[x].checked){
+        var ratingValue = ratings[x].value;
+        break;
+      }
+    }
+    console.log(ratingValue);
+    var addNewReview = new review(target.id, parseFloat(ratingValue), reviewComment.value, Date.now(), user.id);
+    reviews.push(addNewReview);
+    var findrReview = _.where(reviews, {id: target.id, userId: user.id}).reverse();
+    var showStars = document.createElement('img');
+    showStars.src = "images/rating-" + Math.floor(parseFloat(findrReview[0].rating)) + ".png";
+    showStars.setAttribute('style','display:block; width: 100%; height: auto;');
+    showStars.addEventListener('click',function(){
+      toggleClass('hidden', boxReview);
+    })
+    toggleClass('hidden', boxReview);
+    removeAllChild(boxRemove);
+    boxRemove.appendChild(showStars);
+    console.log(reviews);
+  })
 }
 
 // The Shopping Cart
@@ -456,7 +480,7 @@ cart.addEventListener('mouseover',function(){
         inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
       }
       for(var i=0; i < inCart.length; i++){
-        showCart(panelBody, inCart[i], true, false);
+        showCart(panelBody, inCart[i], true, false, i);
       }
 
       pageYield.appendChild(currentBox);
@@ -488,7 +512,7 @@ cart.addEventListener('mouseover',function(){
         panelBody.className = 'panel-body';
 
         for(var y=0; y < pastInCart[x].cart.length; y++){
-          showCart(panelBody, pastInCart[x].cart[y], false, true);
+          showCart(panelBody, pastInCart[x].cart[y], false, true, y);
         }
         var paraTotal = document.createElement('p');
         var paraDate = document.createElement('p');
@@ -570,7 +594,7 @@ checkout.addEventListener('click',function(){
   pageYield.appendChild(checkoutContent);
   calculate(showBalance, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(checkoutList, inCart[i], false, false);
+    showCart(checkoutList, inCart[i], false, false, i);
   }
 })
 
@@ -619,7 +643,7 @@ payContinue.addEventListener('click', function(){
   pageYield.appendChild(confirmPage);
   calculate(confirmList, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(confirmList, inCart[i], false, false);
+    showCart(confirmList, inCart[i], false, false, i);
   }
   var printName = document.createTextNode('Name: ' + customerName.value);
   var printEmail = document.createTextNode('Email: ' + email.value);

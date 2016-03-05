@@ -278,54 +278,34 @@ var reviews = [{
   id:1,
   rating:5,
   comment: "okok",
-  date: 1457128046610
+  date: 1457128046610,
+  userId: 10
 },{
   id:2,
   rating:4,
   comment: "okok",
-  date: 1457128046610
-},{
-  id:3,
-  rating:3,
-  comment: "okok",
-  date: 1457128046610
-},{
-  id:4,
-  rating:1,
-  comment: "okok",
-  date: 1457128046610
-},{
-  id:5,
-  rating:5,
-  comment: "okok",
-  date: 1457128046610
-},{
-  id:6,
-  rating:3,
-  comment: "okok",
-  date: 1457128046610
-},{
-  id:7,
-  rating:5,
-  comment: "okok",
-  date: 1457128046610
-},{
-  id:8,
-  rating:2,
-  comment: "okok",
-  date: 1457128046610
+  date: 1457128046610,
+  userId: 2
 }];
 
-function review(id, rating, comment, date){
+function review(id, rating, comment, date, userId){
   this.id = id;
   this.rating = rating;
   this.comment = comment;
   this.date = date;
+  this.userId = userId;
 }
-// push random reviews
-for (var i=1; i<=1000;i++){
+
+// push a random reviews
+for (var i=1; i<=1;i++){
   var randomProduct = _.sample(products, 1);
   var randomRating = Math.floor(Math.random() * (5)) + 1;
-  var addNewReview = new review(randomProduct[0].id, randomRating ,"this is a random review", 1457128046610);
+  var randomeUserId = Math.floor(Math.random() * (100)) + 2;
+  var addNewReview = new review(randomProduct[0].id, randomRating ,"this is a random review", 1457128046610, randomeUserId);
   reviews.push(addNewReview);
+}
+
+// A fake user id
+var user ={
+  id:1
 }
