@@ -1,3 +1,40 @@
+// Page Cover Gallery
+var imgGallerys = document.getElementsByClassName('img-gallery');
+var sampleProducts = [];
+for (var i=0; i < imgGallerys.length; i++){
+  var itemPerRow = 4 ;
+  var sampleProducts = _.difference(products, sampleProducts);
+  var sampleProducts = _.sample(sampleProducts, itemPerRow)
+
+  for(var t=0; t < itemPerRow; t++){
+    var imgBox = document.createElement('div');
+    imgBox.className = "img-box";
+    var link = document.createElement('a');
+    link.href=sampleProducts[t].id;
+    console.log(link.getAttribute('href'));
+
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      var productId = parseFloat(link.getAttribute('href'));
+      showDetail(productId);
+      console.log(productId);
+    })
+
+    var img = document.createElement('img');
+    img.src = sampleProducts[t].thumbOne;
+    imgBox.appendChild(link);
+    link.appendChild(img);
+    imgGallerys[i].appendChild(imgBox);
+  }
+}
+
+// Global
+function item(id, qty, price){
+  this.id = id;
+  this.qty = parseFloat(qty);
+  this.price = price;
+}
+
 function removeAllChild(node){
   while (node.firstChild) {
       node.removeChild(node.firstChild);
@@ -31,6 +68,130 @@ function appendMessage(location, value){
   location.appendChild(msgBox);
 }
 
+// Product Individual View
+function showDetail(productId){
+  array = _.where(products, {id: productId});
+  target = array[0];
+
+  var img = document.createElement('img');
+  img.src = target.thumbOne;
+  img.setAttribute('width', '100%');
+
+  var name = document.createTextNode(target.name);
+  var price = document.createTextNode("$" + target.price);
+  var description = document.createTextNode(target.description);
+
+  removeAllChild(detailImg);
+  removeAllChild(detailName);
+  removeAllChild(detailPrice);
+  removeAllChild(detailReviewBar);
+  removeAllChild(detailDescription);
+
+  detailImg.appendChild(img);
+  detailName.appendChild(name);
+  detailPrice.appendChild(price);
+  detailDescription.appendChild(description);
+
+  reviewArray = _.where(reviews);
+
+  var detailQty = document.getElementById('detail-qty');
+  var quantity = document.createElement('select');
+  quantity.className="form-control input-sm";
+  for (var i =1; i<=10; i++){
+    var option = document.createElement('option');
+    option.setAttribute('value', i);
+    var num = document.createTextNode(i);
+    option.appendChild(num);
+    quantity.appendChild(option);
+  }
+  removeAllChild(detailQty);
+  detailQty.appendChild(quantity);
+
+  var detailAdd = document.getElementById('detail-add');
+  detailAdd.addEventListener('click', function(){
+    var addThis = new item(target.id, quantity.value, target.price);
+    var added = false;
+    for(var x=0; x < inCart.length; x++){
+      if (addThis.id === inCart[x].id){
+        inCart[x].qty = inCart[x].qty + addThis.qty;
+        added = true;
+      }
+    }
+    if(added == false){
+      inCart.push(addThis);
+    }
+    var inCartCount = 0;
+    var inCartTotal = 0;
+    for(var x=0; x<inCart.length; x++){
+      inCartCount = inCartCount + inCart[x].qty;
+      inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
+    }
+    var cartCountValue = document.createTextNode(inCartCount);
+    removeAllChild(cartCount);
+    cartCount.appendChild(cartCountValue);
+    calculate(showBalance, inCartTotal);
+  })
+
+  // detail review
+  var reviewRating = 0;
+  var theReview = _.where(reviews, {productId: target.id})
+
+  if (theReview.length>0){
+    for (var i=0; i < theReview.length; i++){
+      reviewRating = reviewRating + theReview[i].rating
+    }
+    var average = reviewRating/(theReview.length);
+    var showReview = document.createElement('img');
+    showReview.src = "images/rating-" + Math.floor(average) + ".png";
+    showReview.setAttribute('style','display:inline; max-width: 200px; height: auto;');
+    detailReviewBar.appendChild(showReview);
+    var reviewCount = document.createTextNode("("+theReview.length+")");
+    detailReviewBar.appendChild(reviewCount);
+
+    var displayReviews = document.createElement('div');
+    for(var i=5; i >=1; i--){
+      theReviewRatings = _.where(theReview, {rating: i});
+      var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
+      var showRating = document.createElement('img');
+      showRating.src = "images/rating-" + i + ".png";
+      showRating.setAttribute('style','display:inline; width: 200px; height: auto;');
+      displayReviews.appendChild(showRating);
+      displayReviews.appendChild(ratingCount);
+    }
+    detailReviewBar.appendChild(displayReviews);
+    for(var i=0; i < theReview.length; i++){
+      var reviewLine = document.createElement('div');
+      reviewLine.className = 'col-md-12';
+      reviewLine.setAttribute('style','padding:10px;')
+      var lineLeft = document.createElement('div');
+      lineLeft.className = 'col-md-2';
+      var lineRight = document.createElement('div');
+      lineRight.className = 'col-md-10';
+      var showReviewRating = document.createElement('img');
+      showReviewRating.src = "images/rating-" + theReview[i].rating + ".png";
+      showReviewRating.setAttribute('style','display:inline; width: 100px; height: auto;');
+      var reviewUsername = _.where(users, {id: theReview[i].userId})
+      var showReviewUser = document.createTextNode(reviewUsername[0].name);
+      var showReviewDate = document.createTextNode(timeStamp(theReview[i].date));
+      var showReviewCommentBox = document.createElement('p');
+      var showReviewComment = document.createTextNode(theReview[i].comment);
+      detailReviews.appendChild(reviewLine);
+      reviewLine.appendChild(lineLeft);
+      reviewLine.appendChild(lineRight);
+      lineLeft.appendChild(showReviewDate);
+      lineLeft.appendChild(showReviewRating);
+      lineRight.appendChild(showReviewUser);
+      showReviewCommentBox.appendChild(showReviewComment);
+      lineRight.appendChild(showReviewCommentBox);
+    }
+
+  } else {
+    var noReview = document.createTextNode("N/A");
+    detailReviewBar.appendChild(noReview);
+  }
+}
+
+
 // Product View with Boostrap Default Media
 function showResult(location, target, row){
   // Structure
@@ -39,40 +200,50 @@ function showResult(location, target, row){
   outline.className = "col-xs-"+12/row +" " +"col-sm-"+12/row +" " + "col-md-"+12/row;
   var box = document.createElement('div');
   box.className = "col-md-12";
-  box.setAttribute('style', 'border:1px solid rgb(213, 213, 213)');
+  box.setAttribute('style', 'padding-bottom:10px; border:1px solid rgb(213, 213, 213)');
   var boxImg = document.createElement('div');
   boxImg.className = "col-md-12";
   var boxBody = document.createElement('div');
   boxBody.className = "col-md-12";
 
   var link = document.createElement('a');
-  link.href="#";
+  link.href=target.id;
+  link.setAttribute('product-id',target.id);
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    detail.className = ' ';
+    removeAllChild(yield);
+    yield.appendChild(detail);
+    productId = parseFloat(link.getAttribute('product-id'));
+    showDetail(productId);
+  })
+
   var image = document.createElement('img');
   image.src=target.thumbOne;
   image.alt=target.name;
   image.setAttribute('width', '100%');
 
-  var content = document.createElement('p');
-  var contentText = document.createTextNode(' ');
+  var content = document.createElement('h5');
+  var contentText = document.createTextNode(target.name);
 
+  var commandForm = document.createElement('form');
+  commandForm.className="form-inline";
   var commandBox = document.createElement('div');
   commandBox.className = "row";
-  commandBox.setAttribute('style', 'padding-bottom:15px;');
-  var commandBoxTitle = document.createElement('div');
-  commandBoxTitle.className = "col-md-12";
   var commandBoxPrice = document.createElement('div');
-  commandBoxPrice.className = "col-md-4";
-  commandBoxPrice.setAttribute('style','color:red;')
+  commandBoxPrice.className = "col-sm-4";
+  commandBoxPrice.setAttribute('style', 'padding-top:5px')
   var commandBoxQty = document.createElement('div');
-  commandBoxQty.className = "col-md-4";
+  commandBoxQty.className = "col-sm-8";
   var commandBoxAdd = document.createElement('div');
-  commandBoxAdd.className = "col-md-4";
+  commandBoxAdd.className = "col-sm-12";
+  commandBoxAdd.setAttribute('style', 'padding-top:20px;padding-bottom:20px')
+
 
   var reviewBox = document.createElement('div');
   reviewBox.className = "col-md-12";
-  reviewBox.setAttribute('style', "padding:0px; padding-bottom:10px;");
   var reviewRating = 0;
-  var theReview = _.where(reviews, {id: target.id})
+  var theReview = _.where(reviews, {productId: target.id})
 
   if (theReview.length>0){
     for (var i=0; i < theReview.length; i++){
@@ -112,18 +283,23 @@ function showResult(location, target, row){
   var title = document.createElement('p');
   title.className = "media-heading";
   var titleText = document.createTextNode(target.name + " ("+target.condition+")");
-  var price = document.createElement('h5');
+  var price = document.createElement('span');
   var priceTag = document.createTextNode("$" + target.price);
-  var quantity = document.createElement('input');
-  quantity.setAttribute('style', 'display:block');
-  quantity.setAttribute('type', 'number');
-  quantity.setAttribute('value', 1);
-  quantity.setAttribute('min', 1);
-  quantity.setAttribute('max', 100);
+  var quantityText = document.createTextNode('Qty: ')
+  var quantity = document.createElement('select');
+  quantity.className="form-control input-sm";
+  for (var i =1; i<=10; i++){
+    var option = document.createElement('option');
+    option.setAttribute('value', i);
+    var num = document.createTextNode(i);
+    option.appendChild(num);
+    quantity.appendChild(option);
+  }
   var cartIcon = document.createElement('i');
+  var cartIconText = document.createTextNode(' Add to Cart');
   cartIcon.className="fa fa-cart-plus fa-lg";
   var addToCart = document.createElement('button');
-  addToCart.className = "add-to-cart btn btn-primary";
+  addToCart.className = "add-to-cart btn btn-success btn-xs btn-block";
   addToCart.setAttribute('style', 'display:block');
 
   // Node Tree
@@ -133,33 +309,28 @@ function showResult(location, target, row){
   box.appendChild(boxBody);
   boxImg.appendChild(link);
   link.appendChild(image);
-  boxBody.appendChild(commandBox);
   boxBody.appendChild(content);
+  boxBody.appendChild(commandForm);
   boxBody.appendChild(reviewBox);
   content.appendChild(contentText);
 
-  commandBox.appendChild(commandBoxTitle);
+  commandForm.appendChild(commandBox);
   commandBox.appendChild(commandBoxPrice);
   commandBox.appendChild(commandBoxQty);
   commandBox.appendChild(commandBoxAdd);
 
-  commandBoxTitle.appendChild(title);
   commandBoxPrice.appendChild(price);
+  commandBoxQty.appendChild(quantityText);
   commandBoxQty.appendChild(quantity);
   commandBoxAdd.appendChild(addToCart);
 
   title.appendChild(titleText);
   price.appendChild(priceTag);
   addToCart.appendChild(cartIcon);
+  cartIcon.appendChild(cartIconText);
 
-  // Add to Cart
-  function item(id, qty, price){
-    this.id = id;
-    this.qty = parseFloat(qty);
-    this.price = price;
-  }
-
-  addToCart.addEventListener('click', function(){
+  addToCart.addEventListener('click', function(e){
+    e.preventDefault();
     var addThis = new item(target.id, quantity.value, target.price);
     var added = false;
     for(var x=0; x < inCart.length; x++){
@@ -177,7 +348,7 @@ function showResult(location, target, row){
       inCartCount = inCartCount + inCart[x].qty;
       inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
     }
-    var cartCountValue = document.createTextNode("(" + inCartCount + ")");
+    var cartCountValue = document.createTextNode(inCartCount);
     removeAllChild(cartCount);
     cartCount.appendChild(cartCountValue);
     calculate(showBalance, inCartTotal);
@@ -186,7 +357,6 @@ function showResult(location, target, row){
 
 // Cart View
 function showCart(location, target, editable, reviewable, orderCount){
-  console.log(orderCount);
   for(var x=0; x < products.length; x++){
     if (target.id === products[x].id){
       target.name = products[x].name;
@@ -233,7 +403,7 @@ function showCart(location, target, editable, reviewable, orderCount){
   reviewComment.setAttribute('placeholder', 'write your review');
   var submitReview = document.createElement('button');
   submitReview.className = "btn btn-warning";
-  submitReviewText = document.createTextNode('wite my review!');
+  submitReviewText = document.createTextNode('write my review!');
 
   var rating = document.createElement('div');
   var ratingText = document.createTextNode('Your rating ( 5 is the best) :');
@@ -308,6 +478,9 @@ function showCart(location, target, editable, reviewable, orderCount){
 
   // Change Qty
   if (editable == true){
+    cartPanel.className = ' ';
+    checkout.removeAttribute('disabled');
+
     amount.removeAttribute('disabled');
     amount.addEventListener('input',function(e){
       e.preventDefault();
@@ -321,7 +494,7 @@ function showCart(location, target, editable, reviewable, orderCount){
         inCartCount = inCartCount + inCart[x].qty;
         inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
       }
-      var cartCountValue = document.createTextNode("(" + inCartCount + ")");
+      var cartCountValue = document.createTextNode(inCartCount);
       removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
       calculate(showBalance, inCartTotal);
@@ -329,7 +502,6 @@ function showCart(location, target, editable, reviewable, orderCount){
       if(inCartCount==0){
         checkout.setAttribute('disabled','disabled')
       }
-      pageYield.appendChild(checkout);
     })
   }
 
@@ -340,6 +512,9 @@ function showCart(location, target, editable, reviewable, orderCount){
     var removeTag = document.createTextNode('remove');
     boxRemove.appendChild(remove);
     remove.appendChild(removeTag);
+
+    cartPanel.className = ' ';
+    checkout.removeAttribute('disabled');
 
     remove.addEventListener('click', function(){
       // alert(' remove '+ target.name+" ? ");
@@ -372,7 +547,7 @@ function showCart(location, target, editable, reviewable, orderCount){
         inCartCount = inCartCount + inCart[x].qty;
         inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
       }
-      var cartCountValue = document.createTextNode("(" + inCartCount + ")");
+      var cartCountValue = document.createTextNode(inCartCount);
       removeAllChild(cartCount);
       cartCount.appendChild(cartCountValue);
       calculate(showBalance, inCartTotal);
@@ -382,7 +557,6 @@ function showCart(location, target, editable, reviewable, orderCount){
         removeAllChild(pageYield);
         main.className = "container";
       }
-      pageYield.appendChild(checkout);
     })
   }
 
@@ -401,17 +575,15 @@ function showCart(location, target, editable, reviewable, orderCount){
   reviewForm.addEventListener('submit',function(e){
     e.preventDefault();
     var ratings = document.getElementsByName('rating'+orderCount);
-    console.log(ratings);
     for(var x=0; x < ratings.length; x++){
       if(ratings[x].checked){
         var ratingValue = ratings[x].value;
         break;
       }
     }
-    console.log(ratingValue);
-    var addNewReview = new review(target.id, parseFloat(ratingValue), reviewComment.value, Date.now(), user.id);
+    var addNewReview = new review(0, target.id, parseFloat(ratingValue), reviewComment.value, Date.now(), user.id);
     reviews.push(addNewReview);
-    var findrReview = _.where(reviews, {id: target.id, userId: user.id}).reverse();
+    var findrReview = _.where(reviews, {productId: target.id, userId: user.id}).reverse();
     var showStars = document.createElement('img');
     showStars.src = "images/rating-" + Math.floor(parseFloat(findrReview[0].rating)) + ".png";
     showStars.setAttribute('style','display:block; width: 100%; height: auto;');
@@ -421,7 +593,7 @@ function showCart(location, target, editable, reviewable, orderCount){
     toggleClass('hidden', boxReview);
     removeAllChild(boxRemove);
     boxRemove.appendChild(showStars);
-    console.log(reviews);
+    console.log(reviews.length);
   })
 }
 
@@ -447,107 +619,83 @@ function calculate(location, inCartTotal){
   showShippingFee.appendChild(showShippingFeeText);
 }
 
+var current = document.getElementById('current');
+var past = document.getElementById('past');
 
-cart.addEventListener('mouseover',function(){
-  var viewbox = document.createElement('div');
-  viewbox.className = "view-cart-box";
-  var current = document.createElement('button');
-  current.className = 'btn btn-default btn-block'
-  current.setAttribute('disabled', 'disabled');
-  currentText = document.createTextNode('My Cart')
-  var past = document.createElement('button');
-  past.className = 'btn btn-default btn-block'
-  past.setAttribute('disabled', 'disabled');
-  pastText = document.createTextNode('Order History');
-  pageTop.appendChild(viewbox);
-  viewbox.appendChild(current);
-  viewbox.appendChild(past);
-  current.appendChild(currentText);
-  past.appendChild(pastText);
-
-  viewbox.addEventListener('mouseleave', function(){
-    pageTop.removeChild(viewbox);
-  })
-
+current.addEventListener('click', function(){
   if (inCart.length>0){
-    current.removeAttribute('disabled')
-    current.addEventListener('click', function(){
-      removeAllChild(pageYield);
-      main.className="hidden";
-      cartPanel.className = ' ';
+    removeAllChild(pageYield);
+    main.className="hidden";
+    cartPanel.className = ' ';
+    checkout.removeAttribute('disabled');
 
-      checkout.removeAttribute('disabled');
-      var checkoutButton = document.getElementById('checkout-button');
-      checkoutButton.appendChild(checkout);
-      var currentBox = document.createElement('div');
-      currentBox.className= "col-md-10";
+    var currentBox = document.createElement('div');
+    currentBox.className= "col-md-10";
+    var panel = document.createElement('div');
+    panel.className = 'panel panel-default'
+    var panelHeading = document.createElement('div');
+    panelHeading.className = 'panel-heading';
+    var panelBody = document.createElement('div');
+    panelBody.className = 'panel-body';
+    var title = document.createElement('p');
+    var titleText = document.createTextNode("Shopping Cart");
+
+    for(var i=0; i<inCart.length; i++){
+      inCartCount = inCartCount + inCart[i].qty;
+      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+    }
+    for(var i=0; i < inCart.length; i++){
+      showCart(panelBody, inCart[i], true, false, i);
+    }
+
+    pageYield.appendChild(currentBox);
+    currentBox.appendChild(panel);
+    panel.appendChild(panelHeading);
+    panel.appendChild(panelBody);
+    panelHeading.appendChild(title);
+    title.appendChild(titleText);
+  }
+})
+
+past.addEventListener('click', function(){
+  if (pastInCart.length>0){
+    removeAllChild(pageYield);
+    main.className="hidden";
+    cartPanel.className = ' ';
+    pastInCart = _.sortBy(pastInCart, date);
+    pastInCart = pastInCart.reverse();
+    for(var x=0; x < pastInCart.length; x++){
+      var pastbox = document.createElement('div');
+      pastbox.className= "col-md-12";
       var panel = document.createElement('div');
       panel.className = 'panel panel-default'
       var panelHeading = document.createElement('div');
       panelHeading.className = 'panel-heading';
       var panelBody = document.createElement('div');
       panelBody.className = 'panel-body';
-      var title = document.createElement('p');
-      var titleText = document.createTextNode("Shopping Cart");
 
-      for(var i=0; i<inCart.length; i++){
-        inCartCount = inCartCount + inCart[i].qty;
-        inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+      for(var y=0; y < pastInCart[x].cart.length; y++){
+        showCart(panelBody, pastInCart[x].cart[y], false, true, y);
       }
-      for(var i=0; i < inCart.length; i++){
-        showCart(panelBody, inCart[i], true, false, i);
-      }
+      var paraTotal = document.createElement('p');
+      var paraDate = document.createElement('p');
+      var total = document.createTextNode("Total(w/ Tax & Shipping): $" + pastInCart[x].total);
+      var date = document.createTextNode("Purchased Date: " + timeStamp(pastInCart[x].date));
 
-      pageYield.appendChild(currentBox);
-      currentBox.appendChild(panel);
+      pageYield.appendChild(pastbox);
+      pastbox.appendChild(panel);
       panel.appendChild(panelHeading);
       panel.appendChild(panelBody);
-      panelHeading.appendChild(title);
-      title.appendChild(titleText);
-    })
-  }
+      panelHeading.appendChild(paraTotal);
+      panelHeading.appendChild(paraDate);
+      paraTotal.appendChild(total);
+      paraDate.appendChild(date);
 
-  if (pastInCart.length>0){
-    past.removeAttribute('disabled')
-
-    past.addEventListener('click', function(){
-      removeAllChild(pageYield);
-      main.className="hidden";
-      cartPanel.className = ' ';
-      pastInCart = _.sortBy(pastInCart, date);
-      pastInCart = pastInCart.reverse();
-      for(var x=0; x < pastInCart.length; x++){
-        var pastbox = document.createElement('div');
-        pastbox.className= "col-md-12";
-        var panel = document.createElement('div');
-        panel.className = 'panel panel-default'
-        var panelHeading = document.createElement('div');
-        panelHeading.className = 'panel-heading';
-        var panelBody = document.createElement('div');
-        panelBody.className = 'panel-body';
-
-        for(var y=0; y < pastInCart[x].cart.length; y++){
-          showCart(panelBody, pastInCart[x].cart[y], false, true, y);
-        }
-        var paraTotal = document.createElement('p');
-        var paraDate = document.createElement('p');
-        var total = document.createTextNode("Total(w/ Tax & Shipping): $" + pastInCart[x].total);
-        var date = document.createTextNode("Purchased Date: " + timeStamp(pastInCart[x].date));
-
-        pageYield.appendChild(pastbox);
-        pastbox.appendChild(panel);
-        panel.appendChild(panelHeading);
-        panel.appendChild(panelBody);
-        panelHeading.appendChild(paraTotal);
-        panelHeading.appendChild(paraDate);
-        paraTotal.appendChild(total);
-        paraDate.appendChild(date);
-
-      }
-      cartPanel.className = 'hidden';
-    })
+    }
+    cartPanel.className = 'hidden';
   }
 })
+
 
 // Search Function //
 search.addEventListener('submit', function(evt){
@@ -602,7 +750,6 @@ search.addEventListener('submit', function(evt){
 
 // Checkout Content
 checkout.addEventListener('click',function(){
-  console.log(inCartTotal);
   removeAllChild(pageYield);
   removeAllChild(checkoutList);
   checkoutContent.className = '';

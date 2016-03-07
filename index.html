@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Amazon</title>
+    <title>Shopazon</title>
     <meta name="author" content="Chunyen Huang">
     <meta name="description" content="Reproduce Amazon">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:100,400' type='text/css'>
@@ -14,18 +14,16 @@
   </head>
   <body>
     <div class="container-fluid" id="page-top">
-      <div class="row">
-        <a href="#">
-          <div class="col-lg-12" id="top-banner">
-          </div>
-        </a>
-      </div>
       <div class="row" id="function-bar">
-        <div class="col-lg-12">
-          <a id='link-home' href="#">
-            <img src="images/logos/amazon.png" height="120px" id="logo">
-          </a>
-          <form class="form" id="search-bar" method="get" action="search.html">
+        <div class="col-lg-2" style="padding-left:50px;">
+          <p class="logo-text">
+            <a id='link-home' href="#">
+              Shopazon
+            </a>
+          </p>
+        </div>
+        <div class="col-lg-8">
+          <form class="form" id="search-bar" method="get" action="">
             <div class="form-group">
               <label class="sr-only" for="search">search content</label>
               <div class="input-group">
@@ -35,10 +33,19 @@
               </div>
             </div>
           </form>
-          <div id="menu-icons">
-            <a href="#" id="cart">
-              <i class="fa fa-shopping-cart fa-3x"></i><span id="cart-count" style="color:white"></span>
-            </a>
+        </div>
+        <div class="col-lg-2">
+          <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle" type="button" id="cart-list" data-toggle="dropdown" style="padding-top:10px;padding-bottom:0px;">
+              <p style="font-size:1.3em;">
+                <i class="fa fa-shopping-cart"></i>
+                cart(<span id="cart-count" style="color:white"></span>)
+              </p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="#" id="current">My cart</a></li>
+              <li><a href="#" id="past">Order History</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -215,7 +222,46 @@
                 <div id="show-balance"></div>
               </div>
             </div>
-            <div id="checkout-button"></div>
+            <button class="btn btn-success btn-block" id="checkout-button" disabled="disabled">Checkout</div>
+          </div>
+        </div>
+        <div id="detail" class="hidden">
+          <div class="row">
+            <div class="col-md-3">
+              <div id="detail-img"></div>
+            </div>
+            <div class="col-md-5">
+              <h2 id="detail-name"></h2>
+              <h3 id="detail-price"></h3>
+              <p id="detail-description"></p>
+
+            </div>
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-3">
+                  Qty:
+                </div>
+                <div class="col-md-7" id="detail-qty">
+                </div>
+              </div>
+              <div class="row" style="margin-top:20px;">
+                <div class="col-md-12">
+                  <button class="btn btn-success btn-block" id="detail-add">
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <h3>Reviews</h3>
+              <h5 id="detail-reviewbar"></h5>
+              <hr>
+            </div>
+            <div class="col-md-9">
+              <div id="detail-reviews"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -234,13 +280,15 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <img src="images/logos/amazon-sm.gif">
+          <h5>Shopazon</h5>
           <p style="margin-top: 30px;">
-            Conditions of UsePrivacy NoticeInterest-Based Ads© 1996-2016, Amazon.com, Inc. or its affiliates
+            Conditions of UsePrivacy NoticeInterest-Based Ads© 2015-2016, Shopazon.com, Inc. or its affiliates
           </p>
         </div>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="js/objects.js"></script>
     <script src="js/elements.js"></script>

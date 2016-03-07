@@ -10,13 +10,13 @@ var pastInCart = [];
 var count = 0;
 var shippingFee = 0;
 
-
-
 var pageTop = document.getElementById('page-top');
 var pageYield = document.getElementById('yield');
 
 var cart = document.getElementById('cart');
 var cartCount = document.getElementById('cart-count');
+var cartCountValue = document.createTextNode("0");
+cartCount.appendChild(cartCountValue);
 var showBalance = document.getElementById('show-balance');
 
 var hiddenClass = document.getElementsByClassName('hidden');
@@ -25,11 +25,8 @@ var cartPanel = document.getElementById('cart-panel');
 var homepage = document.getElementById('main');
 var search = document.getElementsByTagName('form')[0];
 
-var checkout = document.createElement('button');
-checkout.className = "btn btn-success";
-checkout.setAttribute('style', 'margin-top:5px;position:absolute;right:30px');
-var checkoutText = document.createTextNode('Checkout!');
-checkout.appendChild(checkoutText);
+var checkout = document.getElementById('checkout-button');
+
 var checkoutList = document.getElementById('checkout-list');
 var checkoutContent = document.getElementById('checkout-content');
 
@@ -58,3 +55,11 @@ var confirmUser = document.getElementById('confirm-user');
 var confirmPayment = document.getElementById('confirm-payment');
 
 var payPlaceorder = document.getElementById('pay-placeorder-button');
+
+var detail = document.getElementById('detail');
+var detailImg = document.getElementById('detail-img');
+var detailName = document.getElementById('detail-name');
+var detailPrice = document.getElementById('detail-price');
+var detailReviewBar = document.getElementById('detail-reviewbar');
+var detailDescription = document.getElementById('detail-description');
+var detailReviews = document.getElementById('detail-reviews');

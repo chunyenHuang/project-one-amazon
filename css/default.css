@@ -28,6 +28,7 @@ a i:hover {
 #function-bar {
   background-color: rgb(41, 46, 64);
   height: 80px;
+  padding-top: 20px;
 }
 
 #logo {
@@ -37,10 +38,6 @@ a i:hover {
 }
 
 #search-bar {
-  position: absolute;
-  top:20px;
-  right:250px;
-  left:200px;
 }
 
 #menu-icons {
@@ -80,12 +77,13 @@ a i:hover {
 
 .float-review-box {
   position: absolute;
-  top:70%;
-  width: 110px;
+  top:130%;
+  width: 130px;
   height: 102px;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
+  box-shadow: 0px 0px 5px 1px black;
 }
 
 /* main */
@@ -132,6 +130,16 @@ a i:hover {
 
 #content a > img {
   display: inline-block;
+}
+
+.logo-text a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.6em;
+}
+
+.logo-text a:hover {
+  text-decoration: none;
 }
 
 .img-gallery {

@@ -275,21 +275,26 @@ var seven = _.where(products, {id: 7})
 
 // reviews
 var reviews = [{
-  id:1,
+  id: 1,
+  productId:1,
   rating:5,
   comment: "okok",
   date: 1457128046610,
   userId: 10
 },{
-  id:2,
+  id: 2,
+  productId:2,
   rating:4,
   comment: "okok",
   date: 1457128046610,
   userId: 2
 }];
 
-function review(id, rating, comment, date, userId){
+function review(id, productId, rating, comment, date, userId){
+  var last = _.last(reviews);
+  id = last.id + 1,
   this.id = id;
+  this.productId = productId;
   this.rating = rating;
   this.comment = comment;
   this.date = date;
@@ -300,12 +305,25 @@ function review(id, rating, comment, date, userId){
 for (var i=1; i<=1000;i++){
   var randomProduct = _.sample(products, 1);
   var randomRating = Math.floor(Math.random() * (5)) + 1;
-  var randomeUserId = Math.floor(Math.random() * (100)) + 2;
-  var addNewReview = new review(randomProduct[0].id, randomRating ,"this is a random review", 1457128046610, randomeUserId);
+  var randomeUserId = Math.floor(Math.random() * (5)) + 1;
+  var addNewReview = new review(0, randomProduct[0].id, randomRating ,"this is a random review", 1457128046610, randomeUserId);
   reviews.push(addNewReview);
 }
 
 // A fake user id
-var user ={
-  id:1
-}
+var users =[{
+  id:1,
+  name: "John"
+},{
+  id:2,
+  name: "Sarah"
+},{
+  id:3,
+  name: "UFO"
+},{
+  id:4,
+  name: "Mr.Don"
+},{
+  id:5,
+  name: "Koala"
+}]

@@ -48,49 +48,7 @@ function toggleImg() {
   });
 }
 
-// Select Payment Method
- var paymentList = document.getElementsByTagName('li');
- var paymentInput = document.getElementById('payment-input-box');
- var visa = document.getElementById('visa');
- for(var i=0; i < paymentList.length; i+=1){
-    paymentList[i].addEventListener('click', function() {
-      for(var i=0; i < paymentList.length; i+=1){
-        paymentList[i].setAttribute('class', 'list-group-item-noborder');
-        var paymentSelect =paymentList[i].getAttribute('name');
-        var form = document.getElementById(paymentSelect);
-        form.setAttribute('class', 'hidden');
-      }
-      this.setAttribute('class', 'list-group-item-noborder active');
-      var paymentSelect =this.getAttribute('name');
-      var form = document.getElementById(paymentSelect);
-      form.setAttribute('class', 'active');
-   })
- }
 
- // Page Cover Gallery
- var imgGallerys = document.getElementsByClassName('img-gallery');
- var sampleProducts = [];
- for (var i=0; i < imgGallerys.length; i++){
-   var sampleProducts = _.difference(products, sampleProducts);
-   var sampleProducts = _.sample(sampleProducts, 4)
-
-   for(var t=0; t<4; t++){
-     var imgBox = document.createElement('div');
-     imgBox.className = "img-box";
-     var link = document.createElement('a');
-     link.href="#"+sampleProducts[t].id;
-     var img = document.createElement('img');
-     img.src = sampleProducts[t].thumbOne;
-     imgBox.appendChild(link);
-     link.appendChild(img);
-     imgGallerys[i].appendChild(imgBox);
-   }
- }
-
- // Product Individual Detail
- function showDetail(element){
-   console.log(element.id);
- }
 
  // link home and page reload
  var linkHome = document.getElementById('link-home');
