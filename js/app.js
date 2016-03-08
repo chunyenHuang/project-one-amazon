@@ -835,32 +835,141 @@ search.addEventListener('submit', function(evt){
       }
     }
   }
-
+  // Print Result
   // Remove Duplicates
   var uniqResult = _.uniq(results);
+  console.log(uniqResult);
+  var perRow = 6;
 
-  // Print Result
-  if (results.length <= 0){
-    appendMessage(pageYield, "sorry, no match found.");
-  } else {
-    var rowSix = [];
-    var showed = [];
-    var perRow = 6;
+  var resultCountBox = document.createElement('h5');
+  var resultCount = document.createTextNode(uniqResult.length + " results for " + '"' +searchInput + '"');
+  resultCountBox.appendChild(resultCount);
 
-    for(var t=0; t < (uniqResult.length/perRow); t++){
-      var row = document.createElement('div');
-      row.className="row";
-      pageYield.appendChild(row);
-      take = _.difference(uniqResult, showed);
-      if(take.length >= perRow){
-        take = _.sample(take, perRow);
-      }
-      for(var x=0;x<take.length; x++){
-        showed.push(take[x]);
-        showResult(row, take[x], perRow);
+  var showPerRowBox = document.createElement('div');
+  showPerRowBox.className = 'btn-group';
+  var showPerRow1 = document.createElement('button');
+  showPerRow1.className = "btn btn-default btn-xs";
+  showPerRow1.textContent = "small view";
+  var showPerRow2 = document.createElement('button');
+  showPerRow2.className = "btn btn-default btn-sm";
+  showPerRow2.textContent = "medium view";
+  var showPerRow3 = document.createElement('button');
+  showPerRow3.className = "btn btn-default";
+  showPerRow3.textContent = "large view";
+  showPerRowBox.appendChild(showPerRow1);
+  showPerRowBox.appendChild(showPerRow2);
+  showPerRowBox.appendChild(showPerRow3);
+  showPerRow1.addEventListener('click',function(){
+    perRow = 6;
+    printResult();
+  })
+  showPerRow2.addEventListener('click',function(){
+    perRow = 4;
+    printResult();
+  })
+  showPerRow3.addEventListener('click',function(){
+    perRow = 3;
+    printResult();
+  })
+
+  var sortResult = document.createElement('form');
+  sortResult.className = "form form-inline";
+  sortResult.textContent ="sort by:";
+  var sortResultOptions = document.createElement('select');
+  sortResultOptions.className="form-control input-sm";
+  var option1 = document.createElement('option');
+  option1.textContent = "Relevance";
+  option1.value ="relevance";
+  var option2 = document.createElement('option');
+  option2.textContent = "Price: Low to High";
+  option2.value = "priceLow";
+  var option3 = document.createElement('option');
+  option3.textContent = "Price: High to Low";
+  option3.value = "priceHigh";
+  var option4 = document.createElement('option');
+  option4.textContent = "Most Review";
+  option4.value = "mostReview";
+  var option5 = document.createElement('option');
+  option5.textContent = "Average Rating";
+  option5.value = "average";
+  sortResultOptions.appendChild(option1);
+  sortResultOptions.appendChild(option2);
+  sortResultOptions.appendChild(option3);
+  sortResultOptions.appendChild(option4);
+  sortResultOptions.appendChild(option5);
+  sortResult.appendChild(sortResultOptions);
+  sortResultOptions.addEventListener('change', function(){
+    uniqResult = sorts(uniqResult, sortResultOptions.value);
+    printResult();
+  })
+
+  function sorts(array, type){
+    if(type === "relevance"){
+      var sortType = "name";
+      return array = _.sortBy(array, sortType);
+    }
+    if(type === "priceLow"){
+      var sortType = "price";
+      return array = _.sortBy(array, sortType);
+    }
+    if(type === "priceHigh"){
+      var sortType = "price";
+      return array = _.sortBy(array, sortType).reverse();
+    }
+    if(type === "mostReview"){
+      var sortType = "condition";
+      return array = _.sortBy(array, sortType);
+    }
+    if(type === "average"){
+      var sortType = "condition";
+      return array = _.sortBy(array, sortType);
+    }
+  }
+
+  var functionBar = document.createElement('div');
+  functionBar.className = "row well"
+  functionBarLeft = document.createElement('div');
+  functionBarLeft.className = "col-md-4";
+  functionBarMid = document.createElement('div');
+  functionBarMid.className = "col-md-4";
+  functionBarRight = document.createElement('div');
+  functionBarRight.className = "col-md-4";
+  pageYield.appendChild(functionBar);
+  functionBar.appendChild(functionBarLeft);
+  functionBar.appendChild(functionBarMid);
+  functionBar.appendChild(functionBarRight);
+  functionBarLeft.appendChild(resultCountBox);
+  functionBarMid.appendChild(showPerRowBox);
+  functionBarRight.appendChild(sortResult);
+
+  var resultsYield = document.createElement('div');
+  pageYield.appendChild(resultsYield);
+
+  function printResult(){
+    if (results.length <= 0){
+      appendMessage(pageYield, "sorry, no match found.");
+    } else {
+      removeAllChild(resultsYield);
+      var rowSix = [];
+      var showed = [];
+
+      for(var t=0; t < (uniqResult.length/perRow); t++){
+        var row = document.createElement('div');
+        row.className="row";
+        resultsYield.appendChild(row);
+
+        take = _.difference(uniqResult, showed);
+        if(take.length >= perRow){
+          take = _.first(take, perRow);
+        }
+        for(var x=0;x<take.length; x++){
+          showed.push(take[x]);
+          showResult(row, take[x], perRow);
+        }
       }
     }
   }
+  printResult();
 });
 
 // End of Search Function //

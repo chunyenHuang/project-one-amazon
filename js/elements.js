@@ -64,3 +64,4 @@ var detailReviewBar = document.getElementById('detail-reviewbar');
 var detailReviewAll = document.getElementById('detail-reviewall');
 var detailDescription = document.getElementById('detail-description');
 var detailReviews = document.getElementById('detail-reviews');
+var detailRecommend = document.getElementById('detail-recommend');
