@@ -31,7 +31,7 @@ var products = [{
   id: 4,
   name: "dream dream dream",
   price: 28,
-  description: "something",
+  description: randomText(150),
   condition: 'Old',
   thumbOne: 'images/products/product-04.jpg',
   category: 'csj',
@@ -39,7 +39,8 @@ var products = [{
 }, {
   id: 5,
   name: "Space Shoes for women",
-  price: 63, description: "something",
+  price: 63,
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-05.jpg',
   category: 'csj',
@@ -48,7 +49,7 @@ var products = [{
   id: 6,
   name: "Cotton cloth blue green",
   price: 45,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-06.jpg',
   category: 'csj',
@@ -57,7 +58,7 @@ var products = [{
   id: 7,
   name: "High shoes sport",
   price: 150,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-07.jpg',
   category: 'csj',
@@ -66,7 +67,7 @@ var products = [{
   id: 8,
   name: "Hfashion jewelry pendant",
   price: 70,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-08.jpg',
   category: 'csj',
@@ -75,7 +76,7 @@ var products = [{
   id: 9,
   name: "No 9 shoes sport",
   price: 700,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-09.jpg',
   category: 'csj',
@@ -84,7 +85,7 @@ var products = [{
   id: 10,
   name: "No 10 flower mask",
   price: 1000,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-10.jpg',
   category: 'csj',
@@ -93,7 +94,7 @@ var products = [{
   id: 11,
   name: "No 11 colorful paints",
   price: 340,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-11.jpg',
   category: 'csj',
@@ -102,7 +103,7 @@ var products = [{
   id: 12,
   name: "No 12 silver pendant",
   price: 300,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-12.jpg',
   category: 'csj',
@@ -111,7 +112,7 @@ var products = [{
   id: 13,
   name: "coloful plastic bracelet bangle",
   price: 10,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-13.jpg',
   category: 'csj',
@@ -120,7 +121,7 @@ var products = [{
   id: 14,
   name: "nice shoes",
   price: 90,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-14.jpg',
   category: 'csj',
@@ -129,7 +130,7 @@ var products = [{
   id: 15,
   name: "leather watch really cool",
   price: 230,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-15.jpg',
   category: 'csj',
@@ -138,7 +139,7 @@ var products = [{
   id: 16,
   name: "red shoes nice",
   price: 80,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-16.jpg',
   category: 'csj',
@@ -147,7 +148,7 @@ var products = [{
   id: 17,
   name: "So cool sun glasses",
   price: 400,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-17.jpg',
   category: 'csj',
@@ -156,7 +157,7 @@ var products = [{
   id: 18,
   name: "cream polish",
   price: 4000,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-18.jpg',
   category: 'beauty',
@@ -165,7 +166,7 @@ var products = [{
   id: 19,
   name: "red jacket waterproof",
   price: 250,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-19.jpg',
   category: 'csj',
@@ -174,7 +175,7 @@ var products = [{
   id: 20,
   name: "leather jacket",
   price: 40,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-20.jpg',
   category: 'csj',
@@ -183,7 +184,7 @@ var products = [{
   id: 21,
   name: "hat",
   price: 400,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-21.jpg',
   category: 'csj',
@@ -192,7 +193,7 @@ var products = [{
   id: 22,
   name: "No 22 ungly t-shirt",
   price: 332.2,
-  description: "Canon DSLR body",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-22.jpg',
   category: 'csj',
@@ -201,7 +202,7 @@ var products = [{
   id: 23,
   name: "cool watch",
   price: 410,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-23.jpg',
   category: 'electronics',
@@ -210,7 +211,7 @@ var products = [{
   id: 24,
   name: "leather watch",
   price: 20,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-24.jpg',
   category: 'electronics',
@@ -219,7 +220,7 @@ var products = [{
   id: 25,
   name: "watch so nice",
   price: 90,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-25.jpg',
   category: 'electronics',
@@ -228,7 +229,7 @@ var products = [{
   id: 26,
   name: "really cool phone",
   price: 2200,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-26.jpg',
   category: 'electronics',
@@ -237,7 +238,7 @@ var products = [{
   id: 27,
   name: "colorful purse",
   price: 700,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-27.jpg',
   category: 'csj',
@@ -246,7 +247,7 @@ var products = [{
   id: 28,
   name: "cool iphone contaier",
   price: 340,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-28.jpg',
   category: 'csj',
@@ -255,7 +256,7 @@ var products = [{
   id: 29,
   name: "Purse black for nothing",
   price: 80,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-29.jpg',
   category: 'csj',
@@ -264,7 +265,7 @@ var products = [{
   id: 30,
   name: "lots of purses",
   price: 90,
-  description: "something",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-30.jpg',
   category: 'csj',
@@ -290,6 +291,29 @@ var reviews = [{
   userId: 2
 }];
 
+// A fake user id
+var users =[{
+  id:1,
+  name: ">>>Current User<<<  <<<<<<<<<<<<<<<< This guy is you!"
+}]
+
+// push random user
+for (var i=2; i<=500;i++){
+  var randomName = randomText(2);
+  var addNewUser = new user(i, randomName);
+  users.push(addNewUser);
+}
+
+function user(id, name){
+  this.id = id;
+  this.name = name
+}
+
+var currentUser = {
+  id:1,
+  name: ">>>Current User<<<  <<<<<<<<<<<<<<<< This guy is you!"
+}
+
 function review(id, productId, rating, comment, date, userId){
   var last = _.last(reviews);
   id = last.id + 1,
@@ -301,29 +325,32 @@ function review(id, productId, rating, comment, date, userId){
   this.userId = userId;
 }
 
-// push a random reviews
-for (var i=1; i<=1000;i++){
-  var randomProduct = _.sample(products, 1);
-  var randomRating = Math.floor(Math.random() * (5)) + 1;
-  var randomeUserId = Math.floor(Math.random() * (5)) + 1;
-  var addNewReview = new review(0, randomProduct[0].id, randomRating ,"this is a random review", 1457128046610, randomeUserId);
-  reviews.push(addNewReview);
+
+function randomText(length){
+    var text = "";
+    var paragraph = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz";
+    var paragraphLength = Math.floor(Math.random() * (length)) + 1;
+    for(var x=0; x < paragraphLength; x++){
+      text = "";
+      var textLength = Math.floor(Math.random() * (10)) + 3;
+      for( var i=0; i < textLength; i++ ){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      paragraph = paragraph + text + " ";
+    }
+    return paragraph;
 }
 
-// A fake user id
-var users =[{
-  id:1,
-  name: "John"
-},{
-  id:2,
-  name: "Sarah"
-},{
-  id:3,
-  name: "UFO"
-},{
-  id:4,
-  name: "Mr.Don"
-},{
-  id:5,
-  name: "Koala"
-}]
+// push a random reviews
+for (var i=1; i<=2998;i++){
+  var randomProduct = _.sample(products, 1);
+  var randomRating = Math.floor(Math.random() * (5)) + 1;
+  var randomeUser = _.sample(users, 1);
+  var randomYear = Math.floor(Math.random() * (8)) + 2008;
+  var randomMonth = Math.floor(Math.random() * (11)) + 1;
+  var randomDay = Math.floor(Math.random() * (29)) + 1;
+  var randomDate = new Date(randomYear, randomMonth, randomDay);
+  var addNewReview = new review(0, randomProduct[0].id, randomRating , randomText(100), randomDate, randomeUser[0].id);
+  reviews.push(addNewReview);
+}

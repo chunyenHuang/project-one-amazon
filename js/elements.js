@@ -61,5 +61,6 @@ var detailImg = document.getElementById('detail-img');
 var detailName = document.getElementById('detail-name');
 var detailPrice = document.getElementById('detail-price');
 var detailReviewBar = document.getElementById('detail-reviewbar');
+var detailReviewAll = document.getElementById('detail-reviewall');
 var detailDescription = document.getElementById('detail-description');
 var detailReviews = document.getElementById('detail-reviews');
