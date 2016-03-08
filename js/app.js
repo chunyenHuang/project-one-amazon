@@ -121,6 +121,13 @@ function insertImgGallery(location, element){
 }
 
 // Global
+function filterInt(value) {
+  if(/^(\-|\+)?([0-9]+|Infinity)$/.test(value)){
+    return Number(value);
+  }
+  return NaN;
+}
+
 function item(id, qty, price){
   this.id = id;
   this.qty = parseFloat(qty);
@@ -838,7 +845,6 @@ search.addEventListener('submit', function(evt){
   // Print Result
   // Remove Duplicates
   var uniqResult = _.uniq(results);
-  console.log(uniqResult);
   var perRow = 6;
 
   var resultCountBox = document.createElement('h5');
@@ -905,24 +911,29 @@ search.addEventListener('submit', function(evt){
 
   function sorts(array, type){
     if(type === "relevance"){
-      var sortType = "name";
-      return array = _.sortBy(array, sortType);
-    }
-    if(type === "priceLow"){
-      var sortType = "price";
-      return array = _.sortBy(array, sortType);
-    }
-    if(type === "priceHigh"){
-      var sortType = "price";
-      return array = _.sortBy(array, sortType).reverse();
-    }
-    if(type === "mostReview"){
-      var sortType = "condition";
-      return array = _.sortBy(array, sortType);
-    }
-    if(type === "average"){
-      var sortType = "condition";
-      return array = _.sortBy(array, sortType);
+      return array = _.sortBy(array, "name");
+    } else if (type === "priceLow"){
+      return array = _.sortBy(array, "price");
+    } else if(type === "priceHigh"){
+      return array = _.sortBy(array, "price").reverse();
+    } else if(type === "mostReview"){
+      var newArray =[];
+      for(var i=0; i < mostReviews.length; i++){
+        var found = _.where(array, {id: filterInt(mostReviews[i][0])});
+        if (found.length >0){
+          newArray.push(found[0]);
+        }
+      }
+      return array = newArray;
+    } else if(type === "average"){
+      var newArray =[];
+      for(var i=0; i < rankReviews.length; i++){
+        var found = _.where(array, {id: filterInt(rankReviews[i].productId)});
+        if (found.length >0){
+          newArray.push(found[0]);
+        }
+      }
+      return array = newArray;
     }
   }
 
