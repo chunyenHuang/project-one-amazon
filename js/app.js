@@ -1,6 +1,7 @@
 // Page Cover Gallery
 function loadHomepage(){
   main.className = "container";
+  cartPanel.className ="hidden";
   var imgGallerys = document.getElementsByClassName('img-gallery');
   for(var i=0; i< imgGallerys.length; i ++){
     removeAllChild(imgGallerys[i]);
@@ -8,6 +9,7 @@ function loadHomepage(){
   var mayLikeProducts = [];
   var sampleProducts = [];
 
+  // Recommendation
   if (inCart.length>0){
     var tags = [];
     var inCartProducts = [];
@@ -18,7 +20,6 @@ function loadHomepage(){
     }
     tags = _.flatten(tags);
     tags = _.uniq(tags);
-    console.log(tags);
 
     var notInCart = _.difference(products, inCartProducts);
     for(var i=0; i< notInCart.length; i++){
@@ -31,16 +32,19 @@ function loadHomepage(){
     }
     mayLikeProducts = _.uniq(mayLikeProducts);
     mayLikes = _.sample(mayLikeProducts, 6);
+
     for (var i=0; i < mayLikes.length;i++){
       insertImgGallery(imgGallerys[0],mayLikes[i]);
     }
     var others = _.difference(products, mayLikeProducts);
+    var showed = [];
     for (var i=1; i < imgGallerys.length; i++){
       var itemPerRow = 6 ;
-      var sampleProducts = _.difference(others, sampleProducts);
+      var sampleProducts = _.difference(others, showed);
       var sampleProducts = _.sample(sampleProducts, itemPerRow)
       for(var t=0; t < itemPerRow; t++){
         insertImgGallery(imgGallerys[i], sampleProducts[t]);
+        showed.push(sampleProducts[t]);
       }
     }
   } else if (pastInCart.length > 0){
@@ -57,16 +61,19 @@ function loadHomepage(){
       }
     }
   } else {
+    var showed = [];
     for (var i=0; i < imgGallerys.length; i++){
       var itemPerRow = 6 ;
-      var sampleProducts = _.difference(products, sampleProducts);
+      var sampleProducts = _.difference(products, showed);
       var sampleProducts = _.sample(sampleProducts, itemPerRow)
       for(var t=0; t < itemPerRow; t++){
         insertImgGallery(imgGallerys[i], sampleProducts[t]);
+        showed.push(sampleProducts[t]);
       }
     }
   }
 
+  // put img on the homepage
   function insertImgGallery(location, element){
     var imgBox = document.createElement('div');
     imgBox.className = "img-box";
