@@ -4,29 +4,29 @@ var products = [{
   id: 1,
   name: "Dream shoes",
   price: 45,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-01.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['shoes']
 }, {
   id: 2,
   name: "Metal Chain Flats Thick Sole Shoes Sneakers shoes",
   price: 30,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-02.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['shoes']
 }, {
   id: 3,
   name: "EpicStep Women's k Sole Shoes Sneakers shoes",
   price: 30,
-  description: "You'll love this lightweight runner! It features a mesh upper, padded collar, laces for good fit, soft lining, cushiony memory foam insole for comfort and support, and a non-marking outsole. Manmade materials.",
+  description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg',
   category: 'csj',
-  tag: ['fashion', 'men', 'women']
+  tag: ['shoes']
 }, {
   id: 4,
   name: "dream dream dream",
@@ -35,7 +35,7 @@ var products = [{
   condition: 'Old',
   thumbOne: 'images/products/product-04.jpg',
   category: 'csj',
-  tag: ['fashion', 'men', 'women']
+  tag: ['shoes']
 }, {
   id: 5,
   name: "Space Shoes for women",
@@ -44,7 +44,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-05.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['shoes']
 }, {
   id: 6,
   name: "Cotton cloth blue green",
@@ -53,7 +53,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-06.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['fashion']
 }, {
   id: 7,
   name: "High shoes sport",
@@ -62,7 +62,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-07.jpg',
   category: 'csj',
-  tag: ['sport', 'men']
+  tag: ['shoes']
 }, {
   id: 8,
   name: "Hfashion jewelry pendant",
@@ -71,7 +71,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-08.jpg',
   category: 'csj',
-  tag: ['fashion', 'women', 'gift']
+  tag: ['fashion', 'gift']
 }, {
   id: 9,
   name: "No 9 shoes sport",
@@ -80,7 +80,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-09.jpg',
   category: 'csj',
-  tag: ['sport', 'men']
+  tag: ['shoes', 'sport']
 }, {
   id: 10,
   name: "No 10 flower mask",
@@ -89,7 +89,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-10.jpg',
   category: 'csj',
-  tag: ['fashion', 'women']
+  tag: ['fashion']
 }, {
   id: 11,
   name: "No 11 colorful paints",
@@ -107,7 +107,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-12.jpg',
   category: 'csj',
-  tag: ['fashion', 'women', 'gift']
+  tag: ['fashion', 'gift']
 }, {
   id: 13,
   name: "coloful plastic bracelet bangle",
@@ -116,7 +116,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-13.jpg',
   category: 'csj',
-  tag: ['fashion', 'women']
+  tag: ['fashion']
 }, {
   id: 14,
   name: "nice shoes",
@@ -125,7 +125,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-14.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['shoes']
 }, {
   id: 15,
   name: "leather watch really cool",
@@ -134,7 +134,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-15.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['electronics']
 }, {
   id: 16,
   name: "red shoes nice",
@@ -143,7 +143,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-16.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['shoes']
 }, {
   id: 17,
   name: "So cool sun glasses",
@@ -152,7 +152,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-17.jpg',
   category: 'csj',
-  tag: ['fashion', 'men']
+  tag: ['fashion']
 }, {
   id: 18,
   name: "cream polish",
@@ -161,7 +161,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-18.jpg',
   category: 'beauty',
-  tag: ['cosmetic', 'women']
+  tag: ['cosmetic']
 }, {
   id: 19,
   name: "red jacket waterproof",
@@ -170,7 +170,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-19.jpg',
   category: 'csj',
-  tag: ['sport', 'women']
+  tag: ['sport']
 }, {
   id: 20,
   name: "leather jacket",
@@ -179,7 +179,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-20.jpg',
   category: 'csj',
-  tag: ['fashion', 'women']
+  tag: ['fashion']
 }, {
   id: 21,
   name: "hat",
@@ -206,7 +206,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-23.jpg',
   category: 'electronics',
-  tag: ['fashion', 'men', 'women']
+  tag: ['electronics']
 }, {
   id: 24,
   name: "leather watch",
@@ -215,7 +215,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-24.jpg',
   category: 'electronics',
-  tag: ['fashion', 'women', 'mem']
+  tag: ['electronics']
 }, {
   id: 25,
   name: "watch so nice",
@@ -224,7 +224,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-25.jpg',
   category: 'electronics',
-  tag: ['fashion', 'women', 'mem']
+  tag: ['electronics']
 }, {
   id: 26,
   name: "really cool phone",
@@ -233,7 +233,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-26.jpg',
   category: 'electronics',
-  tag: ['fashion', 'women', 'mem']
+  tag: ['electronics']
 }, {
   id: 27,
   name: "colorful purse",
@@ -251,7 +251,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-28.jpg',
   category: 'csj',
-  tag: ['men', 'gift']
+  tag: ['gift', 'electronics']
 }, {
   id: 29,
   name: "Purse black for nothing",
@@ -260,7 +260,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-29.jpg',
   category: 'csj',
-  tag: ['fashion', 'women']
+  tag: ['fashion']
 }, {
   id: 30,
   name: "lots of purses",
@@ -269,7 +269,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-30.jpg',
   category: 'csj',
-  tag: ['fashion', 'women']
+  tag: ['fashion']
 }];
 // Underscore
 var seven = _.where(products, {id: 7})

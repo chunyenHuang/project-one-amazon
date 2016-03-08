@@ -48,11 +48,12 @@ function toggleImg() {
   });
 }
 
-
-
  // link home and page reload
+ window.addEventListener('load',function(){
+   loadHomepage();
+ })
  var linkHome = document.getElementById('link-home');
  linkHome.addEventListener('click', function(){
    removeAllChild(pageYield);
-   main.className = "container";
+   loadHomepage();
  })
