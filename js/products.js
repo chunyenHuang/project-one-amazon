@@ -277,7 +277,7 @@ var products = [{
   condition: 'New',
   thumbOne: 'images/products/product-31.jpg',
   category: 'csj',
-  tag: ['fashion' 'glasses']
+  tag: ['fashion', 'glasses']
 }, {
   id: 32,
   name: "black tea glasses",
