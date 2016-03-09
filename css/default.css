@@ -225,5 +225,8 @@ a i:hover {
 /* footer */
 
 #footer {
+  margin-top:50px;
   text-align: center;
+  background-color: rgb(41, 46, 64);
+  color:rgb(219, 219, 219);
 }
