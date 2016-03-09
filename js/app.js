@@ -181,6 +181,16 @@ function showDetail(productId){
   routeProduct.textContent = " / " + target.name;
   route.appendChild(routeProduct);
 
+  removeAllChild(detailImg);
+  removeAllChild(detailName);
+  removeAllChild(detailBrand);
+  removeAllChild(detailPrice);
+  removeAllChild(detailReviewBar);
+  removeAllChild(detailReviewAll);
+  removeAllChild(detailDescription);
+  removeAllChild(detailReviews);
+  removeAllChild(detailRecommend);
+
   var img = document.createElement('img');
   img.src = target.thumbOne;
   img.setAttribute('width', '100%');
@@ -199,14 +209,62 @@ function showDetail(productId){
     search(target.manufacturer, "manufacturer", pageYield);
   })
 
-  removeAllChild(detailImg);
-  removeAllChild(detailName);
-  removeAllChild(detailBrand);
-  removeAllChild(detailPrice);
-  removeAllChild(detailReviewBar);
-  removeAllChild(detailReviewAll);
-  removeAllChild(detailDescription);
-  removeAllChild(detailReviews);
+  var recomArray = [];
+  var self = [target];
+  var noSelf = _.difference(products, self);
+  for(var i=0; i < target.tag.length;i++){
+    for(var x=0; x< noSelf.length;x++){
+      var checkContain = _.contains(noSelf[x].tag, target.tag[i]);
+      if(checkContain === true){
+        recomArray.push(noSelf[x]);
+      }
+    }
+  }
+  recomArray = _.uniq(recomArray);
+
+  function showRecommends(array){
+    array = _.sample(array, 5);
+
+    removeAllChild(detailRecommend);
+    for(var i=0; i < array.length;i++){
+      var spanBox = document.createElement('div');
+      spanBox.setAttribute('style','display: inline-block; margin:10px;');
+      var recomImgBox = document.createElement('a');
+      recomImgBox.href="#"+array[i].id;
+      recomImgBox.setAttribute('product-id',array[i].id);
+      recomImgBox.setAttribute('name', "recom-img-box");
+      var recomImg = document.createElement('img');
+      recomImg.src =array[i].thumbOne;
+      recomImg.setAttribute('width',"150px");
+
+      var recomText = document.createElement('p');
+      recomText.textContent = array[i].name;
+      recomText.setAttribute('style','font-size:0.8em');
+      var recomPrice = document.createElement('p');
+      recomPrice.textContent = "$" + array[i].price;
+      recomPrice.setAttribute('style','font-size:0.8em;color:rgb(143, 12, 23);');
+
+      detailRecommend.appendChild(spanBox);
+      spanBox.appendChild(recomImgBox);
+      recomImgBox.appendChild(recomImg);
+      recomImgBox.appendChild(recomText);
+      spanBox.appendChild(recomPrice);
+
+    }
+    var recomImgBoxArray = document.getElementsByName('recom-img-box');
+    for(var i=0; i < recomImgBoxArray.length;i++){
+      recomImgBoxArray[i].addEventListener('click', function(){
+        showDetail(filterInt(this.getAttribute('product-id')));
+      })
+    }
+  }
+  showRecommends(recomArray);
+  detailTowardLeft.addEventListener('click', function(){
+    showRecommends(recomArray);
+  })
+  detailTowardRight.addEventListener('click', function(){
+    showRecommends(recomArray);
+  })
 
   detailImg.appendChild(img);
   detailName.appendChild(name);

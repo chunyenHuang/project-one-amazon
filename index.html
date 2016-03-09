@@ -230,9 +230,9 @@
           </div>
         </div>
         <div id="detail" class="hidden">
-          <div class="col-md-10">
+          <div class="col-xs-12 col-sm-12 col-md-10">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-xs-3 col-sm-3 col-md-3">
                 <div id="detail-img"></div>
               </div>
               <div class="col-md-7">
@@ -259,13 +259,16 @@
               </div>
             </div>
             <div class="row" style="margin-top:20px;">
-              <div class="col-md=12">
-                <div id="detail-recommend"></div>
+              <div class="hidden-xs col-sm-12 col-md-12">
+                <h4>Customers Who Bought This Item Also Bought</h4>
+                <button class="btn btn-default btn-lg" id="detail-recommend-left"> < </button>
+                <span id="detail-recommend"></span>
+                <button class="btn btn-default btn-lg" id="detail-recommend-right"> > </button>
               </div>
             </div>
             <div class="row" style="margin-top:20px;">
               <div class="col-md-2">
-                <h3>Reviews</h3>
+                <h4>Reviews</h4>
                 <h5 id="detail-reviewbar"></h5>
                 <hr>
                 <h5 id="detail-reviewall"></h5>
