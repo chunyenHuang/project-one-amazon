@@ -55,10 +55,22 @@ function toggleImg() {
  var linkHome = document.getElementById('link-home');
  linkHome.addEventListener('click', function(){
    removeAllChild(pageYield);
+   var route =document.getElementById('route');
+   var cartRoute =document.getElementById('cart-route');
+   var searchRoute =document.getElementById('search-route');
+   removeAllChild(route);
+   removeAllChild(cartRoute);
+   removeAllChild(searchRoute);
    loadHomepage();
  })
  var linkHome2 = document.getElementById('link-home-2');
  linkHome2.addEventListener('click', function(){
    removeAllChild(pageYield);
+   var route =document.getElementById('route');
+   var cartRoute =document.getElementById('cart-route');
+   var searchRoute =document.getElementById('search-route');
+   removeAllChild(route);
+   removeAllChild(cartRoute);
+   removeAllChild(searchRoute);
    loadHomepage();
  })
