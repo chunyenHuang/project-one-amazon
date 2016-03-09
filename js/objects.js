@@ -10,7 +10,7 @@ var products = [{
   tag: ['shoes']
 }, {
   id: 2,
-  name: "Metal Chain Flats Thick Sole Shoes Sneakers shoes",
+  name: "Metal Chain shoes",
   price: 30,
   description: randomText(150),
   condition: 'New',
@@ -19,7 +19,7 @@ var products = [{
   tag: ['shoes']
 }, {
   id: 3,
-  name: "EpicStep Women's k Sole Shoes Sneakers shoes",
+  name: "EpicStep Women's shoes",
   price: 30,
   description: randomText(150),
   condition: 'New',
@@ -28,7 +28,7 @@ var products = [{
   tag: ['shoes']
 }, {
   id: 4,
-  name: "dream dream dream",
+  name: "another dream shoes",
   price: 28,
   description: randomText(150),
   condition: 'Old',
@@ -64,7 +64,7 @@ var products = [{
   tag: ['shoes']
 }, {
   id: 8,
-  name: "Hfashion jewelry pendant",
+  name: "Fashion jewelry pendant",
   price: 70,
   description: randomText(150),
   condition: 'New',
@@ -73,7 +73,7 @@ var products = [{
   tag: ['fashion', 'gift']
 }, {
   id: 9,
-  name: "No 9 shoes sport",
+  name: "shoes sport",
   price: 700,
   description: randomText(150),
   condition: 'New',
@@ -82,7 +82,7 @@ var products = [{
   tag: ['shoes', 'sport']
 }, {
   id: 10,
-  name: "No 10 flower mask",
+  name: "flower mask",
   price: 1000,
   description: randomText(150),
   condition: 'New',
@@ -91,7 +91,7 @@ var products = [{
   tag: ['fashion']
 }, {
   id: 11,
-  name: "No 11 colorful paints",
+  name: "colorful paints",
   price: 340,
   description: randomText(150),
   condition: 'New',
@@ -100,7 +100,7 @@ var products = [{
   tag: ['fashion', 'women', 'men']
 }, {
   id: 12,
-  name: "No 12 silver pendant",
+  name: "silver pendant",
   price: 300,
   description: randomText(150),
   condition: 'New',

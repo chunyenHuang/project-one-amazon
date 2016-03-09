@@ -838,6 +838,9 @@ search.addEventListener('submit', function(evt){
   evt.preventDefault();
   cartPanel.className = 'hidden';
   var results = [];
+  var resultsNames = []; // weight 1
+  var resultsTags = []; // weight 0.5
+  var resultsDescriptions =[]; // weight 0.1
   var searchInput = document.getElementById('search-input').value;
   var searchInputArray = searchInput.split(space);
 
@@ -847,15 +850,51 @@ search.addEventListener('submit', function(evt){
       var nameArray = products[i].name.split(space);
       for (var x=0; x < nameArray.length; x++){
         if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          results.push(products[i]);
+          resultsNames.push({id: products[i].id, weight: 1});
         }
       }
     }
   }
-
   // Search Compare with tag
-
+  for (var t=0; t < searchInputArray.length; t++){
+    for (var i=0; i < products.length; i++){
+      var tagsArray = products[i].tag;
+      for (var x=0; x < tagsArray.length; x++){
+        if (tagsArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+          resultsTags.push({id: products[i].id, weight: 0.5});
+        }
+      }
+    }
+  }
   // Search Compare with description
+  for (var t=0; t < searchInputArray.length; t++){
+    for (var i=0; i < products.length; i++){
+      var desArray = products[i].description.split(space);
+      for (var x=0; x < desArray.length; x++){
+        if (desArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+          resultsDescriptions.push({id: products[i].id, weight: 0.1});
+        }
+      }
+    }
+  }
+  var resultWeight = [];
+  resultWeight.push(resultsNames);
+  resultWeight.push(resultsTags);
+  resultWeight.push(resultsDescriptions);
+  resultWeight = _.flatten(resultWeight, 1);
+  resultWeight = _(resultWeight).groupBy('id');
+  var addWeight = _.chain(resultWeight).map(function(num, key){
+        return {
+          id: key,
+          weight: _(num).reduce(function(m, x){ return m+x.weight;},0)
+        };
+      }).sortBy('weight').value().reverse()
+
+  for(var i=0;i < addWeight.length;i++){
+    var foundProduct = _.where(products, {id: filterInt(addWeight[i].id)});
+    results.push(foundProduct[0]);
+  }
+  var resultsRelevance = results;
 
   // Print Result (Remove Duplicates)
   var uniqResult = _.uniq(results);
@@ -865,8 +904,7 @@ search.addEventListener('submit', function(evt){
   var resultCount = document.createTextNode(uniqResult.length + " results for " + '"' +searchInput + '"');
   resultCountBox.appendChild(resultCount);
 
-  var resultsYield = document.createElement('div');
-  pageYield.appendChild(resultsYield);
+
 
   function printResult(){
     if (results.length <= 0){
@@ -892,10 +930,8 @@ search.addEventListener('submit', function(evt){
       }
     }
   }
-  printResult();
 
   // Sort
-
   var showPerRowBox = document.createElement('div');
   showPerRowBox.className = 'btn-group';
   var showPerRow1 = document.createElement('button');
@@ -956,7 +992,7 @@ search.addEventListener('submit', function(evt){
 
   function sorts(array, type){
     if(type === "relevance"){
-      return array = _.sortBy(array, "name");
+      return array = resultsRelevance;
     } else if (type === "priceLow"){
       return array = _.sortBy(array, "price");
     } else if(type === "priceHigh"){
@@ -997,6 +1033,11 @@ search.addEventListener('submit', function(evt){
   functionBarLeft.appendChild(resultCountBox);
   functionBarMid.appendChild(showPerRowBox);
   functionBarRight.appendChild(sortResult);
+
+  var resultsYield = document.createElement('div');
+  pageYield.appendChild(resultsYield);
+
+  printResult();
 });
 
 // End of Search Function //
