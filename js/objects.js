@@ -6,6 +6,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-01.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -15,6 +16,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-02.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -24,6 +26,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -33,6 +36,7 @@ var products = [{
   description: randomText(150),
   condition: 'Old',
   thumbOne: 'images/products/product-04.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -42,6 +46,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-05.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -51,6 +56,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-06.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -60,6 +66,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-07.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -69,6 +76,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-08.jpg',
+  manufacturer: "Cartier",
   category: 'csj',
   tag: ['fashion', 'gift']
 }, {
@@ -78,6 +86,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-09.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['shoes', 'sport']
 }, {
@@ -87,6 +96,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-10.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -96,6 +106,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-11.jpg',
+  manufacturer: "Adidas",
   category: 'csj',
   tag: ['fashion', 'women', 'men']
 }, {
@@ -105,6 +116,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-12.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['fashion', 'gift']
 }, {
@@ -114,6 +126,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-13.jpg',
+  manufacturer: "Tiffany",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -123,6 +136,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-14.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -132,6 +146,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-15.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['electronics']
 }, {
@@ -141,6 +156,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-16.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['shoes']
 }, {
@@ -150,6 +166,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-17.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -159,6 +176,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-18.jpg',
+  manufacturer: "H&M",
   category: 'beauty',
   tag: ['cosmetic']
 }, {
@@ -168,6 +186,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-19.jpg',
+  manufacturer: "Nike",
   category: 'csj',
   tag: ['sport']
 }, {
@@ -177,6 +196,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-20.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -186,6 +206,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-21.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['fashion', 'women']
 }, {
@@ -195,6 +216,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-22.jpg',
+  manufacturer: "Reebok",
   category: 'csj',
   tag: ['fashion', 'women', 't-shirt']
 }, {
@@ -204,6 +226,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-23.jpg',
+  manufacturer: "Nike",
   category: 'electronics',
   tag: ['electronics']
 }, {
@@ -213,6 +236,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-24.jpg',
+  manufacturer: "Apple",
   category: 'electronics',
   tag: ['electronics']
 }, {
@@ -222,6 +246,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-25.jpg',
+  manufacturer: "Apple",
   category: 'electronics',
   tag: ['electronics']
 }, {
@@ -231,6 +256,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-26.jpg',
+  manufacturer: "Apple",
   category: 'electronics',
   tag: ['electronics']
 }, {
@@ -240,6 +266,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-27.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['fashion', 'women']
 }, {
@@ -249,6 +276,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-28.jpg',
+  manufacturer: "Apple",
   category: 'csj',
   tag: ['gift', 'electronics']
 }, {
@@ -258,6 +286,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-29.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -267,6 +296,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-30.jpg',
+  manufacturer: "Tiffany",
   category: 'csj',
   tag: ['fashion']
 }, {
@@ -276,6 +306,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-31.jpg',
+  manufacturer: "Apple",
   category: 'csj',
   tag: ['fashion', 'glasses']
 }, {
@@ -285,6 +316,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-32.jpg',
+  manufacturer: "Target",
   category: 'home',
   tag: ['home', 'drink']
 }, {
@@ -294,6 +326,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-33.jpg',
+  manufacturer: "Target",
   category: 'csj',
   tag: ['home', 'drink', 'alcohol']
 }, {
@@ -303,6 +336,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-34.jpg',
+  manufacturer: "Tiffany",
   category: 'csj',
   tag: ['fashion', 'necklace']
 }, {
@@ -312,6 +346,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-35.jpg',
+  manufacturer: "tiffany",
   category: 'csj',
   tag: ['pendant', 'silver']
 }, {
@@ -321,6 +356,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-36.jpg',
+  manufacturer: "H&M",
   category: 'csj',
   tag: ['cloth', 'fashion']
 }, {
@@ -330,6 +366,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-37.jpg',
+  manufacturer: "Coach",
   category: 'csj',
   tag: ['party']
 }, {
@@ -339,6 +376,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-38.jpg',
+  manufacturer: "H&M",
   category: 'csj',
   tag: ['hat', 'fashion']
 }, {
@@ -348,6 +386,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-39.jpg',
+  manufacturer: "H&M",
   category: 'csj',
   tag: ['hat', 'winter', 'fashion']
 }, {
@@ -357,6 +396,7 @@ var products = [{
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-40.jpg',
+  manufacturer: "H&M",
   category: 'csj',
   tag: ['handbag', 'bag']
 }];

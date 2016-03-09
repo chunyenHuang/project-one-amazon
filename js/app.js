@@ -407,9 +407,15 @@ function showResult(location, target, row){
     reviewBox.appendChild(noReview);
   }
 
-  var title = document.createElement('p');
-  title.className = "media-heading";
-  var titleText = document.createTextNode(target.name + " ("+target.condition+")");
+  var brand = document.createElement('p');
+  brand.setAttribute('style','font-size:0.9em;');
+  brand.textContent = "by "
+  var brandLink = document.createElement('a');
+  brandLink.textContent = target.manufacturer;
+  brandLink.href="#";
+  brandLink.addEventListener('click', function(){
+    search(target.manufacturer, "manufacturer", pageYield);
+  })
   var price = document.createElement('span');
   var priceTag = document.createTextNode("$" + target.price);
   var quantityText = document.createTextNode('Qty: ')
@@ -437,6 +443,7 @@ function showResult(location, target, row){
   boxImg.appendChild(link);
   link.appendChild(image);
   boxBody.appendChild(content);
+  boxBody.appendChild(brand);
   boxBody.appendChild(commandForm);
   boxBody.appendChild(reviewBox);
   content.appendChild(contentText);
@@ -451,7 +458,7 @@ function showResult(location, target, row){
   commandBoxQty.appendChild(quantity);
   commandBoxAdd.appendChild(addToCart);
 
-  title.appendChild(titleText);
+  brand.appendChild(brandLink);
   price.appendChild(priceTag);
   addToCart.appendChild(cartIcon);
   cartIcon.appendChild(cartIconText);
@@ -832,18 +839,19 @@ past.addEventListener('click', function(){
 
 
 // Search Function //
-search.addEventListener('submit', function(evt){
+function search(value, target, location){
   removeAllChild(pageYield);
   main.className = "container hidden";
-  evt.preventDefault();
   cartPanel.className = 'hidden';
+  var searchInputArray = value.split(space);
   var results = [];
-  var resultsNames = []; // weight 1
-  var resultsTags = []; // weight 0.5
-  var resultsDescriptions =[]; // weight 0.1
-  var searchInput = document.getElementById('search-input').value;
-  var searchInputArray = searchInput.split(space);
-
+  var resultsNames = [];
+  var resultsBrands = [];
+  var resultsTags = [];
+  var resultsDescriptions =[];
+  if (target != 0){
+    producst = _.where(products, {target: value});
+  }
   // Search Compare with name
   for (var t=0; t < searchInputArray.length; t++){
     for (var i=0; i < products.length; i++){
@@ -855,13 +863,24 @@ search.addEventListener('submit', function(evt){
       }
     }
   }
+  // Search Compare with brands
+  for (var t=0; t < searchInputArray.length; t++){
+    for (var i=0; i < products.length; i++){
+      var brandArray = products[i].manufacturer.split(space);
+      for (var x=0; x < brandArray.length; x++){
+        if (brandArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+          resultsBrands.push({id: products[i].id, weight: 0.7});
+        }
+      }
+    }
+  }
   // Search Compare with tag
   for (var t=0; t < searchInputArray.length; t++){
     for (var i=0; i < products.length; i++){
       var tagsArray = products[i].tag;
       for (var x=0; x < tagsArray.length; x++){
         if (tagsArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          resultsTags.push({id: products[i].id, weight: 0.5});
+          resultsTags.push({id: products[i].id, weight: 0.3});
         }
       }
     }
@@ -879,6 +898,7 @@ search.addEventListener('submit', function(evt){
   }
   var resultWeight = [];
   resultWeight.push(resultsNames);
+  resultWeight.push(resultsBrands);
   resultWeight.push(resultsTags);
   resultWeight.push(resultsDescriptions);
   resultWeight = _.flatten(resultWeight, 1);
@@ -901,10 +921,8 @@ search.addEventListener('submit', function(evt){
   var perRow = 6;
 
   var resultCountBox = document.createElement('h5');
-  var resultCount = document.createTextNode(uniqResult.length + " results for " + '"' +searchInput + '"');
+  var resultCount = document.createTextNode(uniqResult.length + " results for " + '"' + value  + '"');
   resultCountBox.appendChild(resultCount);
-
-
 
   function printResult(){
     if (results.length <= 0){
@@ -913,12 +931,10 @@ search.addEventListener('submit', function(evt){
       removeAllChild(resultsYield);
       var rowSix = [];
       var showed = [];
-
       for(var t=0; t < (uniqResult.length/perRow); t++){
         var row = document.createElement('div');
         row.className="row";
         resultsYield.appendChild(row);
-
         take = _.difference(uniqResult, showed);
         if(take.length >= perRow){
           take = _.first(take, perRow);
@@ -1035,9 +1051,15 @@ search.addEventListener('submit', function(evt){
   functionBarRight.appendChild(sortResult);
 
   var resultsYield = document.createElement('div');
-  pageYield.appendChild(resultsYield);
+  location.appendChild(resultsYield);
 
   printResult();
+}
+
+searchBar.addEventListener('submit', function(evt){
+  evt.preventDefault();
+  var searchInput = document.getElementById('search-input').value;
+  search(searchInput, 0, pageYield);
 });
 
 // End of Search Function //

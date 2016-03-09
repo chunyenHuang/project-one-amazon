@@ -22,7 +22,7 @@ var hiddenClass = document.getElementsByClassName('hidden');
 var cartPanel = document.getElementById('cart-panel');
 
 var homepage = document.getElementById('main');
-var search = document.getElementsByTagName('form')[0];
+var searchBar = document.getElementById('search-bar');
 
 var checkout = document.getElementById('checkout-button');
 
