@@ -57,3 +57,8 @@ function toggleImg() {
    removeAllChild(pageYield);
    loadHomepage();
  })
+ var linkHome2 = document.getElementById('link-home-2');
+ linkHome2.addEventListener('click', function(){
+   removeAllChild(pageYield);
+   loadHomepage();
+ })

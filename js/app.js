@@ -175,6 +175,12 @@ function showDetail(productId){
   array = _.where(products, {id: productId});
   target = array[0];
 
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var routeProduct = document.createElement('span');
+  routeProduct.textContent = " / " + target.name;
+  route.appendChild(routeProduct);
+
   var img = document.createElement('img');
   img.src = target.thumbOne;
   img.setAttribute('width', '100%');
@@ -195,6 +201,7 @@ function showDetail(productId){
 
   removeAllChild(detailImg);
   removeAllChild(detailName);
+  removeAllChild(detailBrand);
   removeAllChild(detailPrice);
   removeAllChild(detailReviewBar);
   removeAllChild(detailReviewAll);
@@ -774,79 +781,119 @@ function calculate(location, inCartTotal){
 var current = document.getElementById('current');
 var past = document.getElementById('past');
 
+// Current Shopping Cart
 current.addEventListener('click', function(){
   if (inCart.length>0){
-    removeAllChild(pageYield);
-    main.className="hidden";
-    cartPanel.className = ' ';
-    checkout.removeAttribute('disabled');
+    showCurrentCart();
+  }
+})
 
-    var currentBox = document.createElement('div');
-    currentBox.className= "col-md-10";
+// Show cart
+function showCurrentCart(){
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var cartRoute = document.getElementById('cart-route');
+  removeAllChild(cartRoute);
+  var slash = document.createElement('span');
+  slash.textContent = " / ";
+  var routeCart = document.createElement('a');
+  routeCart.textContent = "Shopping Cart";
+  routeCart.href = "#";
+  routeCart.addEventListener('click',function(){
+    showCurrentCart();
+  })
+
+  cartRoute.appendChild(slash);
+  cartRoute.appendChild(routeCart);
+
+  removeAllChild(pageYield);
+  main.className="hidden";
+  cartPanel.className = ' ';
+  checkout.removeAttribute('disabled');
+
+  var currentBox = document.createElement('div');
+  currentBox.className= "col-md-10";
+  var panel = document.createElement('div');
+  panel.className = 'panel panel-default'
+  var panelHeading = document.createElement('div');
+  panelHeading.className = 'panel-heading';
+  var panelBody = document.createElement('div');
+  panelBody.className = 'panel-body';
+  var title = document.createElement('p');
+  var titleText = document.createTextNode("Shopping Cart");
+
+  for(var i=0; i<inCart.length; i++){
+    inCartCount = inCartCount + inCart[i].qty;
+    inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+  }
+  for(var i=0; i < inCart.length; i++){
+    showCart(panelBody, inCart[i], true, false, i);
+  }
+
+  pageYield.appendChild(currentBox);
+  currentBox.appendChild(panel);
+  panel.appendChild(panelHeading);
+  panel.appendChild(panelBody);
+  panelHeading.appendChild(title);
+  title.appendChild(titleText);
+}
+
+// Order History
+past.addEventListener('click', function(){
+  if (pastInCart.length>0){
+    showOrderHistory();
+  }
+})
+// Show order history
+function showOrderHistory(){
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var cartRoute = document.getElementById('cart-route');
+  removeAllChild(cartRoute);
+  var slash = document.createElement('span');
+  slash.textContent = " / ";
+  var routeCart = document.createElement('a');
+  routeCart.textContent = "Order History";
+  routeCart.href="#";
+  routeCart.addEventListener('click',function(){
+    showOrderHistory();
+  })
+  cartRoute.appendChild(slash);
+  cartRoute.appendChild(routeCart);
+
+  removeAllChild(pageYield);
+  main.className="hidden";
+  cartPanel.className = 'hidden';
+  pastInCart = _.sortBy(pastInCart, date);
+  pastInCart = pastInCart.reverse();
+  for(var x=0; x < pastInCart.length; x++){
+    var pastbox = document.createElement('div');
+    pastbox.className= "col-md-12";
     var panel = document.createElement('div');
     panel.className = 'panel panel-default'
     var panelHeading = document.createElement('div');
     panelHeading.className = 'panel-heading';
     var panelBody = document.createElement('div');
     panelBody.className = 'panel-body';
-    var title = document.createElement('p');
-    var titleText = document.createTextNode("Shopping Cart");
 
-    for(var i=0; i<inCart.length; i++){
-      inCartCount = inCartCount + inCart[i].qty;
-      inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
+    for(var y=0; y < pastInCart[x].cart.length; y++){
+      showCart(panelBody, pastInCart[x].cart[y], false, true, y);
     }
-    for(var i=0; i < inCart.length; i++){
-      showCart(panelBody, inCart[i], true, false, i);
-    }
+    var paraTotal = document.createElement('p');
+    var paraDate = document.createElement('p');
+    var total = document.createTextNode("Total(w/ Tax & Shipping): $" + pastInCart[x].total);
+    var date = document.createTextNode("Purchased Date: " + timeStamp(pastInCart[x].date));
 
-    pageYield.appendChild(currentBox);
-    currentBox.appendChild(panel);
+    pageYield.appendChild(pastbox);
+    pastbox.appendChild(panel);
     panel.appendChild(panelHeading);
     panel.appendChild(panelBody);
-    panelHeading.appendChild(title);
-    title.appendChild(titleText);
+    panelHeading.appendChild(paraTotal);
+    panelHeading.appendChild(paraDate);
+    paraTotal.appendChild(total);
+    paraDate.appendChild(date);
   }
-})
-
-past.addEventListener('click', function(){
-  if (pastInCart.length>0){
-    removeAllChild(pageYield);
-    main.className="hidden";
-    cartPanel.className = ' ';
-    pastInCart = _.sortBy(pastInCart, date);
-    pastInCart = pastInCart.reverse();
-    for(var x=0; x < pastInCart.length; x++){
-      var pastbox = document.createElement('div');
-      pastbox.className= "col-md-12";
-      var panel = document.createElement('div');
-      panel.className = 'panel panel-default'
-      var panelHeading = document.createElement('div');
-      panelHeading.className = 'panel-heading';
-      var panelBody = document.createElement('div');
-      panelBody.className = 'panel-body';
-
-      for(var y=0; y < pastInCart[x].cart.length; y++){
-        showCart(panelBody, pastInCart[x].cart[y], false, true, y);
-      }
-      var paraTotal = document.createElement('p');
-      var paraDate = document.createElement('p');
-      var total = document.createTextNode("Total(w/ Tax & Shipping): $" + pastInCart[x].total);
-      var date = document.createTextNode("Purchased Date: " + timeStamp(pastInCart[x].date));
-
-      pageYield.appendChild(pastbox);
-      pastbox.appendChild(panel);
-      panel.appendChild(panelHeading);
-      panel.appendChild(panelBody);
-      panelHeading.appendChild(paraTotal);
-      panelHeading.appendChild(paraDate);
-      paraTotal.appendChild(total);
-      paraDate.appendChild(date);
-
-    }
-    cartPanel.className = 'hidden';
-  }
-})
+}
 
 
 // Search Function //
@@ -854,6 +901,22 @@ function search(value, targetProperty, location){
   removeAllChild(pageYield);
   main.className = "container hidden";
   cartPanel.className = 'hidden';
+
+  // show route
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var cartRoute = document.getElementById('cart-route');
+  removeAllChild(cartRoute);
+  var routeSearch = document.getElementById('search-route');
+  removeAllChild(routeSearch);
+  var routeSearchPath = document.createElement('a');
+  routeSearchPath.textContent = "search: " + value;
+  routeSearchPath.href="#";
+  routeSearchPath.addEventListener('click',function(){
+    search(value, "any", pageYield);
+  })
+  routeSearch.appendChild(routeSearchPath);
+
   var searchInputArray = value.split(space);
   var results = [];
   var resultsNames = [];
@@ -1197,7 +1260,6 @@ payPlaceorder.addEventListener('click', function(){
   pastInCart.push(addThisCart);
   var lastPurchase = _.last(pastInCart);
 
-
   inCartTotal = 0;
   inCartCount = 0;
   inCart = [];
@@ -1207,6 +1269,12 @@ payPlaceorder.addEventListener('click', function(){
   removeAllChild(showBalance);
   appendMessage(pageYield, "Thanks for shopping with us!")
 
+  var route =document.getElementById('route');
+  var cartRoute =document.getElementById('cart-route');
+  var searchRoute =document.getElementById('search-route');
+  removeAllChild(route);
+  removeAllChild(cartRoute);
+  removeAllChild(searchRoute);
   var showLastOrder = _.last(pastInCart);
   var pastbox = document.createElement('div');
   pastbox.className= "col-md-12";
