@@ -183,6 +183,16 @@ function showDetail(productId){
   var price = document.createTextNode("$" + target.price);
   var description = document.createTextNode(target.description);
 
+  var brand = document.createElement('p');
+  brand.setAttribute('style','font-size:0.9em;');
+  brand.textContent = "by "
+  var brandLink = document.createElement('a');
+  brandLink.textContent = target.manufacturer;
+  brandLink.href="#";
+  brandLink.addEventListener('click', function(){
+    search(target.manufacturer, "manufacturer", pageYield);
+  })
+
   removeAllChild(detailImg);
   removeAllChild(detailName);
   removeAllChild(detailPrice);
@@ -193,6 +203,8 @@ function showDetail(productId){
 
   detailImg.appendChild(img);
   detailName.appendChild(name);
+  detailBrand.appendChild(brand);
+  brand.appendChild(brandLink);
   detailPrice.appendChild(price);
   detailDescription.appendChild(description);
 
@@ -379,7 +391,7 @@ function showResult(location, target, row){
     var average = reviewRating/(theReview.length);
     var showReview = document.createElement('img');
     showReview.src = "images/rating-" + Math.floor(average) + ".png";
-    showReview.setAttribute('style','display:inline; max-width: 70%; height: auto;');
+    showReview.setAttribute('style','display:inline; max-width: 100px; height: auto;');
     reviewBox.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     reviewBox.appendChild(reviewCount);
@@ -392,7 +404,7 @@ function showResult(location, target, row){
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
       var showRating = document.createElement('img');
       showRating.src = "images/rating-" + i + ".png";
-      showRating.setAttribute('style','display:inline; max-width: 70%; height: auto;');
+      showRating.setAttribute('style','display:inline; max-width: 100px; height: auto;');
       displayReviews.appendChild(showRating);
       displayReviews.appendChild(ratingCount);
     }
@@ -839,7 +851,7 @@ past.addEventListener('click', function(){
 
 
 // Search Function //
-function search(value, target, location){
+function search(value, targetProperty, location){
   removeAllChild(pageYield);
   main.className = "container hidden";
   cartPanel.className = 'hidden';
@@ -849,54 +861,73 @@ function search(value, target, location){
   var resultsBrands = [];
   var resultsTags = [];
   var resultsDescriptions =[];
-  if (target != 0){
+  if (targetProperty != "any"){
     producst = _.where(products, {target: value});
   }
-  // Search Compare with name
-  for (var t=0; t < searchInputArray.length; t++){
-    for (var i=0; i < products.length; i++){
-      var nameArray = products[i].name.split(space);
-      for (var x=0; x < nameArray.length; x++){
-        if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          resultsNames.push({id: products[i].id, weight: 1});
+  // Search for exact name
+  for(var i=0; i < products.length; i++){
+    var nameArray = products[i].name.split(space);
+    var lowerCases = [];
+    for(var x=0; x< nameArray.length; x++){
+      lowerCases.push(nameArray[x].toLowerCase());
+    }
+    lowerCases = lowerCases.join(' ');
+    if (lowerCases.indexOf(value.toLowerCase()) != -1){
+      resultsNames.push({id: products[i].id, weight: 1});
+    }
+  }
+  if(resultsNames.length == 0){
+    // Search compare with Name
+    for (var t=0; t < searchInputArray.length; t++){
+      for (var i=0; i < products.length; i++){
+        var nameArray = products[i].name.split(space);
+        for (var x=0; x < nameArray.length; x++){
+          if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+            resultsNames.push({id: products[i].id, weight: 1});
+          }
+        }
+      }
+    }
+    // Search Compare with brands
+    for (var t=0; t < searchInputArray.length; t++){
+      for (var i=0; i < products.length; i++){
+        var brandArray = products[i].manufacturer.split(space);
+        for (var x=0; x < brandArray.length; x++){
+          if (brandArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+            resultsBrands.push({id: products[i].id, weight: 0.7});
+          }
+        }
+      }
+    }
+    // Search Compare with tag
+    for (var t=0; t < searchInputArray.length; t++){
+      for (var i=0; i < products.length; i++){
+        var tagsArray = products[i].tag;
+        for (var x=0; x < tagsArray.length; x++){
+          if (tagsArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+            resultsTags.push({id: products[i].id, weight: 0.3});
+          }
+        }
+      }
+    }
+    // Search Compare with description
+    for (var t=0; t < searchInputArray.length; t++){
+      for (var i=0; i < products.length; i++){
+        var desArray = products[i].description.split(space);
+        for (var x=0; x < desArray.length; x++){
+          if (desArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
+            resultsDescriptions.push({id: products[i].id, weight: 0.1});
+          }
         }
       }
     }
   }
-  // Search Compare with brands
-  for (var t=0; t < searchInputArray.length; t++){
-    for (var i=0; i < products.length; i++){
-      var brandArray = products[i].manufacturer.split(space);
-      for (var x=0; x < brandArray.length; x++){
-        if (brandArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          resultsBrands.push({id: products[i].id, weight: 0.7});
-        }
-      }
-    }
-  }
-  // Search Compare with tag
-  for (var t=0; t < searchInputArray.length; t++){
-    for (var i=0; i < products.length; i++){
-      var tagsArray = products[i].tag;
-      for (var x=0; x < tagsArray.length; x++){
-        if (tagsArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          resultsTags.push({id: products[i].id, weight: 0.3});
-        }
-      }
-    }
-  }
-  // Search Compare with description
-  for (var t=0; t < searchInputArray.length; t++){
-    for (var i=0; i < products.length; i++){
-      var desArray = products[i].description.split(space);
-      for (var x=0; x < desArray.length; x++){
-        if (desArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
-          resultsDescriptions.push({id: products[i].id, weight: 0.1});
-        }
-      }
-    }
-  }
+
   var resultWeight = [];
+  resultsNames = _.uniq(resultsNames, function(x){return x.id;});
+  resultsBrands = _.uniq(resultsBrands, function(x){return x.id;});
+  resultsTags = _.uniq(resultsTags, function(x){return x.id;});
+  resultsDescriptions = _.uniq(resultsDescriptions, function(x){return x.id;});
   resultWeight.push(resultsNames);
   resultWeight.push(resultsBrands);
   resultWeight.push(resultsTags);
@@ -914,6 +945,7 @@ function search(value, target, location){
     var foundProduct = _.where(products, {id: filterInt(addWeight[i].id)});
     results.push(foundProduct[0]);
   }
+  console.log(addWeight);
   var resultsRelevance = results;
 
   // Print Result (Remove Duplicates)
@@ -1059,7 +1091,7 @@ function search(value, target, location){
 searchBar.addEventListener('submit', function(evt){
   evt.preventDefault();
   var searchInput = document.getElementById('search-input').value;
-  search(searchInput, 0, pageYield);
+  search(searchInput, "any", pageYield);
 });
 
 // End of Search Function //
