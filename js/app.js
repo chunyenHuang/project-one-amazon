@@ -240,7 +240,9 @@ function showDetail(productId){
   var reviewRating = 0;
   var array = _.where(reviews, {productId: target.id});
   var ownReview = _.where(array, {userId: currentUser.id});
-  var otherReview = _.sortBy(array, 'date').reverse();
+  ownReview = _.sortBy(ownReview, 'date').reverse();
+  var otherReview = _.difference(array, ownReview);
+  otherReview = _.sortBy(otherReview, 'date').reverse();
   var theReview = [];
   for(var i=0; i<ownReview.length;i++){
     theReview.push(ownReview[i]);
