@@ -106,9 +106,8 @@ function insertImgGallery(location, element){
   imgBox.className = "img-box";
   var link = document.createElement('a');
   link.setAttribute('data-id', element.id);
-  link.href=element.id;
-  link.addEventListener('click', function(e){
-    e.preventDefault();
+  link.href="#";
+  link.addEventListener('click', function(){
     var productId = parseFloat(link.getAttribute('data-id'));
     showDetail(productId);
   })
@@ -274,34 +273,47 @@ function showDetail(productId){
     }
     detailReviewAll.appendChild(displayReviews);
 
-    for(var i=0; i < theReview.length; i++){
-      var reviewLine = document.createElement('div');
-      reviewLine.className = 'col-md-12';
-      reviewLine.setAttribute('style','padding:10px;')
-      var lineLeft = document.createElement('div');
-      lineLeft.className = 'col-md-2';
-      var lineRight = document.createElement('div');
-      lineRight.className = 'col-md-10';
-      var showReviewRating = document.createElement('img');
-      showReviewRating.src = "images/rating-" + theReview[i].rating + ".png";
-      showReviewRating.setAttribute('style','display:inline; width: 100px; height: auto;');
-      var reviewUsername = _.where(users, {id: theReview[i].userId})
-      var boldText = document.createElement('b');
-      var showReviewUser = document.createTextNode(reviewUsername[0].name);
-      var showReviewDate = document.createTextNode(timeStamp(theReview[i].date));
-      var showReviewCommentBox = document.createElement('p');
-      var showReviewComment = document.createTextNode(theReview[i].comment);
-      detailReviews.appendChild(reviewLine);
-      reviewLine.appendChild(lineLeft);
-      reviewLine.appendChild(lineRight);
-      lineLeft.appendChild(showReviewDate);
-      lineLeft.appendChild(showReviewRating);
-      lineRight.appendChild(boldText);
-      boldText.appendChild(showReviewUser);
-      showReviewCommentBox.appendChild(showReviewComment);
-      lineRight.appendChild(showReviewCommentBox);
-    }
+    var showedReviews = [];
+    loadReviews(5);
+    detailLoad10.addEventListener('click',function(){
+      loadReviews(10);
+    })
+    detailLoad30.addEventListener('click',function(){
+      loadReviews(30);
+    })
+    function loadReviews(num){
+      var notShown = _.difference(theReview, showedReviews);
+      var toShow = _.first(notShown, num);
 
+      for(var i=0; i < toShow.length; i++){
+        showedReviews.push(toShow[i]);
+        var reviewLine = document.createElement('div');
+        reviewLine.className = 'col-md-12';
+        reviewLine.setAttribute('style','padding:10px;')
+        var lineLeft = document.createElement('div');
+        lineLeft.className = 'col-md-2';
+        var lineRight = document.createElement('div');
+        lineRight.className = 'col-md-10';
+        var showReviewRating = document.createElement('img');
+        showReviewRating.src = "images/rating-" + theReview[i].rating + ".png";
+        showReviewRating.setAttribute('style','display:inline; width: 100px; height: auto;');
+        var reviewUsername = _.where(users, {id: theReview[i].userId})
+        var boldText = document.createElement('b');
+        var showReviewUser = document.createTextNode(reviewUsername[0].name);
+        var showReviewDate = document.createTextNode(timeStamp(theReview[i].date));
+        var showReviewCommentBox = document.createElement('p');
+        var showReviewComment = document.createTextNode(theReview[i].comment);
+        detailReviews.appendChild(reviewLine);
+        reviewLine.appendChild(lineLeft);
+        reviewLine.appendChild(lineRight);
+        lineLeft.appendChild(showReviewDate);
+        lineLeft.appendChild(showReviewRating);
+        lineRight.appendChild(boldText);
+        boldText.appendChild(showReviewUser);
+        showReviewCommentBox.appendChild(showReviewComment);
+        lineRight.appendChild(showReviewCommentBox);
+      }
+    }
   } else {
     var noReview = document.createTextNode("N/A");
     detailReviewBar.appendChild(noReview);
@@ -309,7 +321,7 @@ function showDetail(productId){
 }
 
 
-// Product View with Boostrap Default Media
+// Product Album View
 function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
@@ -324,10 +336,9 @@ function showResult(location, target, row){
   boxBody.className = "col-md-12";
 
   var link = document.createElement('a');
-  link.href=target.id;
+  link.href="#";
   link.setAttribute('product-id',target.id);
-  link.addEventListener('click', function(e){
-    e.preventDefault();
+  link.addEventListener('click', function(){
     productId = parseFloat(link.getAttribute('product-id'));
     showDetail(productId);
   })
@@ -541,10 +552,9 @@ function showCart(location, target, editable, reviewable, orderCount){
   var title = document.createElement('h4');
   title.className = "media-heading";
   var link = document.createElement('a');
-  link.href=target.id;
+  link.href="#";
   link.setAttribute('product-id',target.id);
-  link.addEventListener('click', function(e){
-    e.preventDefault();
+  link.addEventListener('click', function(){
     detail.className = ' ';
     removeAllChild(yield);
     yield.appendChild(detail);

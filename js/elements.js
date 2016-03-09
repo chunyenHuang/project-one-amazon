@@ -65,3 +65,5 @@ var detailReviewAll = document.getElementById('detail-reviewall');
 var detailDescription = document.getElementById('detail-description');
 var detailReviews = document.getElementById('detail-reviews');
 var detailRecommend = document.getElementById('detail-recommend');
+var detailLoad10 = document.getElementById('detail-load-10');
+var detailLoad30 = document.getElementById('detail-load-30');

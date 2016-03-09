@@ -332,27 +332,40 @@ function randomText(length){
 }
 
 // push a random reviews
-var randomRating = Math.floor(Math.random() * (5)) + 1;
-var randomeUser = _.sample(users, 1);
-var randomYear = Math.floor(Math.random() * (8)) + 2008;
-var randomMonth = Math.floor(Math.random() * (11)) + 1;
-var randomDay = Math.floor(Math.random() * (29)) + 1;
-var randomDate = new Date(randomYear, randomMonth, randomDay);
+
 
 for (var i=1; i<=2000;i++){
   var randomProduct = _.sample(products, 1);
+  var randomRating = Math.floor(Math.random() * (5)) + 1;
+  var randomeUser = _.sample(users, 1);
+  var randomYear = Math.floor(Math.random() * (8)) + 2008;
+  var randomMonth = Math.floor(Math.random() * (11)) + 1;
+  var randomDay = Math.floor(Math.random() * (29)) + 1;
+  var randomDate = new Date(randomYear, randomMonth, randomDay);
   var addNewReview = new review(0, randomProduct[0].id, randomRating , randomText(100), randomDate, randomeUser[0].id);
   reviews.push(addNewReview);
 }
 for (var i=1; i<=1000;i++){
   var samples = _.first(products, 5);
   var randomProduct = _.sample(samples, 1);
+  var randomRating = Math.floor(Math.random() * (5)) + 1;
+  var randomeUser = _.sample(users, 1);
+  var randomYear = Math.floor(Math.random() * (8)) + 2008;
+  var randomMonth = Math.floor(Math.random() * (11)) + 1;
+  var randomDay = Math.floor(Math.random() * (29)) + 1;
+  var randomDate = new Date(randomYear, randomMonth, randomDay);
   var addNewReview = new review(0, randomProduct[0].id, 1 , randomText(100), randomDate, randomeUser[0].id);
   reviews.push(addNewReview);
 }
 for (var i=1; i<=1000;i++){
   var samples = _.last(products, 5);
   var randomProduct = _.sample(samples, 1);
+  var randomRating = Math.floor(Math.random() * (5)) + 1;
+  var randomeUser = _.sample(users, 1);
+  var randomYear = Math.floor(Math.random() * (8)) + 2008;
+  var randomMonth = Math.floor(Math.random() * (11)) + 1;
+  var randomDay = Math.floor(Math.random() * (29)) + 1;
+  var randomDate = new Date(randomYear, randomMonth, randomDay);
   var addNewReview = new review(0, randomProduct[0].id, 5 , randomText(100), randomDate, randomeUser[0].id);
   reviews.push(addNewReview);
 }
