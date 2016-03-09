@@ -739,7 +739,6 @@ function showCart(location, target, editable, reviewable, orderCount){
     var writeReviewDate = new Date();
     var addNewReview = new review(0, target.id, parseFloat(ratingValue), reviewComment.value, writeReviewDate, currentUser.id);
     reviews.push(addNewReview);
-    console.log(reviews.length);
     var findReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
     var showStars = document.createElement('img');
     showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
@@ -945,7 +944,6 @@ function search(value, targetProperty, location){
     var foundProduct = _.where(products, {id: filterInt(addWeight[i].id)});
     results.push(foundProduct[0]);
   }
-  console.log(addWeight);
   var resultsRelevance = results;
 
   // Print Result (Remove Duplicates)
@@ -1198,8 +1196,8 @@ payPlaceorder.addEventListener('click', function(){
   var addThisCart = new order(inCart, ((inCartTotal*1.07 + shippingFee).toFixed(2)), orderTime);
   pastInCart.push(addThisCart);
   var lastPurchase = _.last(pastInCart);
-  console.log(lastPurchase.cart);
-  console.log(pastInCart);
+
+
   inCartTotal = 0;
   inCartCount = 0;
   inCart = [];
