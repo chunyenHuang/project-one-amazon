@@ -538,11 +538,12 @@ function showCart(location, target, editable, reviewable, orderCount){
 
   for (var x=1; x<=5; x++){
     var ratingLable = document.createElement('label');
-    ratingLable.className = "radio-inline"
+    ratingLable.className = "radio-inline";
     var input = document.createElement('input');
     input.setAttribute('type', 'radio');
     input.setAttribute('name', 'rating' + orderCount);
     input.setAttribute('value', x);
+    input.setAttribute('required','required');
     var num = document.createTextNode(x);
     ratingLable.appendChild(input);
     ratingLable.appendChild(num);
@@ -718,13 +719,10 @@ function showCart(location, target, editable, reviewable, orderCount){
     var addNewReview = new review(0, target.id, parseFloat(ratingValue), reviewComment.value, writeReviewDate, currentUser.id);
     reviews.push(addNewReview);
     console.log(reviews.length);
-    var findrReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
+    var findReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
     var showStars = document.createElement('img');
-    showStars.src = "images/rating-" + Math.floor(parseFloat(findrReview[0].rating)) + ".png";
+    showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
     showStars.setAttribute('style','display:block; width: 100%; height: auto;');
-    showStars.addEventListener('click',function(){
-      toggleClass('hidden', boxReview);
-    })
     toggleClass('hidden', boxReview);
     removeAllChild(boxRemove);
     boxRemove.appendChild(showStars);

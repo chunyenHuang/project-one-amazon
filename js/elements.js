@@ -6,7 +6,6 @@ var space = " ";
 var inCart = [];
 var inCartCount = 0;
 var inCartTotal = 0;
-var pastInCart = [];
 var count = 0;
 var shippingFee = 0;
 
