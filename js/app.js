@@ -578,8 +578,16 @@ function showCart(location, target, editable, reviewable, orderCount){
     ratingContent.appendChild(ratingLable);
   }
 
-  var title = document.createElement('h4');
-  title.className = "media-heading";
+  var title = document.createElement('a');
+  title.href = "#";
+  title.setAttribute('product-id',target.id);
+  title.addEventListener('click', function(){
+    detail.className = ' ';
+    removeAllChild(yield);
+    yield.appendChild(detail);
+    productId = parseFloat(link.getAttribute('product-id'));
+    showDetail(productId);
+  })
   var link = document.createElement('a');
   link.href="#";
   link.setAttribute('product-id',target.id);
@@ -596,7 +604,8 @@ function showCart(location, target, editable, reviewable, orderCount){
   image.className="media-object";
   image.setAttribute('height', '50px');
 
-  var titleText = document.createTextNode(target.name + " ("+ target.condition+")");
+  var titleText = document.createElement('h4');
+  titleText.textContent = target.name;
   var price = document.createElement('h4');
   var priceTag = document.createTextNode("$" + target.price);
   var amount = document.createElement('input');
