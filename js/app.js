@@ -841,7 +841,7 @@ search.addEventListener('submit', function(evt){
   var searchInput = document.getElementById('search-input').value;
   var searchInputArray = searchInput.split(space);
 
-  // Search Compare
+  // Search Compare with name
   for (var t=0; t < searchInputArray.length; t++){
     for (var i=0; i < products.length; i++){
       var nameArray = products[i].name.split(space);
@@ -852,14 +852,49 @@ search.addEventListener('submit', function(evt){
       }
     }
   }
-  // Print Result
-  // Remove Duplicates
+
+  // Search Compare with tag
+
+  // Search Compare with description
+
+  // Print Result (Remove Duplicates)
   var uniqResult = _.uniq(results);
   var perRow = 6;
 
   var resultCountBox = document.createElement('h5');
   var resultCount = document.createTextNode(uniqResult.length + " results for " + '"' +searchInput + '"');
   resultCountBox.appendChild(resultCount);
+
+  var resultsYield = document.createElement('div');
+  pageYield.appendChild(resultsYield);
+
+  function printResult(){
+    if (results.length <= 0){
+      appendMessage(pageYield, "sorry, no match found.");
+    } else {
+      removeAllChild(resultsYield);
+      var rowSix = [];
+      var showed = [];
+
+      for(var t=0; t < (uniqResult.length/perRow); t++){
+        var row = document.createElement('div');
+        row.className="row";
+        resultsYield.appendChild(row);
+
+        take = _.difference(uniqResult, showed);
+        if(take.length >= perRow){
+          take = _.first(take, perRow);
+        }
+        for(var x=0;x<take.length; x++){
+          showed.push(take[x]);
+          showResult(row, take[x], perRow);
+        }
+      }
+    }
+  }
+  printResult();
+
+  // Sort
 
   var showPerRowBox = document.createElement('div');
   showPerRowBox.className = 'btn-group';
@@ -962,35 +997,6 @@ search.addEventListener('submit', function(evt){
   functionBarLeft.appendChild(resultCountBox);
   functionBarMid.appendChild(showPerRowBox);
   functionBarRight.appendChild(sortResult);
-
-  var resultsYield = document.createElement('div');
-  pageYield.appendChild(resultsYield);
-
-  function printResult(){
-    if (results.length <= 0){
-      appendMessage(pageYield, "sorry, no match found.");
-    } else {
-      removeAllChild(resultsYield);
-      var rowSix = [];
-      var showed = [];
-
-      for(var t=0; t < (uniqResult.length/perRow); t++){
-        var row = document.createElement('div');
-        row.className="row";
-        resultsYield.appendChild(row);
-
-        take = _.difference(uniqResult, showed);
-        if(take.length >= perRow){
-          take = _.first(take, perRow);
-        }
-        for(var x=0;x<take.length; x++){
-          showed.push(take[x]);
-          showResult(row, take[x], perRow);
-        }
-      }
-    }
-  }
-  printResult();
 });
 
 // End of Search Function //
