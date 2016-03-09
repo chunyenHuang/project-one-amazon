@@ -6,7 +6,6 @@ var towardRight = document.getElementById('toward-right');
 var startNum = 1;
 var route = 'background:url("images/ads/ad-' + startNum + '.jpg")';
 mainAd.setAttribute('style',route);
-
 towardLeft.addEventListener('click', function(){
   if (startNum == 1){
       startNum =3 ;
@@ -25,6 +24,16 @@ towardRight.addEventListener('click', function(){
   }
   var route = 'background:url("images/ads/ad-' + startNum + '.jpg")';
   mainAd.setAttribute('style',route);
+})
+mainAd.addEventListener('click', function(){
+  mainAd.setAttribute('product-id', startNum+100);
+  main.className="hidden";
+  detail.className = ' ';
+  removeAllChild(yield);
+  yield.appendChild(detail);
+  var productId = parseFloat(mainAd.getAttribute('product-id'));
+  showDetail(productId);
+  console.log(mainAd.getAttribute('product-id'));
 })
 
 // Details Image Gallery

@@ -399,6 +399,36 @@ var products = [{
   manufacturer: "H&M",
   category: 'csj',
   tag: ['handbag', 'bag']
+}, {
+  id: 101,
+  name: 'Fire Kids Edition, 7" Display, Wi-Fi, 8 GB, Blue Kid-Proof Case',
+  price: 99.99,
+  description: randomText(150),
+  condition: 'New',
+  thumbOne: 'images/products/product-101.jpg',
+  manufacturer: "Amazon",
+  category: 'electronics',
+  tag: ['tablet', 'kids', 'electronics']
+}, {
+  id: 102,
+  name: 'Amazon Echo',
+  price: 179.99,
+  description: randomText(150),
+  condition: 'New',
+  thumbOne: 'images/products/product-102.jpg',
+  manufacturer: "Amazon",
+  category: 'electronics',
+  tag: ['speaker', 'music', 'electronics']
+}, {
+  id: 103,
+  name: 'Billions 1 Season DVD',
+  price: 9.99,
+  description: randomText(150),
+  condition: 'New',
+  thumbOne: 'images/products/product-103.jpg',
+  manufacturer: "Amazon",
+  category: 'tv-show',
+  tag: ['TV', 'DVD', 'show']
 }];
 
 // Underscore
