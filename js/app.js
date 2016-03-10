@@ -102,8 +102,11 @@ function loadHomepage(){
 
 // put img on the homepage
 function insertImgGallery(location, element){
+  var imgCol = document.createElement('div');
+  imgCol.className = "col-xs-6 col-sm-4 col-md-2";
   var imgBox = document.createElement('div');
   imgBox.className = "img-box";
+  imgBox.setAttribute('style','width:95%;')
   var link = document.createElement('a');
   link.setAttribute('data-id', element.id);
   link.href="#";
@@ -114,7 +117,8 @@ function insertImgGallery(location, element){
   var img = document.createElement('img');
   img.src = element.thumbOne;
 
-  location.appendChild(imgBox);
+  location.appendChild(imgCol);
+  imgCol.appendChild(imgBox);
   imgBox.appendChild(link);
   link.appendChild(img);
 }
@@ -228,7 +232,7 @@ function showDetail(productId){
     removeAllChild(detailRecommend);
     for(var i=0; i < array.length;i++){
       var spanBox = document.createElement('div');
-      spanBox.setAttribute('style','display: inline-block; margin:10px;width:180px');
+      spanBox.className = "col-sm-4 col-md-2";
       var recomImgBox = document.createElement('a');
       recomImgBox.href="#"+array[i].id;
       recomImgBox.setAttribute('product-id',array[i].id);
@@ -407,10 +411,14 @@ function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
   outline.setAttribute('style','padding:5px;min-width:150px;');
-  outline.className = "col-xs-"+12/row +" " +"col-sm-"+12/row +" " + "col-md-"+12/row;
+  if(row == 4){
+    outline.className = "col-xs-12 col-sm-6 col-md-3";
+  } else {
+    outline.className = "col-xs-12 col-sm-4 col-md-2";
+  }
   var box = document.createElement('div');
   box.className = "col-md-12";
-  box.setAttribute('style', 'padding-bottom:10px; border:1px solid rgb(213, 213, 213)');
+  box.setAttribute('style', 'padding-top:10px;padding-bottom:10px; border:1px solid rgb(213, 213, 213)');
   var boxImg = document.createElement('div');
   boxImg.className = "col-md-12";
   var boxBody = document.createElement('div');
@@ -510,7 +518,7 @@ function showResult(location, target, row){
   var cartIconText = document.createTextNode(' Add to Cart');
   cartIcon.className="fa fa-cart-plus fa-lg";
   var addToCart = document.createElement('button');
-  addToCart.className = "add-to-cart btn btn-success btn-xs btn-block";
+  addToCart.className = "add-to-cart btn btn-success btn-sm btn-block";
   addToCart.setAttribute('style', 'display:block');
 
   // Node Tree
@@ -794,9 +802,8 @@ function showCart(location, target, editable, reviewable, orderCount){
   if (reviewable == true){
     var writeReview = document.createElement('button');
     writeReview.setAttribute('class','btn btn-danger')
-    var reviewTag = document.createTextNode('review');
+    writeReview.textContent= 'Write My review';
     boxRemove.appendChild(writeReview);
-    writeReview.appendChild(reviewTag);
     writeReview.addEventListener('click', function(){
       toggleClass('hidden', boxReview);
     })
@@ -1093,9 +1100,12 @@ function search(value, targetProperty, location){
       var rowSix = [];
       var showed = [];
       for(var t=0; t < (uniqResult.length/perRow); t++){
+        var colBox = document.createElement('div');
+        colBox.className='col-md-12';
         var row = document.createElement('div');
         row.className="row";
-        resultsYield.appendChild(row);
+        colBox.appendChild(row)
+        resultsYield.appendChild(colBox);
         take = _.difference(uniqResult, showed);
         if(take.length >= perRow){
           take = _.first(take, perRow);
@@ -1112,28 +1122,30 @@ function search(value, targetProperty, location){
   var showPerRowBox = document.createElement('div');
   showPerRowBox.className = 'btn-group';
   var showPerRow1 = document.createElement('button');
-  showPerRow1.className = "btn btn-default btn-xs";
-  showPerRow1.textContent = "small view";
+  showPerRow1.className = "btn btn-default btn-sm active";
+  var showPerRowSm = document.createElement('i');
+  showPerRowSm.className = "fa fa-th";
   var showPerRow2 = document.createElement('button');
   showPerRow2.className = "btn btn-default btn-sm";
-  showPerRow2.textContent = "medium view";
-  var showPerRow3 = document.createElement('button');
-  showPerRow3.className = "btn btn-default";
-  showPerRow3.textContent = "large view";
+  var showPerRowLg = document.createElement('i');
+  showPerRowLg.className = "fa fa-th-large";
+  showPerRow1.appendChild(showPerRowSm);
+  showPerRow2.appendChild(showPerRowLg);
   showPerRowBox.appendChild(showPerRow1);
   showPerRowBox.appendChild(showPerRow2);
-  showPerRowBox.appendChild(showPerRow3);
   showPerRow1.addEventListener('click',function(){
     perRow = 6;
     printResult();
+    toggleClass('active', showPerRow1);
+    toggleClass('active', showPerRow2);
+
   })
   showPerRow2.addEventListener('click',function(){
     perRow = 4;
     printResult();
-  })
-  showPerRow3.addEventListener('click',function(){
-    perRow = 3;
-    printResult();
+
+    toggleClass('active', showPerRow1);
+    toggleClass('active', showPerRow2);
   })
 
   var sortResult = document.createElement('form');
@@ -1196,17 +1208,20 @@ function search(value, targetProperty, location){
   }
 
   var functionBar = document.createElement('div');
-  functionBar.className = "row well"
-  functionBarLeft = document.createElement('div');
+  functionBar.className = "col-md-12 well"
+  var functionBarRow = document.createElement('div');
+  functionBarRow.className = "row"
+  var functionBarLeft = document.createElement('div');
   functionBarLeft.className = "col-md-4";
-  functionBarMid = document.createElement('div');
+  var functionBarMid = document.createElement('div');
   functionBarMid.className = "col-md-4";
-  functionBarRight = document.createElement('div');
+  var functionBarRight = document.createElement('div');
   functionBarRight.className = "col-md-4";
   pageYield.appendChild(functionBar);
-  functionBar.appendChild(functionBarLeft);
-  functionBar.appendChild(functionBarMid);
-  functionBar.appendChild(functionBarRight);
+  functionBar.appendChild(functionBarRow)
+  functionBarRow.appendChild(functionBarLeft);
+  functionBarRow.appendChild(functionBarMid);
+  functionBarRow.appendChild(functionBarRight);
   functionBarLeft.appendChild(resultCountBox);
   functionBarMid.appendChild(showPerRowBox);
   functionBarRight.appendChild(sortResult);

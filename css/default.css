@@ -26,8 +26,7 @@ a i:hover {
 
 #function-bar {
   background-color: rgb(41, 46, 64);
-  height: 80px;
-  padding-top: 20px;
+  padding: 20px;
 }
 
 #logo {
@@ -87,7 +86,6 @@ a i:hover {
 
 /* main */
 #main {
-  min-width: 980px;
 }
 
 #main-ads {
@@ -123,7 +121,6 @@ a i:hover {
 #content {
   padding-left: ;
   padding-right: ;
-  min-width:700px;
 }
 
 
@@ -143,7 +140,6 @@ a i:hover {
 
 .img-gallery {
   width: 100%;
-  border-bottom: 1px solid rgb(221, 221, 221);
 }
 
 .img-box {
