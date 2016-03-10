@@ -33,19 +33,10 @@
             </div>
           </form>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2 ol-lg-2">
-          <div class="dropdown">
-            <button class="btn btn-success btn-block dropdown-toggle" type="button" id="cart-list" data-toggle="dropdown" style="padding-top:10px;padding-bottom:0px;">
-              <p style="font-size:1.3em;">
-                <i class="fa fa-shopping-cart"></i>
-                cart(<span id="cart-count" style="color:white"></span>)
-              </p>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#" id="current">My cart</a></li>
-              <li><a href="#" id="past">Order History</a></li>
-            </ul>
-          </div>
+        <div class="col-xs-12 col-sm-3 col-md-2 ol-lg-2" style="padding-top:2px;">
+          <button type="button" class="btn btn-default btn-xs" style="width:30%;" id="past"> <small>My</small><br><strong>Orders</strong></button>
+          <button type="button" class="btn btn-default btn-xs" style="width:30%;" id="wish"> <small>Wish</small><br><strong>List</strong></button>
+          <button type="button" class="btn btn-success btn-xs" style="width:30%;" id="current"><small>Cart</small><br><strong> <i class="fa fa-shopping-cart fa-lg"></i> <span id="cart-count"></span></strong></button>
         </div>
       </div>
     </div>
