@@ -78,8 +78,8 @@ a i:hover {
 .float-review-box {
   position: absolute;
   top:130%;
-  width: 130px;
-  height: 102px;
+  width: 160px;
+  height: 112px;
   z-index: 100;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;

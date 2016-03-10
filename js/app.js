@@ -228,14 +228,14 @@ function showDetail(productId){
     removeAllChild(detailRecommend);
     for(var i=0; i < array.length;i++){
       var spanBox = document.createElement('div');
-      spanBox.setAttribute('style','display: inline-block; margin:10px;');
+      spanBox.setAttribute('style','display: inline-block; margin:10px;width:180px');
       var recomImgBox = document.createElement('a');
       recomImgBox.href="#"+array[i].id;
       recomImgBox.setAttribute('product-id',array[i].id);
       recomImgBox.setAttribute('name', "recom-img-box");
       var recomImg = document.createElement('img');
       recomImg.src =array[i].thumbOne;
-      recomImg.setAttribute('width',"150px");
+      recomImg.setAttribute('width',"180px");
 
       var recomText = document.createElement('p');
       recomText.textContent = array[i].name;
@@ -335,20 +335,22 @@ function showDetail(productId){
     var average = reviewRating/(theReview.length);
     var showReview = document.createElement('img');
     showReview.src = "images/rating-" + Math.floor(average) + ".png";
-    showReview.setAttribute('style','display:inline; max-width: 130px; height: auto;');
+    showReview.setAttribute('style','display:inline; max-width: 100px; height: auto;');
     detailReviewBar.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     detailReviewBar.appendChild(reviewCount);
 
     var displayReviews = document.createElement('div');
     for(var i=5; i >=1; i--){
+      var lineBox = document.createElement('div');
       theReviewRatings = _.where(theReview, {rating: i});
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
       var showRating = document.createElement('img');
       showRating.src = "images/rating-" + i + ".png";
-      showRating.setAttribute('style','display:inline; width: 130px; height: auto;');
-      displayReviews.appendChild(showRating);
-      displayReviews.appendChild(ratingCount);
+      showRating.setAttribute('style','display:inline; width: 100px; height: auto;');
+      lineBox.appendChild(showRating);
+      lineBox.appendChild(ratingCount);
+      displayReviews.appendChild(lineBox);
     }
     detailReviewAll.appendChild(displayReviews);
 
@@ -442,7 +444,6 @@ function showResult(location, target, row){
   var commandBoxAdd = document.createElement('div');
   commandBoxAdd.className = "col-sm-12";
   commandBoxAdd.setAttribute('style', 'padding-top:20px;padding-bottom:20px')
-
 
   var reviewBox = document.createElement('div');
   reviewBox.className = "col-md-12";
