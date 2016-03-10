@@ -1,54 +1,54 @@
 // Prodcuts Details
 var products = [{
   id: 1,
-  name: "Dream shoes",
-  price: 45,
+  name: "Report Men's Norrys",
+  price: 44.14,
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-01.jpg',
   manufacturer: "Nike",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes','casual']
 }, {
   id: 2,
-  name: "Metal Chain shoes",
-  price: 30,
+  name: "ASICS Men's GEL Venture 5 Running Shoe",
+  price: 30.30,
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-02.jpg',
   manufacturer: "Nike",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes', 'sport']
 }, {
   id: 3,
-  name: "EpicStep Women's shoes",
-  price: 30,
+  name: "Polo Ralph Lauren Men's Faxon Low Sneaker",
+  price: 26.24,
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-03.jpg',
   manufacturer: "Coach",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes', 'casual']
 }, {
   id: 4,
-  name: "another dream shoes",
+  name: "The New Style men's casual shoes",
   price: 28,
   description: randomText(150),
   condition: 'Old',
   thumbOne: 'images/products/product-04.jpg',
   manufacturer: "Reebok",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes', 'casual']
 }, {
   id: 5,
-  name: "Space Shoes for women",
+  name: "Saucony Jazz H&L Sneaker (Toddler/Little Kid)",
   price: 63,
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-05.jpg',
   manufacturer: "Coach",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes','kid','casual']
 }, {
   id: 6,
   name: "Cotton cloth blue green",
@@ -61,14 +61,14 @@ var products = [{
   tag: ['fashion']
 }, {
   id: 7,
-  name: "High shoes sport",
+  name: "JustCreat Fashion Men's Shoes Women Shoes Sport Shoes 3844",
   price: 150,
   description: randomText(150),
   condition: 'New',
   thumbOne: 'images/products/product-07.jpg',
   manufacturer: "Reebok",
   category: 'csj',
-  tag: ['shoes']
+  tag: ['shoes','sport',]
 }, {
   id: 8,
   name: "Fashion jewelry pendant",

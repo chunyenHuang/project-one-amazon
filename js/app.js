@@ -406,7 +406,7 @@ function showDetail(productId){
 function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
-  outline.setAttribute('style','padding:5px');
+  outline.setAttribute('style','padding:5px;min-width:150px;');
   outline.className = "col-xs-"+12/row +" " +"col-sm-"+12/row +" " + "col-md-"+12/row;
   var box = document.createElement('div');
   box.className = "col-md-12";
