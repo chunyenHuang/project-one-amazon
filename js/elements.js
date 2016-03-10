@@ -3,6 +3,9 @@
 var comma = ",";
 var space = " ";
 
+
+var inWishList = [];
+
 var inCart = [];
 var inCartCount = 0;
 var inCartTotal = 0;
@@ -66,6 +69,8 @@ var detailDescription = document.getElementById('detail-description');
 var detailReviews = document.getElementById('detail-reviews');
 var detailLoad10 = document.getElementById('detail-load-10');
 var detailLoad30 = document.getElementById('detail-load-30');
+
+var detailAdd = document.getElementById('detail-add');
 
 var detailRecommend = document.getElementById('detail-recommend');
 var detailTowardLeft = document.getElementById('detail-recommend-left');

@@ -176,8 +176,8 @@ function showDetail(productId){
   detail.className = ' ';
   removeAllChild(yield);
   yield.appendChild(detail);
-  array = _.where(products, {id: productId});
-  target = array[0];
+  var array = _.where(products, {id: productId});
+  var target = array[0];
 
   var route = document.getElementById('route');
   removeAllChild(route);
@@ -194,6 +194,7 @@ function showDetail(productId){
   removeAllChild(detailDescription);
   removeAllChild(detailReviews);
   removeAllChild(detailRecommend);
+  removeAllChild(detailAdd);
 
   var img = document.createElement('img');
   img.src = target.thumbOne;
@@ -277,7 +278,7 @@ function showDetail(productId){
   detailPrice.appendChild(price);
   detailDescription.appendChild(description);
 
-  reviewArray = _.where(reviews);
+  var reviewArray = _.where(reviews);
 
   var detailQty = document.getElementById('detail-qty');
   var quantity = document.createElement('select');
@@ -291,18 +292,24 @@ function showDetail(productId){
   }
   removeAllChild(detailQty);
   detailQty.appendChild(quantity);
-
-  var detailAdd = document.getElementById('detail-add');
-  detailAdd.addEventListener('click', function(){
-    var addThis = new item(target.id, quantity.value, target.price);
+  var qty = 1;
+  quantity.addEventListener('input', function(e){
+    qty  = parseFloat(quantity.value);
+  })
+  var detailAddButton = document.createElement('button');
+  detailAddButton.className = "btn btn-success btn-block";
+  detailAddButton.textContent="Add to Cart";
+  detailAdd.appendChild(detailAddButton);
+  detailAddButton.addEventListener('click', function(){
+    var addThis = new item(target.id, qty, target.price);
     var added = false;
     for(var x=0; x < inCart.length; x++){
-      if (addThis.id === inCart[x].id){
+      if (inCart[x].id === addThis.id){
         inCart[x].qty = inCart[x].qty + addThis.qty;
         added = true;
       }
     }
-    if(added == false){
+    if(added === false){
       inCart.push(addThis);
     }
     var inCartCount = 0;
@@ -317,6 +324,21 @@ function showDetail(productId){
     calculate(showBalance, inCartTotal);
   })
 
+  var detailWish = document.getElementById('detail-wish');
+  detailWish.addEventListener('click',function(e){
+    e.preventDefault();
+    var addThis = new item(target.id, quantity.value, target.price);
+    var added = false;
+    for(var x=0; x < inWishList.length; x++){
+      if (addThis.id === inWishList[x].id){
+        inWishList[x].qty = inWishList[x].qty + addThis.qty;
+        added = true;
+      }
+    }
+    if(added == false){
+      inWishList.push(addThis);
+    }
+  });
   // detail review
   var reviewRating = 0;
   var array = _.where(reviews, {productId: target.id});
@@ -520,6 +542,10 @@ function showResult(location, target, row){
   var addToCart = document.createElement('button');
   addToCart.className = "add-to-cart btn btn-success btn-sm btn-block";
   addToCart.setAttribute('style', 'display:block');
+  var addToWishList = document.createElement('button');
+  addToWishList.className = "add-to-cart btn btn-default btn-sm btn-block";
+  addToWishList.setAttribute('style', 'display:block');
+  addToWishList.textContent = "Add to My Wish List"
 
   // Node Tree
   location.appendChild(outline);
@@ -540,14 +566,30 @@ function showResult(location, target, row){
   commandBox.appendChild(commandBoxAdd);
 
   commandBoxPrice.appendChild(price);
-  commandBoxQty.appendChild(quantityText);
-  commandBoxQty.appendChild(quantity);
-  commandBoxAdd.appendChild(addToCart);
-
+  //commandBoxQty.appendChild(quantityText);
+  //commandBoxQty.appendChild(quantity);
+  //commandBoxAdd.appendChild(addToCart);
+  commandBoxAdd.appendChild(addToWishList);
   brand.appendChild(brandLink);
   price.appendChild(priceTag);
   addToCart.appendChild(cartIcon);
   cartIcon.appendChild(cartIconText);
+
+  addToWishList.addEventListener('click', function(e){
+    e.preventDefault();
+    var addThis = new item(target.id, quantity.value, target.price);
+    var added = false;
+    for(var x=0; x < inWishList.length; x++){
+      if (addThis.id === inWishList[x].id){
+        inWishList[x].qty = inWishList[x].qty + addThis.qty;
+        added = true;
+      }
+    }
+    if(added == false){
+      inWishList.push(addThis);
+    }
+    console.log(inWishList);
+  })
 
   addToCart.addEventListener('click', function(e){
     e.preventDefault();
@@ -576,7 +618,7 @@ function showResult(location, target, row){
 }
 
 // Cart View
-function showCart(location, target, editable, reviewable, orderCount){
+function showCart(location, target, editable, reviewable, wishlist, orderCount){
   for(var x=0; x < products.length; x++){
     if (target.id === products[x].id){
       target.name = products[x].name;
@@ -584,7 +626,7 @@ function showCart(location, target, editable, reviewable, orderCount){
       target.thumbOne = products[x].thumbOne;
     }
   }
-
+  cartPanel.className = ' ';
   // Structure
   var box = document.createElement('div');
   box.className = "col-md-12";
@@ -716,9 +758,7 @@ function showCart(location, target, editable, reviewable, orderCount){
 
   // Change Qty
   if (editable == true){
-    cartPanel.className = ' ';
     checkout.removeAttribute('disabled');
-
     amount.removeAttribute('disabled');
     amount.addEventListener('input',function(e){
       e.preventDefault();
@@ -751,7 +791,6 @@ function showCart(location, target, editable, reviewable, orderCount){
     boxRemove.appendChild(remove);
     remove.appendChild(removeTag);
 
-    cartPanel.className = ' ';
     checkout.removeAttribute('disabled');
 
     remove.addEventListener('click', function(){
@@ -777,7 +816,7 @@ function showCart(location, target, editable, reviewable, orderCount){
       title.appendChild(titleText);
 
       for(var x=0; x < inCart.length; x++){
-        showCart(panelBody, inCart[x], true, false, x);
+        showCart(panelBody, inCart[x], true, false, false, x);
       }
       inCartCount = 0;
       inCartTotal = 0;
@@ -800,12 +839,58 @@ function showCart(location, target, editable, reviewable, orderCount){
 
   // Review Purchased Items
   if (reviewable == true){
+    cartPanel.className = 'hidden';
     var writeReview = document.createElement('button');
     writeReview.setAttribute('class','btn btn-danger')
     writeReview.textContent= 'Write My review';
     boxRemove.appendChild(writeReview);
     writeReview.addEventListener('click', function(){
       toggleClass('hidden', boxReview);
+    })
+  }
+  // Wish List Items
+  if (wishlist == true){
+    cartPanel.className = 'hidden';
+    var addWishToCart = document.createElement('button');
+    addWishToCart.setAttribute('class','btn btn-danger')
+    addWishToCart.textContent= 'Add to My Cart';
+    boxRemove.appendChild(addWishToCart);
+    var wishQty = parseFloat(amount.value);
+    amount.removeAttribute('disabled');
+    amount.addEventListener('input',function(e){
+      wishQty  = parseFloat(amount.value);
+      total.removeChild(totalTag);
+      totalTag = document.createTextNode("$" + (wishQty * target.price).toFixed(2));
+      total.appendChild(totalTag);
+    })
+    addWishToCart.addEventListener('click', function(e){
+      e.preventDefault();
+      var addThis = new item(target.id, wishQty, target.price);
+      var added = false;
+      for(var x=0; x < inCart.length; x++){
+        if (addThis.id === inCart[x].id){
+          inCart[x].qty = inCart[x].qty + addThis.qty;
+          added = true;
+        }
+      }
+      if(added == false){
+        inCart.push(addThis);
+      }
+      var inCartCount = 0;
+      var inCartTotal = 0;
+      for(var x=0; x<inCart.length; x++){
+        inCartCount = inCartCount + inCart[x].qty;
+        inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
+      }
+      var cartCountValue = document.createTextNode(inCartCount);
+      removeAllChild(cartCount);
+      cartCount.appendChild(cartCountValue);
+      calculate(showBalance, inCartTotal);
+
+      var position = inWishList.indexOf(target);
+      inWishList.splice(position, 1);
+
+      showWishList();
     })
   }
   // Review submit
@@ -902,7 +987,7 @@ function showCurrentCart(){
     inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
   }
   for(var i=0; i < inCart.length; i++){
-    showCart(panelBody, inCart[i], true, false, i);
+    showCart(panelBody, inCart[i], true, false, false, i);
   }
 
   pageYield.appendChild(currentBox);
@@ -938,7 +1023,6 @@ function showOrderHistory(){
 
   removeAllChild(pageYield);
   main.className="hidden";
-  cartPanel.className = 'hidden';
   pastInCart = _.sortBy(pastInCart, date);
   pastInCart = pastInCart.reverse();
   for(var x=0; x < pastInCart.length; x++){
@@ -952,7 +1036,7 @@ function showOrderHistory(){
     panelBody.className = 'panel-body';
 
     for(var y=0; y < pastInCart[x].cart.length; y++){
-      showCart(panelBody, pastInCart[x].cart[y], false, true, y);
+      showCart(panelBody, pastInCart[x].cart[y], false, true, false, y);
     }
     var paraTotal = document.createElement('p');
     var paraDate = document.createElement('p');
@@ -967,6 +1051,52 @@ function showOrderHistory(){
     panelHeading.appendChild(paraDate);
     paraTotal.appendChild(total);
     paraDate.appendChild(date);
+  }
+}
+
+// Wish List
+wish.addEventListener('click', function(){
+  if (inWishList.length>0){
+    showWishList();
+  }
+})
+
+// Show Wish List
+function showWishList(){
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var cartRoute = document.getElementById('cart-route');
+  removeAllChild(cartRoute);
+  var slash = document.createElement('span');
+  slash.textContent = " / ";
+  var routeCart = document.createElement('a');
+  routeCart.textContent = "Wish List";
+  routeCart.href="#";
+  routeCart.addEventListener('click',function(){
+    showWishList();
+  })
+  cartRoute.appendChild(slash);
+  cartRoute.appendChild(routeCart);
+  removeAllChild(pageYield);
+  main.className="hidden";
+  // add sort system here
+  var pastbox = document.createElement('div');
+  pastbox.className= "col-md-12";
+  var panel = document.createElement('div');
+  panel.className = 'panel panel-default'
+  var panelHeading = document.createElement('div');
+  panelHeading.className = 'panel-heading';
+  var panelBody = document.createElement('div');
+  panelBody.className = 'panel-body';
+  var title = document.createElement('h3');
+  title.textContent = "My Wish List"
+  pageYield.appendChild(pastbox);
+  pastbox.appendChild(panel);
+  panel.appendChild(panelHeading);
+  panel.appendChild(panelBody);
+  panelHeading.appendChild(title);
+  for(var x=0; x < inWishList.length; x++){
+    showCart(panelBody, inWishList[x], false, false, true, x);
   }
 }
 
@@ -1248,7 +1378,7 @@ checkout.addEventListener('click',function(){
   pageYield.appendChild(checkoutContent);
   calculate(showBalance, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(checkoutList, inCart[i], false, false, i);
+    showCart(checkoutList, inCart[i], false, false, false, i);
   }
 })
 
@@ -1297,7 +1427,7 @@ payContinue.addEventListener('click', function(){
   pageYield.appendChild(confirmPage);
   calculate(confirmList, inCartTotal);
   for(var i=0; i < inCart.length; i++){
-    showCart(confirmList, inCart[i], false, false, i);
+    showCart(confirmList, inCart[i], false, false, false, i);
   }
   var printName = document.createTextNode('Name: ' + customerName.value);
   var printEmail = document.createTextNode('Email: ' + email.value);
@@ -1369,7 +1499,7 @@ payPlaceorder.addEventListener('click', function(){
   panelBody.className = 'panel-body';
 
   for(var y=0; y < showLastOrder.cart.length; y++){
-    showCart(panelBody, showLastOrder.cart[y], false, true, y);
+    showCart(panelBody, showLastOrder.cart[y], false, true, false, y);
   }
   var paraTotal = document.createElement('p');
   var paraDate = document.createElement('p');
