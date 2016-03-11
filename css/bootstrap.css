@@ -1620,6 +1620,9 @@ pre code {
   padding-right: 15px;
   padding-left: 15px;
 }
+.no-padding{
+  padding:0px;
+}
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
 }
@@ -3182,6 +3185,9 @@ fieldset[disabled] .btn-primary.focus {
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
+.one-third {
+  width:30%;
+}
 .btn-success:focus,
 .btn-success.focus {
   color: #fff;
@@ -3913,6 +3919,18 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.input-group-addon.search-box{
+  padding: 0px;
+}
+.input-group-addon > button{
+  margin:-2px;
+  border-radius:0px 2px 2px 0px;
+  padding-left:14px;
+  padding-right:12px;
+  padding-top:6px;
+  padding-bottom:6px
+}
+
 .input-group-addon.input-sm {
   padding: 5px 10px;
   font-size: 12px;

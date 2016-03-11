@@ -123,6 +123,9 @@ a i:hover {
   padding-right: ;
 }
 
+.text-right {
+  text-align: right;
+}
 
 #content a > img {
   display: inline-block;
@@ -158,6 +161,19 @@ a i:hover {
   margin-bottom: auto;
   width: 100%;
   vertical-align: middle;
+}
+
+.add-to-cart-box {
+  padding:20px
+}
+.add-to-cart-box > .col-md-12{
+  margin-top:20px;
+}
+
+.recom-box {
+  margin-bottom:20px;
+  margin-top:20px;
+  border:solid 5px rgb(249, 249, 249);
 }
 
 /* footer */

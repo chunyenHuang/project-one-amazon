@@ -13,7 +13,7 @@ function loadHomepage(){
   if (inCart.length>0){
     var tags = [];
     var inCartProducts = [];
-    for(var i =0; i < inCart.length; i++){
+    for (var i =0; i<inCart.length; i++){
       var theProduct = _.where(products, {id: inCart[i].id});
       inCartProducts.push(theProduct[0]);
       tags.push(theProduct[0].tag);
@@ -22,8 +22,8 @@ function loadHomepage(){
     tags = _.uniq(tags);
 
     var notInCart = _.difference(products, inCartProducts);
-    for(var i=0; i< notInCart.length; i++){
-      for(var x=0; x < tags.length; x++){
+    for (var i=0; i<notInCart.length; i++){
+      for (var x=0; x<tags.length; x++){
         var checkTag = _.contains(notInCart[i].tag, tags[x]);
         if (checkTag === true){
           mayLikeProducts.push(notInCart[i]);
@@ -33,16 +33,16 @@ function loadHomepage(){
     mayLikeProducts = _.uniq(mayLikeProducts);
     mayLikes = _.sample(mayLikeProducts, 6);
 
-    for (var i=0; i < mayLikes.length;i++){
+    for (var i=0; i<mayLikes.length; i++){
       insertImgGallery(imgGallerys[0],mayLikes[i]);
     }
     var others = _.difference(products, mayLikeProducts);
     var showed = [];
-    for (var i=1; i < imgGallerys.length; i++){
+    for (var i=1; i<imgGallerys.length; i++){
       var itemPerRow = 6 ;
       var sampleProducts = _.difference(others, showed);
       var sampleProducts = _.sample(sampleProducts, itemPerRow)
-      for(var t=0; t < itemPerRow; t++){
+      for (var t=0; t<itemPerRow; t++){
         insertImgGallery(imgGallerys[i], sampleProducts[t]);
         showed.push(sampleProducts[t]);
       }
@@ -51,7 +51,7 @@ function loadHomepage(){
     var tags = [];
     var lastPurchase = _.last(pastInCart);
     var lastItems = [];
-    for(var i =0; i < lastPurchase.cart.length; i++){
+    for (var i =0; i<lastPurchase.cart.length; i++){
       var theProducts = _.where(products, {id: lastPurchase.cart[i].id});
         lastItems.push(theProducts[0]);
         tags.push(theProducts[0].tag);
@@ -60,8 +60,8 @@ function loadHomepage(){
     tags = _.uniq(tags);
 
     var notInCart = _.difference(products, lastItems);
-    for(var i=0; i< notInCart.length; i++){
-      for(var x=0; x < tags.length; x++){
+    for (var i=0; i<notInCart.length; i++){
+      for (var x=0; x<tags.length; x++){
         var checkTag = _.contains(notInCart[i].tag, tags[x]);
         if (checkTag === true){
           mayLikeProducts.push(notInCart[i]);
@@ -71,28 +71,28 @@ function loadHomepage(){
     mayLikeProducts = _.uniq(mayLikeProducts);
     mayLikes = _.sample(mayLikeProducts, 6);
 
-    for (var i=0; i < mayLikes.length;i++){
+    for (var i=0; i<mayLikes.length; i++){
       insertImgGallery(imgGallerys[0],mayLikes[i]);
     }
 
     var others = _.difference(products, mayLikeProducts);
     var showed = [];
-    for (var i=1; i < imgGallerys.length; i++){
+    for (var i=1; i<imgGallerys.length; i++){
       var itemPerRow = 6 ;
       var sampleProducts = _.difference(others, showed);
       var sampleProducts = _.sample(sampleProducts, itemPerRow)
-      for(var t=0; t < itemPerRow; t++){
+      for (var t=0; t<itemPerRow; t++){
         insertImgGallery(imgGallerys[i], sampleProducts[t]);
         showed.push(sampleProducts[t]);
       }
     }
   } else {
     var showed = [];
-    for (var i=0; i < imgGallerys.length; i++){
+    for (var i=0; i<imgGallerys.length; i++){
       var itemPerRow = 6 ;
       var sampleProducts = _.difference(products, showed);
       var sampleProducts = _.sample(sampleProducts, itemPerRow)
-      for(var t=0; t < itemPerRow; t++){
+      for (var t=0; t<itemPerRow; t++){
         insertImgGallery(imgGallerys[i], sampleProducts[t]);
         showed.push(sampleProducts[t]);
       }
@@ -101,13 +101,6 @@ function loadHomepage(){
 }
 
 function linkHome(){
-  // removeAllChild(pageYield);
-  // var route =document.getElementById('route');
-  // var cartRoute =document.getElementById('cart-route');
-  // var searchRoute =document.getElementById('search-route');
-  // removeAllChild(route);
-  // removeAllChild(cartRoute);
-  // removeAllChild(searchRoute);
   clearPage();
   loadHomepage();
 }
@@ -215,8 +208,8 @@ function showDetail(id){
   var recomArray = [];
   var self = [target];
   var noSelf = _.difference(products, self);
-  for(var i=0; i < target.tag.length;i++){
-    for(var x=0; x< noSelf.length;x++){
+  for (var i=0; i<target.tag.length; i++){
+    for (var x=0; x<noSelf.length; x++){
       var checkContain = _.contains(noSelf[x].tag, target.tag[i]);
       if(checkContain === true){
         recomArray.push(noSelf[x]);
@@ -229,7 +222,7 @@ function showDetail(id){
     array = _.sample(array, 5);
 
     removeAllChild(detailRecommend);
-    for(var i=0; i < array.length;i++){
+    for (var i=0; i<array.length; i++){
       var spanBox = document.createElement('div');
       spanBox.className = "col-sm-4 col-md-2";
       var recomImgBox = document.createElement('a');
@@ -319,15 +312,15 @@ function showDetail(id){
   var otherReview = _.difference(array, ownReview);
   otherReview = _.sortBy(otherReview, 'date').reverse();
   var theReview = [];
-  for(var i=0; i<ownReview.length;i++){
+  for (var i=0; i<ownReview.length; i++){
     theReview.push(ownReview[i]);
   }
-  for(var i=0; i<otherReview.length;i++){
+  for (var i=0; i<otherReview.length; i++){
     theReview.push(otherReview[i]);
   }
 
   if (theReview.length>0){
-    for (var i=0; i < theReview.length; i++){
+    for (var i=0; i<theReview.length; i++){
       reviewRating = reviewRating + theReview[i].rating
     }
     var average = reviewRating/(theReview.length);
@@ -339,7 +332,7 @@ function showDetail(id){
     detailReviewBar.appendChild(reviewCount);
 
     var displayReviews = document.createElement('div');
-    for(var i=5; i >=1; i--){
+    for (var i=5; i>=1; i--){
       var lineBox = document.createElement('div');
       theReviewRatings = _.where(theReview, {rating: i});
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
@@ -364,7 +357,7 @@ function showDetail(id){
       var notShown = _.difference(theReview, showedReviews);
       var toShow = _.first(notShown, num);
 
-      for(var i=0; i < toShow.length; i++){
+      for (var i=0; i<toShow.length; i++){
         showedReviews.push(toShow[i]);
         var reviewLine = document.createElement('div');
         reviewLine.className = 'col-md-12';
@@ -452,7 +445,7 @@ function showResult(location, target, row){
   var theReview = _.where(reviews, {productId: target.id})
 
   if (theReview.length>0){
-    for (var i=0; i < theReview.length; i++){
+    for (var i=0; i<theReview.length; i++){
       reviewRating = reviewRating + theReview[i].rating
     }
     var average = reviewRating/(theReview.length);
@@ -466,7 +459,7 @@ function showResult(location, target, row){
     var displayReviews = document.createElement('div');
     displayReviews.className = 'float-review-box hidden';
     reviewBox.appendChild(displayReviews);
-    for(var i=5; i >=1; i--){
+    for (var i=5; i>=1; i--){
       theReviewRatings = _.where(theReview, {rating: i});
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
       var showRating = document.createElement('img');
@@ -549,7 +542,7 @@ function showResult(location, target, row){
 
 // Cart View
 function showCart(location, target, editable, reviewable, wishlist, orderCount){
-  for(var x=0; x < products.length; x++){
+  for (var x=0; x<products.length; x++){
     if (target.id === products[x].id){
       target.name = products[x].name;
       target.condition = products[x].condition;
@@ -724,13 +717,13 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
       panelHeading.appendChild(title);
       title.appendChild(titleText);
 
-      for(var x=0; x < inCart.length; x++){
+      for (var x=0; x<inCart.length; x++){
         showCart(panelBody, inCart[x], true, false, false, x);
       }
       resetCartTotal();
       calculate(showBalance, inCartTotal);
 
-      if(inCartCount==0){
+      if (inCartCount==0){
         checkout.setAttribute('disabled','disabled')
         removeAllChild(pageYield);
         main.className = "container";
@@ -774,7 +767,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
   reviewForm.addEventListener('submit',function(e){
     e.preventDefault();
     var ratings = document.getElementsByName('rating'+orderCount);
-    for(var x=0; x < ratings.length; x++){
+    for (var x=0; x<ratings.length; x++){
       if(ratings[x].checked){
         var ratingValue = ratings[x].value;
         break;
@@ -847,11 +840,11 @@ function showCurrentCart(){
   var title = document.createElement('p');
   var titleText = document.createTextNode("Shopping Cart");
 
-  for(var i=0; i<inCart.length; i++){
+  for (var i=0; i<inCart.length; i++){
     inCartCount = inCartCount + inCart[i].qty;
     inCartTotal = inCartTotal + (inCart[i].qty * inCart[i].price);
   }
-  for(var i=0; i < inCart.length; i++){
+  for (var i=0; i<inCart.length; i++){
     showCart(panelBody, inCart[i], true, false, false, i);
   }
 
@@ -883,7 +876,7 @@ function showOrderHistory(){
   clearPage();
   pastInCart = _.sortBy(pastInCart, date);
   pastInCart = pastInCart.reverse();
-  for(var x=0; x < pastInCart.length; x++){
+  for (var x=0; x<pastInCart.length; x++){
     var pastbox = document.createElement('div');
     pastbox.className= "col-md-12";
     var panel = document.createElement('div');
@@ -893,7 +886,7 @@ function showOrderHistory(){
     var panelBody = document.createElement('div');
     panelBody.className = 'panel-body';
 
-    for(var y=0; y < pastInCart[x].cart.length; y++){
+    for (var y=0; y<pastInCart[x].cart.length; y++){
       showCart(panelBody, pastInCart[x].cart[y], false, true, false, y);
     }
     var paraTotal = document.createElement('p');
@@ -945,7 +938,7 @@ function showWishList(){
   panel.appendChild(panelHeading);
   panel.appendChild(panelBody);
   panelHeading.appendChild(title);
-  for(var x=0; x < inWishList.length; x++){
+  for (var x=0; x<inWishList.length; x++){
     showCart(panelBody, inWishList[x], false, false, true, x);
   }
 }
@@ -979,10 +972,10 @@ function search(value, targetProperty, location){
     producst = _.where(products, {target: value});
   }
   // Search for exact name
-  for(var i=0; i < products.length; i++){
+  for (var i=0; i<products.length; i++){
     var nameArray = products[i].name.split(space);
     var lowerCases = [];
-    for(var x=0; x< nameArray.length; x++){
+    for (var x=0; x<nameArray.length; x++){
       lowerCases.push(nameArray[x].toLowerCase());
     }
     lowerCases = lowerCases.join(' ');
@@ -992,10 +985,10 @@ function search(value, targetProperty, location){
   }
   if(resultsNames.length == 0){
     // Search compare with Name
-    for (var t=0; t < searchInputArray.length; t++){
-      for (var i=0; i < products.length; i++){
+    for (var t=0; t<searchInputArray.length; t++){
+      for (var i=0; i<products.length; i++){
         var nameArray = products[i].name.split(space);
-        for (var x=0; x < nameArray.length; x++){
+        for (var x=0; x<nameArray.length; x++){
           if (nameArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
             resultsNames.push({id: products[i].id, weight: 1});
           }
@@ -1003,10 +996,10 @@ function search(value, targetProperty, location){
       }
     }
     // Search Compare with brands
-    for (var t=0; t < searchInputArray.length; t++){
-      for (var i=0; i < products.length; i++){
+    for (var t=0; t<searchInputArray.length; t++){
+      for (var i=0; i<products.length; i++){
         var brandArray = products[i].manufacturer.split(space);
-        for (var x=0; x < brandArray.length; x++){
+        for (var x=0; x<brandArray.length; x++){
           if (brandArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
             resultsBrands.push({id: products[i].id, weight: 0.7});
           }
@@ -1014,10 +1007,10 @@ function search(value, targetProperty, location){
       }
     }
     // Search Compare with tag
-    for (var t=0; t < searchInputArray.length; t++){
-      for (var i=0; i < products.length; i++){
+    for (var t=0; t<searchInputArray.length; t++){
+      for (var i=0; i<products.length; i++){
         var tagsArray = products[i].tag;
-        for (var x=0; x < tagsArray.length; x++){
+        for (var x=0; x<tagsArray.length; x++){
           if (tagsArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
             resultsTags.push({id: products[i].id, weight: 0.3});
           }
@@ -1025,10 +1018,10 @@ function search(value, targetProperty, location){
       }
     }
     // Search Compare with description
-    for (var t=0; t < searchInputArray.length; t++){
-      for (var i=0; i < products.length; i++){
+    for (var t=0; t<searchInputArray.length; t++){
+      for (var i=0; i<products.length; i++){
         var desArray = products[i].description.split(space);
-        for (var x=0; x < desArray.length; x++){
+        for (var x=0; x<desArray.length; x++){
           if (desArray[x].toLowerCase().indexOf(searchInputArray[t].toLowerCase()) != -1){
             resultsDescriptions.push({id: products[i].id, weight: 0.1});
           }
@@ -1055,7 +1048,7 @@ function search(value, targetProperty, location){
         };
       }).sortBy('weight').value().reverse()
 
-  for(var i=0;i < addWeight.length;i++){
+  for (var i=0; i<addWeight.length; i++){
     var foundProduct = _.where(products, {id: filterInt(addWeight[i].id)});
     results.push(foundProduct[0]);
   }
@@ -1076,7 +1069,7 @@ function search(value, targetProperty, location){
       removeAllChild(resultsYield);
       var rowSix = [];
       var showed = [];
-      for(var t=0; t < (uniqResult.length/perRow); t++){
+      for (var t=0; t<(uniqResult.length/perRow); t++){
         var colBox = document.createElement('div');
         colBox.className='col-md-12';
         var row = document.createElement('div');
@@ -1087,7 +1080,7 @@ function search(value, targetProperty, location){
         if(take.length >= perRow){
           take = _.first(take, perRow);
         }
-        for(var x=0;x<take.length; x++){
+        for (var x=0; x<take.length; x++){
           showed.push(take[x]);
           showResult(row, take[x], perRow);
         }
@@ -1165,7 +1158,7 @@ function search(value, targetProperty, location){
       return array = _.sortBy(array, "price").reverse();
     } else if(type === "mostReview"){
       var newArray =[];
-      for(var i=0; i < mostReviews.length; i++){
+      for (var i=0; i<mostReviews.length; i++){
         var found = _.where(array, {id: filterInt(mostReviews[i][0])});
         if (found.length >0){
           newArray.push(found[0]);
@@ -1174,7 +1167,7 @@ function search(value, targetProperty, location){
       return array = newArray;
     } else if(type === "average"){
       var newArray =[];
-      for(var i=0; i < rankReviews.length; i++){
+      for (var i=0; i<rankReviews.length; i++){
         var found = _.where(array, {id: filterInt(rankReviews[i].productId)});
         if (found.length >0){
           newArray.push(found[0]);
@@ -1244,7 +1237,7 @@ function timeStamp(date) {
 function resetCartTotal(){
   inCartCount = 0;
   inCartTotal = 0;
-  for(var x=0; x<inCart.length; x++){
+  for (var x=0; x<inCart.length; x++){
     inCartCount = inCartCount + inCart[x].qty;
     inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
   }

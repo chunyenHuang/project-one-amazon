@@ -16,34 +16,34 @@
   <body>
     <div class="container-fluid" id="page-top">
       <div class="row" id="function-bar">
-        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2" style="padding-left:10px;">
+        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
             <a href="#">
               <img src="images/logos/logo.png" alt="Shopazon" height="40px;" data-type="link-to-home">
             </a>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8" style="padding-top:5px;">
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
           <form class="form" id="search-bar" method="get" action="" data-type="search" >
             <div class="form-group">
               <label class="sr-only" for="search">search content</label>
               <div class="input-group">
                 <div class="input-group-addon">Search</div>
                 <input type="text" name="search" id="search-input" class="form-control" placeholder="what do you need?">
-                <div class="input-group-addon" style="padding:0px"><button type="submit" class="btn btn-warning" style="margin:-2px;border-radius:0px 2px 2px 0px; padding-left:14px;padding-right:12px;padding-top:6px;padding-bottom:6px"><i class="fa fa-search fa-lg"></i></button></div>
+                <div class="input-group-addon search-box"><button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button></div>
               </div>
             </div>
           </form>
         </div>
-        <div class="col-xs-12 col-sm-3 col-md-2 ol-lg-2" style="padding-top:2px;">
-          <button type="button" class="btn btn-default btn-xs" style="width:30%;" data-type="show-history"> <small>My</small><br><strong>Orders</strong></button>
-          <button type="button" class="btn btn-default btn-xs" style="width:30%;" data-type="show-wishlist"> <small>Wish</small><br><strong>List</strong></button>
-          <button type="button" class="btn btn-success btn-xs" style="width:30%;" data-type="show-cart"><small>Cart</small><br><i class="fa fa-shopping-cart fa-lg"></i><stron id="cart-count"></strong></button>
+        <div class="col-xs-12 col-sm-3 col-md-2 ol-lg-2">
+          <button type="button" class="btn btn-default btn-xs one-third" data-type="show-history"> <small>My</small><br><strong>Orders</strong></button>
+          <button type="button" class="btn btn-default btn-xs one-third" data-type="show-wishlist"> <small>Wish</small><br><strong>List</strong></button>
+          <button type="button" class="btn btn-success btn-xs one-third" data-type="show-cart"><small>Cart</small><br><i class="fa fa-shopping-cart fa-lg"></i><stron id="cart-count"></strong></button>
         </div>
       </div>
     </div>
     <div class="container" id="main" class="">
       <div class="row">
-        <div class="col-md-12" style="padding:0px;">
-          <a href="#"><div id="main-ads" style=''></div></a>
+        <div class="col-md-12 no-padding">
+          <a href="#"><div id="main-ads"></div></a>
           <i class="fa fa-arrow-circle-left fa-4x" id="toward-left"></i>
           <i class="fa fa-arrow-circle-right fa-4x" id="toward-right"></i>
         </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="container" style="margin-top:10px">
+    <div class="container">
       <div class="row">
         <div class="col-md-12">
           <p><a href="#" data-type="link-to-home">Home </a> /
@@ -221,8 +221,8 @@
               <div class="panel-heading">
                 Your Cart
               </div>
-              <div class="panel-body" style="text-align:right">
-                <div id="show-balance"></div>
+              <div class="panel-body">
+                <div class="text-right" id="show-balance"></div>
               </div>
             </div>
             <button class="btn btn-primary btn-block" data-type="checkout">Checkout</div>
@@ -241,35 +241,39 @@
                 <h3 id="detail-price"></h3>
                 <p id="detail-description"></p>
               </div>
-              <div class="col-md-2" style="padding-top:30px;">
+              <div class="col-md-2">
                 <div class="row">
-                  <div class="col-md-3">
-                    Qty:
+                  <div class="add-to-cart-box">
+                    <div class="col-md-3">
+                      Qty:
+                    </div>
+                    <div class="col-md-7" id="detail-qty">
+                    </div>
+                    <div class="col-md-12" id="detail-add"></div>
+                    <div class="col-md-12" id="detail-wish"></div>
                   </div>
-                  <div class="col-md-7" id="detail-qty">
-                  </div>
-                  <div class="col-md-12" style="margin-top:20px;" id="detail-add">  </div>
-                  <div class="col-md-12" style="margin-top:20px;" id="detail-wish"></div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="hidden-xs hidden-sm col-md-12" style="margin-bottom:20px;margin-top:20px;border:solid 3px rgb(249, 249, 249)">
-            <div class="">
-              <h4>Customers Who Bought This Item Also Bought</h4>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 col-md-1" style="text-align:center">
-                <button class="btn btn-default btn-lg" id="detail-recommend-left"> < </button>
+          <div class="hidden-xs hidden-sm col-md-12">
+            <div class="recom-box">
+              <div class="">
+                <h4>Customers Who Bought This Item Also Bought</h4>
               </div>
-              <div id="detail-recommend"></div>
-              <div class="col-sm-12 col-md-1" style="text-align:center">
-                <button class="btn btn-default btn-lg" id="detail-recommend-right"> > </button>
+              <div class="row">
+                <div class="col-sm-12 col-md-1 text-center">
+                  <button class="btn btn-default btn-lg" id="detail-recommend-left"> < </button>
+                </div>
+                <div id="detail-recommend"></div>
+                <div class="col-sm-12 col-md-1 text-center">
+                  <button class="btn btn-default btn-lg" id="detail-recommend-right"> > </button>
+                </div>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <div class="row" style="margin-top:20px;">
+            <div class="row">
               <div class="col-md-2">
                 <h4>Reviews</h4>
                 <h5 id="detail-reviewbar"></h5>
@@ -294,7 +298,7 @@
     </div>
     <div class="container-fluid" id="footer">
       <div class="row">
-        <div class="col-md-12" style="padding:0px;">
+        <div class="col-md-12 no-padding">
           <div class="clickable-bar">
             <a href="#page-top">
               <div class="well">
@@ -305,9 +309,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12" style="padding:50px;">
+        <div class="col-md-12">
           <img src="images/logos/logo.png" alt="Shopazon" height="40px;">
-          <p style="margin-top: 30px;">
+          <p>
             Conditions of UsePrivacy NoticeInterest-Based Ads© 2015-2016, Shopazon.com, Inc. or its affiliates
           </p>
         </div>

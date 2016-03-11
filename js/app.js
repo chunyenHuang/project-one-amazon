@@ -25,7 +25,6 @@ function clearPage(){
   removeAllChild(detailRecommend);
   removeAllChild(detailAdd);
   removeAllChild(detailWish);
-
   removeAllChild(confirmList);
   removeAllChild(confirmUser);
   removeAllChild(confirmPayment);
@@ -74,7 +73,7 @@ document.body.addEventListener('click', function(event){
     var qty = event.target.getAttribute('qty');
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
-    for(var x=0; x < inCart.length; x++){
+    for (var x=0; x<inCart.length; x++){
       if (inCart[x].id === addThis.id){
         inCart[x].qty = inCart[x].qty + addThis.qty;
         added = true;
@@ -92,7 +91,7 @@ document.body.addEventListener('click', function(event){
 
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
-    for(var x=0; x < inWishList.length; x++){
+    for (var x=0; x<inWishList.length; x++){
       if (addThis.id === inWishList[x].id){
         inWishList[x].qty = inWishList[x].qty + addThis.qty;
         added = true;
@@ -107,7 +106,7 @@ document.body.addEventListener('click', function(event){
     var qty = event.target.getAttribute('qty');
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
-    for(var x=0; x < inCart.length; x++){
+    for (var x=0; x<inCart.length; x++){
       if (addThis.id === inCart[x].id){
         inCart[x].qty = inCart[x].qty + addThis.qty;
         added = true;
@@ -130,9 +129,8 @@ document.body.addEventListener('click', function(event){
     clearPage();
     checkoutContent.className = '';
     pageYield.appendChild(checkoutContent);
-    // calculate(showBalance, inCartTotal);
     resetCartTotal();
-    for(var i=0; i < inCart.length; i++){
+    for (var i=0; i<inCart.length; i++){
       showCart(checkoutList, inCart[i], false, false, false, i);
     }
   }
@@ -153,15 +151,11 @@ document.body.addEventListener('click', function(event){
   }
 
   if(type === "confirm-transaction"){
-    // removeAllChild(pageYield);
-    // removeAllChild(confirmList);
-    // removeAllChild(confirmUser);
-    // removeAllChild(confirmPayment);
     clearPage();
     confirmPage.className = '';
     pageYield.appendChild(confirmPage);
     calculate(confirmList, inCartTotal);
-    for(var i=0; i < inCart.length; i++){
+    for (var i=0; i<inCart.length; i++){
       showCart(confirmList, inCart[i], false, false, false, i);
     }
     var printName = document.createTextNode('Name: ' + customerName.value);
@@ -198,19 +192,10 @@ document.body.addEventListener('click', function(event){
 
     resetCartTotal();
     inCart = [];
-    // cartPanel.className = 'hidden';
-    // removeAllChild(pageYield);
-    // removeAllChild(cartCount);
     removeAllChild(showBalance);
     clearPage();
     appendMessage(pageYield, "Thanks for shopping with us!")
 
-    // var route =document.getElementById('route');
-    // var cartRoute =document.getElementById('cart-route');
-    // var searchRoute =document.getElementById('search-route');
-    // removeAllChild(route);
-    // removeAllChild(cartRoute);
-    // removeAllChild(searchRoute);
     var showLastOrder = _.last(pastInCart);
     var pastbox = document.createElement('div');
     pastbox.className= "col-md-12";
@@ -221,7 +206,7 @@ document.body.addEventListener('click', function(event){
     var panelBody = document.createElement('div');
     panelBody.className = 'panel-body';
 
-    for(var y=0; y < showLastOrder.cart.length; y++){
+    for (var y=0; y<showLastOrder.cart.length; y++){
       showCart(panelBody, showLastOrder.cart[y], false, true, false, y);
     }
     var paraTotal = document.createElement('p');
