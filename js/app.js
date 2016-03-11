@@ -1,8 +1,40 @@
+function clearPage(){
+  main.className='hidden';
+
+  var route = document.getElementById('route');
+  var cartRoute =document.getElementById('cart-route');
+  var searchRoute =document.getElementById('search-route');
+  removeAllChild(route);
+  removeAllChild(cartRoute);
+  removeAllChild(searchRoute);
+
+  removeAllChild(pageYield);
+  checkoutContent.className = 'hidden';
+  confirmPage.className = 'hidden';
+  cartPanel.className = 'hidden';
+  detail.className = 'hidden';
+
+  removeAllChild(detailImg);
+  removeAllChild(detailName);
+  removeAllChild(detailBrand);
+  removeAllChild(detailPrice);
+  removeAllChild(detailReviewBar);
+  removeAllChild(detailReviewAll);
+  removeAllChild(detailDescription);
+  removeAllChild(detailReviews);
+  removeAllChild(detailRecommend);
+  removeAllChild(detailAdd);
+  removeAllChild(detailWish);
+
+  removeAllChild(confirmList);
+  removeAllChild(confirmUser);
+  removeAllChild(confirmPayment);
+}
+
 window.addEventListener('load',function(){
   loadHomepage();
 })
 
-// Click events
 document.body.addEventListener('click', function(event){
   if (event.target.hasAttribute('data-type')){
     var id = filterInt(event.target.getAttribute('data-id'));
@@ -12,8 +44,6 @@ document.body.addEventListener('click', function(event){
     var type = event.target.parentNode.getAttribute('data-type');
   }
   var value = event.target.getAttribute('value');
-  console.log(event.target);
-  console.log(event.target.parentNode);
   var theProduct = _.where(products, {id: id})[0];
 
   if(type === "show-wishlist"){
@@ -42,7 +72,6 @@ document.body.addEventListener('click', function(event){
 
   if(type === "add-to-cart"){
     var qty = event.target.getAttribute('qty');
-
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
     for(var x=0; x < inCart.length; x++){
@@ -54,17 +83,8 @@ document.body.addEventListener('click', function(event){
     if(added === false){
       inCart.push(addThis);
     }
-    var inCartCount = 0;
-    var inCartTotal = 0;
-    for(var x=0; x<inCart.length; x++){
-      inCartCount = inCartCount + inCart[x].qty;
-      inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
-    }
-    var cartCountValue = document.createTextNode(inCartCount);
-    removeAllChild(cartCount);
-    cartCount.appendChild(cartCountValue);
+    resetCartTotal();
     calculate(showBalance, inCartTotal);
-    console.log(inCartTotal);
   }
 
   if(type === "add-to-wishlist"){
@@ -96,15 +116,8 @@ document.body.addEventListener('click', function(event){
     if(added == false){
       inCart.push(addThis);
     }
-    var inCartCount = 0;
-    var inCartTotal = 0;
-    for(var x=0; x<inCart.length; x++){
-      inCartCount = inCartCount + inCart[x].qty;
-      inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
-    }
-    var cartCountValue = document.createTextNode(inCartCount);
-    removeAllChild(cartCount);
-    cartCount.appendChild(cartCountValue);
+
+    resetCartTotal();
     calculate(showBalance, inCartTotal);
     var find = _.where(inWishList, {id: id})[0];
     var position = _.indexOf(inWishList, find);
@@ -114,11 +127,11 @@ document.body.addEventListener('click', function(event){
   }
 
   if(type === "checkout"){
-    removeAllChild(pageYield);
-    removeAllChild(checkoutList);
+    clearPage();
     checkoutContent.className = '';
     pageYield.appendChild(checkoutContent);
     // calculate(showBalance, inCartTotal);
+    resetCartTotal();
     for(var i=0; i < inCart.length; i++){
       showCart(checkoutList, inCart[i], false, false, false, i);
     }
@@ -140,13 +153,14 @@ document.body.addEventListener('click', function(event){
   }
 
   if(type === "confirm-transaction"){
-    removeAllChild(pageYield);
-    removeAllChild(confirmList);
-    removeAllChild(confirmUser);
-    removeAllChild(confirmPayment);
+    // removeAllChild(pageYield);
+    // removeAllChild(confirmList);
+    // removeAllChild(confirmUser);
+    // removeAllChild(confirmPayment);
+    clearPage();
     confirmPage.className = '';
     pageYield.appendChild(confirmPage);
-    // calculate(confirmList, inCartTotal);
+    calculate(confirmList, inCartTotal);
     for(var i=0; i < inCart.length; i++){
       showCart(confirmList, inCart[i], false, false, false, i);
     }
@@ -182,21 +196,21 @@ document.body.addEventListener('click', function(event){
     pastInCart.push(addThisCart);
     var lastPurchase = _.last(pastInCart);
 
-    inCartTotal = 0;
-    inCartCount = 0;
+    resetCartTotal();
     inCart = [];
-    cartPanel.className = 'hidden';
-    removeAllChild(pageYield);
-    removeAllChild(cartCount);
+    // cartPanel.className = 'hidden';
+    // removeAllChild(pageYield);
+    // removeAllChild(cartCount);
     removeAllChild(showBalance);
+    clearPage();
     appendMessage(pageYield, "Thanks for shopping with us!")
 
-    var route =document.getElementById('route');
-    var cartRoute =document.getElementById('cart-route');
-    var searchRoute =document.getElementById('search-route');
-    removeAllChild(route);
-    removeAllChild(cartRoute);
-    removeAllChild(searchRoute);
+    // var route =document.getElementById('route');
+    // var cartRoute =document.getElementById('cart-route');
+    // var searchRoute =document.getElementById('search-route');
+    // removeAllChild(route);
+    // removeAllChild(cartRoute);
+    // removeAllChild(searchRoute);
     var showLastOrder = _.last(pastInCart);
     var pastbox = document.createElement('div');
     pastbox.className= "col-md-12";

@@ -101,13 +101,14 @@ function loadHomepage(){
 }
 
 function linkHome(){
-  removeAllChild(pageYield);
-  var route =document.getElementById('route');
-  var cartRoute =document.getElementById('cart-route');
-  var searchRoute =document.getElementById('search-route');
-  removeAllChild(route);
-  removeAllChild(cartRoute);
-  removeAllChild(searchRoute);
+  // removeAllChild(pageYield);
+  // var route =document.getElementById('route');
+  // var cartRoute =document.getElementById('cart-route');
+  // var searchRoute =document.getElementById('search-route');
+  // removeAllChild(route);
+  // removeAllChild(cartRoute);
+  // removeAllChild(searchRoute);
+  clearPage();
   loadHomepage();
 }
 
@@ -180,31 +181,18 @@ function appendMessage(location, value){
 
 // Product Individual View
 function showDetail(id){
-  main.className = "hidden";
+  clearPage();
   detail.className = ' ';
-  removeAllChild(yield);
-  yield.appendChild(detail);
+  pageYield.appendChild(detail);
+
   var array = _.where(products, {id: id});
   var target = array[0];
+  // removeAllChild(route);
 
   var route = document.getElementById('route');
-  removeAllChild(route);
   var routeProduct = document.createElement('span');
   routeProduct.textContent = " / " + target.name;
   route.appendChild(routeProduct);
-
-  removeAllChild(detailImg);
-  removeAllChild(detailName);
-  removeAllChild(detailBrand);
-  removeAllChild(detailPrice);
-  removeAllChild(detailReviewBar);
-  removeAllChild(detailReviewAll);
-  removeAllChild(detailDescription);
-  removeAllChild(detailReviews);
-  removeAllChild(detailRecommend);
-  removeAllChild(detailAdd);
-  removeAllChild(detailWish);
-
 
   var img = document.createElement('img');
   img.src = target.thumbOne;
@@ -697,15 +685,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
       total.removeChild(totalTag);
       totalTag = document.createTextNode("$" + (target.qty * target.price).toFixed(2));
       total.appendChild(totalTag);
-      inCartCount = 0;
-      inCartTotal = 0;
-      for(var x=0; x<inCart.length; x++){
-        inCartCount = inCartCount + inCart[x].qty;
-        inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
-      }
-      var cartCountValue = document.createTextNode(inCartCount);
-      removeAllChild(cartCount);
-      cartCount.appendChild(cartCountValue);
+      resetCartTotal();
       calculate(showBalance, inCartTotal);
 
       if(inCartCount==0){
@@ -747,15 +727,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
       for(var x=0; x < inCart.length; x++){
         showCart(panelBody, inCart[x], true, false, false, x);
       }
-      inCartCount = 0;
-      inCartTotal = 0;
-      for(var x=0; x<inCart.length; x++){
-        inCartCount = inCartCount + inCart[x].qty;
-        inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
-      }
-      var cartCountValue = document.createTextNode(inCartCount);
-      removeAllChild(cartCount);
-      cartCount.appendChild(cartCountValue);
+      resetCartTotal();
       calculate(showBalance, inCartTotal);
 
       if(inCartCount==0){
@@ -780,9 +752,6 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
 
   // Wish List Items
   if (wishlist == true){
-    var ts = document.createElement('h5');
-    boxRemove.appendChild(ts);
-    removeAllChild(boxRemove);
     cartPanel.className = 'hidden';
     var addWishToCart = document.createElement('button');
     addWishToCart.textContent= 'Add to My Cart';
@@ -864,8 +833,7 @@ function showCurrentCart(){
   cartRoute.appendChild(slash);
   cartRoute.appendChild(routeCart);
 
-  removeAllChild(pageYield);
-  main.className="hidden";
+  clearPage();
   cartPanel.className = ' ';
 
   var currentBox = document.createElement('div');
@@ -894,6 +862,7 @@ function showCurrentCart(){
   panelHeading.appendChild(title);
   title.appendChild(titleText);
 }
+
 // Show order history
 function showOrderHistory(){
   var route = document.getElementById('route');
@@ -911,8 +880,7 @@ function showOrderHistory(){
   cartRoute.appendChild(slash);
   cartRoute.appendChild(routeCart);
 
-  removeAllChild(pageYield);
-  main.className="hidden";
+  clearPage();
   pastInCart = _.sortBy(pastInCart, date);
   pastInCart = pastInCart.reverse();
   for(var x=0; x < pastInCart.length; x++){
@@ -943,6 +911,7 @@ function showOrderHistory(){
     paraDate.appendChild(date);
   }
 }
+
 // Show Wish List
 function showWishList(){
   var route = document.getElementById('route');
@@ -959,8 +928,7 @@ function showWishList(){
   })
   cartRoute.appendChild(slash);
   cartRoute.appendChild(routeCart);
-  removeAllChild(pageYield);
-  main.className="hidden";
+  clearPage();
   // add sort system here
   var pastbox = document.createElement('div');
   pastbox.className= "col-md-12";
@@ -982,12 +950,9 @@ function showWishList(){
   }
 }
 
-
 // Search Function //
 function search(value, targetProperty, location){
-  removeAllChild(pageYield);
-  main.className = "container hidden";
-  cartPanel.className = 'hidden';
+  clearPage();
 
   // show route
   var route = document.getElementById('route');
@@ -1255,6 +1220,7 @@ function addShippingFee (element, fee){
     calculate(showBalance, inCartTotal);
   })
 }
+
 addShippingFee(shipOptionStandard, 0);
 addShippingFee(shipOptionTwoDays, 3.50);
 addShippingFee(shipOptionSameDay, 12.10);
@@ -1273,4 +1239,16 @@ function order(cart, total, date){
 function timeStamp(date) {
   var showDate = [ date.getMonth() + 1, date.getDate(), date.getFullYear() ];
   return showDate.join("/");
+}
+
+function resetCartTotal(){
+  inCartCount = 0;
+  inCartTotal = 0;
+  for(var x=0; x<inCart.length; x++){
+    inCartCount = inCartCount + inCart[x].qty;
+    inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
+  }
+  var cartCountValue = document.createTextNode(inCartCount);
+  removeAllChild(cartCount);
+  cartCount.appendChild(cartCountValue);
 }

@@ -1,5 +1,3 @@
-
-//
 var comma = ",";
 var space = " ";
 var inWishList = [];
@@ -9,12 +7,10 @@ var inCartCount = 0;
 var inCartTotal = 0;
 var count = 0;
 var shippingFee = 0;
-console.log(inCartTotal);
 
 var pageTop = document.getElementById('page-top');
 var pageYield = document.getElementById('yield');
 var resultsYield = document.createElement('div');
-
 
 var cart = document.getElementById('cart');
 var cartCount = document.getElementById('cart-count');
