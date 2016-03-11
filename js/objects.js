@@ -492,8 +492,6 @@ function randomText(length){
 }
 
 // push a random reviews
-
-
 for (var i=1; i<=2000;i++){
   var randomProduct = _.sample(products, 1);
   var randomRating = Math.floor(Math.random() * (5)) + 1;
@@ -540,20 +538,7 @@ var rankReviews = _.chain(reviewGroups).map(function(num, key){
          };
 }).sortBy('rating').value().reverse();
 
-// tester
-var data = [ { type: "A", val: 10 },
-             { type: "B", val: 3 },
-             { type: "A", val: 10 },
-             { type: "C", val: 5 } ];
-
-var groups = _(data).groupBy('type');
-
-var out = _(groups).map(function(g, key) {
-  return { type: key,
-           total: _(g).reduce(function(m,x) { return m + x.val; }, 0)
-          };
-});
-// Order History
+// Preset Order History
 var pastInCart = [{
   cart: [{id:3, name:"EpicStep Women's k Sole Shoes Sneakers shoes", price:30, qty:3,thumbOne: "images/products/product-03.jpg",condition: "New"}],
   date: new Date(),

@@ -2,8 +2,6 @@
 //
 var comma = ",";
 var space = " ";
-
-
 var inWishList = [];
 
 var inCart = [];
@@ -11,9 +9,12 @@ var inCartCount = 0;
 var inCartTotal = 0;
 var count = 0;
 var shippingFee = 0;
+console.log(inCartTotal);
 
 var pageTop = document.getElementById('page-top');
 var pageYield = document.getElementById('yield');
+var resultsYield = document.createElement('div');
+
 
 var cart = document.getElementById('cart');
 var cartCount = document.getElementById('cart-count');
@@ -71,6 +72,7 @@ var detailLoad10 = document.getElementById('detail-load-10');
 var detailLoad30 = document.getElementById('detail-load-30');
 
 var detailAdd = document.getElementById('detail-add');
+var detailWish = document.getElementById('detail-wish');
 
 var detailRecommend = document.getElementById('detail-recommend');
 var detailTowardLeft = document.getElementById('detail-recommend-left');

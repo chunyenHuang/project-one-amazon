@@ -25,6 +25,7 @@ towardRight.addEventListener('click', function(){
   var route = 'background:url("images/ads/ad-' + startNum + '.jpg")';
   mainAd.setAttribute('style',route);
 })
+
 mainAd.addEventListener('click', function(){
   mainAd.setAttribute('product-id', startNum+100);
   main.className="hidden";
@@ -33,7 +34,6 @@ mainAd.addEventListener('click', function(){
   yield.appendChild(detail);
   var productId = parseFloat(mainAd.getAttribute('product-id'));
   showDetail(productId);
-  console.log(mainAd.getAttribute('product-id'));
 })
 
 // Details Image Gallery
@@ -56,30 +56,3 @@ function toggleImg() {
     imgDisplay.innerHTML = '<img src="' + route + '" width="100%">';
   });
 }
-
- // link home and page reload
- window.addEventListener('load',function(){
-   loadHomepage();
- })
- var linkHome = document.getElementById('link-home');
- linkHome.addEventListener('click', function(){
-   removeAllChild(pageYield);
-   var route =document.getElementById('route');
-   var cartRoute =document.getElementById('cart-route');
-   var searchRoute =document.getElementById('search-route');
-   removeAllChild(route);
-   removeAllChild(cartRoute);
-   removeAllChild(searchRoute);
-   loadHomepage();
- })
- var linkHome2 = document.getElementById('link-home-2');
- linkHome2.addEventListener('click', function(){
-   removeAllChild(pageYield);
-   var route =document.getElementById('route');
-   var cartRoute =document.getElementById('cart-route');
-   var searchRoute =document.getElementById('search-route');
-   removeAllChild(route);
-   removeAllChild(cartRoute);
-   removeAllChild(searchRoute);
-   loadHomepage();
- })
