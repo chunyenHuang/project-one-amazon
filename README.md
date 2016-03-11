@@ -1,6 +1,6 @@
 # Project One: Shopazon
 
-Homepage
+Homepage 
 1. Search.
 2. My Orders: Show the order history.
 3. Wish List: User can put items in wish list during browsing.
