@@ -30,14 +30,15 @@ a i:hover {
 }
 
 #logo {
-  position: absolute;
-  top: -20px;
-  display: inline-block;
+  padding-top: 5px;
 }
 
 #search-bar {
+  margin-top: 10px;
 }
-
+#function-icons {
+  padding-top: 8px;
+}
 #menu-icons {
   position: absolute;
   top:20px;

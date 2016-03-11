@@ -802,23 +802,8 @@ function calculate(location, total){
 
 // Show cart
 function showCurrentCart(){
-  var route = document.getElementById('route');
-  removeAllChild(route);
-  var cartRoute = document.getElementById('cart-route');
-  removeAllChild(cartRoute);
-  var slash = document.createElement('span');
-  slash.textContent = " / ";
-  var routeCart = document.createElement('a');
-  routeCart.textContent = "Shopping Cart";
-  routeCart.href = "#";
-  routeCart.addEventListener('click',function(){
-    showCurrentCart();
-  })
-
-  cartRoute.appendChild(slash);
-  cartRoute.appendChild(routeCart);
-
   clearPage();
+  printRoute("Shopping Cart", 0);
   cartPanel.className = ' ';
 
   var currentBox = document.createElement('div');
@@ -850,22 +835,9 @@ function showCurrentCart(){
 
 // Show order history
 function showOrderHistory(){
-  var route = document.getElementById('route');
-  removeAllChild(route);
-  var cartRoute = document.getElementById('cart-route');
-  removeAllChild(cartRoute);
-  var slash = document.createElement('span');
-  slash.textContent = " / ";
-  var routeCart = document.createElement('a');
-  routeCart.textContent = "Order History";
-  routeCart.href="#";
-  routeCart.addEventListener('click',function(){
-    showOrderHistory();
-  })
-  cartRoute.appendChild(slash);
-  cartRoute.appendChild(routeCart);
-
   clearPage();
+  printRoute("Order History", 0);
+
   pastInCart = _.sortBy(pastInCart, date);
   pastInCart = pastInCart.reverse();
   for (var x=0; x<pastInCart.length; x++){
@@ -899,21 +871,8 @@ function showOrderHistory(){
 
 // Show Wish List
 function showWishList(){
-  var route = document.getElementById('route');
-  removeAllChild(route);
-  var cartRoute = document.getElementById('cart-route');
-  removeAllChild(cartRoute);
-  var slash = document.createElement('span');
-  slash.textContent = " / ";
-  var routeCart = document.createElement('a');
-  routeCart.textContent = "Wish List";
-  routeCart.href="#";
-  routeCart.addEventListener('click',function(){
-    showWishList();
-  })
-  cartRoute.appendChild(slash);
-  cartRoute.appendChild(routeCart);
   clearPage();
+  printRoute("Wish list");
   // add sort system here
   var pastbox = document.createElement('div');
   pastbox.className= "col-md-12";
@@ -938,21 +897,8 @@ function showWishList(){
 // Search Function //
 function search(value, targetProperty, location){
   clearPage();
-
   // show route
-  var route = document.getElementById('route');
-  removeAllChild(route);
-  var cartRoute = document.getElementById('cart-route');
-  removeAllChild(cartRoute);
-  var routeSearch = document.getElementById('search-route');
-  removeAllChild(routeSearch);
-  var routeSearchPath = document.createElement('a');
-  routeSearchPath.textContent = "search: " + value;
-  routeSearchPath.href="#";
-  routeSearchPath.addEventListener('click',function(){
-    search(value, "any", pageYield);
-  })
-  routeSearch.appendChild(routeSearchPath);
+  printRoute("search", value);
 
   var searchInputArray = value.split(space);
   var results = [];

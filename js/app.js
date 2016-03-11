@@ -30,6 +30,43 @@ function clearPage(){
   removeAllChild(confirmPayment);
 }
 
+function printRoute(place, value){
+  var route = document.getElementById('route');
+  removeAllChild(route);
+  var cartRoute = document.getElementById('cart-route');
+  removeAllChild(cartRoute);
+  var routeSearch = document.getElementById('search-route');
+  removeAllChild(routeSearch);
+  var slash = document.createElement('span');
+  slash.textContent = " / ";
+  var routeCart = document.createElement('a');
+  routeCart.textContent = place;
+  routeCart.href="#";
+  var routeSearchPath = document.createElement('a');
+  routeSearchPath.textContent = "search: " + value;
+  routeSearchPath.href="#";
+  if (place === "Shopping Cart"){
+    routeCart.setAttribute('data-type', 'show-cart');
+    cartRoute.appendChild(slash);
+    cartRoute.appendChild(routeCart);
+  }
+  if (place === "Order History"){
+    routeCart.setAttribute('data-type', 'show-history');
+    cartRoute.appendChild(slash);
+    cartRoute.appendChild(routeCart);
+  }
+  if (place === "Wish list"){
+    routeCart.setAttribute('data-type', 'show-wishlist');
+    cartRoute.appendChild(slash);
+    cartRoute.appendChild(routeCart);
+  }
+  if (place === "search"){
+    routeSearchPath.setAttribute('data-type','search');
+    routeSearchPath.setAttribute('data-value', value);
+    routeSearch.appendChild(routeSearchPath);
+  }
+}
+
 window.addEventListener('load',function(){
   loadHomepage();
 })
@@ -127,6 +164,7 @@ document.body.addEventListener('click', function(event){
 
   if(type === "checkout"){
     clearPage();
+    printRoute("Shopping Cart", 0);
     checkoutContent.className = '';
     pageYield.appendChild(checkoutContent);
     resetCartTotal();
@@ -152,6 +190,8 @@ document.body.addEventListener('click', function(event){
 
   if(type === "confirm-transaction"){
     clearPage();
+    printRoute("Shopping Cart", 0);
+
     confirmPage.className = '';
     pageYield.appendChild(confirmPage);
     calculate(confirmList, inCartTotal);
@@ -185,6 +225,8 @@ document.body.addEventListener('click', function(event){
   }
 
   if(type === "complete-transaction"){
+    clearPage();
+
     var orderTime = new Date();
     var addThisCart = new order(inCart, ((inCartTotal*1.07 + shippingFee).toFixed(2)), orderTime);
     pastInCart.push(addThisCart);
@@ -193,7 +235,6 @@ document.body.addEventListener('click', function(event){
     resetCartTotal();
     inCart = [];
     removeAllChild(showBalance);
-    clearPage();
     appendMessage(pageYield, "Thanks for shopping with us!")
 
     var showLastOrder = _.last(pastInCart);
@@ -226,6 +267,10 @@ document.body.addEventListener('click', function(event){
     cartPanel.className = 'hidden';
   }
 
+  if(type === "search"){
+    var searchInput = event.target.getAttribute('data-value');
+    search(searchInput, "any", pageYield);
+  }
 })
 
 document.body.addEventListener('submit', function(event){
