@@ -126,9 +126,38 @@ a i:hover {
 .text-right {
   text-align: right;
 }
+.text-center {
+  text-align: center;
+}
+
+p.smaller {
+  font-size: 0.9em;
+}
 
 #content a > img {
   display: inline-block;
+}
+
+.box-outside-padding {
+  padding:5px;
+  min-width:150px;
+}
+
+.box {
+  padding: 15px;
+  padding-bottom: 30px;
+  border:1px solid rgb(213, 213, 213);
+}
+
+.row.cart {
+  padding: 20px;
+  border-bottom: 1px solid rgb(246, 246, 246);
+}
+
+.review-img {
+  display:inline;
+  max-width: 100px;
+  height: auto;
 }
 
 .logo-text a {
@@ -151,7 +180,7 @@ a i:hover {
   margin-bottom: auto;
   margin-left: 10px;
   margin-right: 10px;
-  width: 216px;
+  width: 95%;
   background: black;
   vertical-align: middle;
 }

@@ -110,7 +110,6 @@ function insertImgGallery(location, element){
   imgCol.className = "col-xs-6 col-sm-4 col-md-2";
   var imgBox = document.createElement('div');
   imgBox.className = "img-box";
-  imgBox.setAttribute('style','width:95%;')
 
   var link = document.createElement('a');
   link.href="#";
@@ -196,7 +195,7 @@ function showDetail(id){
   var description = document.createTextNode(target.description);
 
   var brand = document.createElement('p');
-  brand.setAttribute('style','font-size:0.9em;');
+  brand.className="smaller";
   brand.textContent = "by "
   var brandLink = document.createElement('a');
   brandLink.textContent = target.manufacturer;
@@ -236,13 +235,13 @@ function showDetail(id){
 
       var recomText = document.createElement('p');
       recomText.textContent = array[i].name;
-      recomText.setAttribute('style','font-size:0.8em');
+      recomText.className='smaller';
       recomText.setAttribute('data-id',array[i].id);
       recomText.setAttribute('data-type',"show-product");
 
       var recomPrice = document.createElement('p');
       recomPrice.textContent = "$" + array[i].price;
-      recomPrice.setAttribute('style','font-size:0.8em;color:rgb(143, 12, 23);');
+      recomPrice.className='smaller';
 
       detailRecommend.appendChild(spanBox);
       spanBox.appendChild(recomImgBox);
@@ -326,7 +325,7 @@ function showDetail(id){
     var average = reviewRating/(theReview.length);
     var showReview = document.createElement('img');
     showReview.src = "images/rating-" + Math.floor(average) + ".png";
-    showReview.setAttribute('style','display:inline; max-width: 100px; height: auto;');
+    showReview.className = "review-img"
     detailReviewBar.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     detailReviewBar.appendChild(reviewCount);
@@ -338,7 +337,7 @@ function showDetail(id){
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
       var showRating = document.createElement('img');
       showRating.src = "images/rating-" + i + ".png";
-      showRating.setAttribute('style','display:inline; width: 100px; height: auto;');
+      showRating.className = "review-img"
       lineBox.appendChild(showRating);
       lineBox.appendChild(ratingCount);
       displayReviews.appendChild(lineBox);
@@ -361,14 +360,13 @@ function showDetail(id){
         showedReviews.push(toShow[i]);
         var reviewLine = document.createElement('div');
         reviewLine.className = 'col-md-12';
-        reviewLine.setAttribute('style','padding:10px;')
         var lineLeft = document.createElement('div');
         lineLeft.className = 'col-md-2';
         var lineRight = document.createElement('div');
         lineRight.className = 'col-md-10';
         var showReviewRating = document.createElement('img');
         showReviewRating.src = "images/rating-" + theReview[i].rating + ".png";
-        showReviewRating.setAttribute('style','display:inline; width: 100px; height: auto;');
+        showReviewRating.className = "review-img";
         var reviewUsername = _.where(users, {id: theReview[i].userId})
         var boldText = document.createElement('b');
         var showReviewUser = document.createTextNode(reviewUsername[0].name);
@@ -396,19 +394,19 @@ function showDetail(id){
 function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
-  outline.setAttribute('style','padding:5px;min-width:150px;');
   if(row == 4){
-    outline.className = "col-xs-12 col-sm-6 col-md-3";
+    outline.className = "col-xs-12 col-sm-6 col-md-3 no-padding";
   } else {
-    outline.className = "col-xs-12 col-sm-4 col-md-2";
+    outline.className = "col-xs-12 col-sm-4 col-md-2 no-padding";
   }
+  var boxPadding = document.createElement('div');
+  boxPadding.className="box-outside-padding";
   var box = document.createElement('div');
-  box.className = "col-md-12";
-  box.setAttribute('style', 'padding-top:10px;padding-bottom:10px; border:1px solid rgb(213, 213, 213)');
+  box.className = "box";
   var boxImg = document.createElement('div');
-  boxImg.className = "col-md-12";
+  boxImg.className = "";
   var boxBody = document.createElement('div');
-  boxBody.className = "col-md-12";
+  boxBody.className = "";
 
   var link = document.createElement('a');
   link.href="#";
@@ -432,12 +430,10 @@ function showResult(location, target, row){
   commandBox.className = "row";
   var commandBoxPrice = document.createElement('div');
   commandBoxPrice.className = "col-sm-4";
-  commandBoxPrice.setAttribute('style', 'padding-top:5px')
   var commandBoxQty = document.createElement('div');
   commandBoxQty.className = "col-sm-8";
   var commandBoxAdd = document.createElement('div');
   commandBoxAdd.className = "col-sm-12";
-  commandBoxAdd.setAttribute('style', 'padding-top:20px;padding-bottom:20px')
 
   var reviewBox = document.createElement('div');
   reviewBox.className = "col-md-12";
@@ -451,7 +447,7 @@ function showResult(location, target, row){
     var average = reviewRating/(theReview.length);
     var showReview = document.createElement('img');
     showReview.src = "images/rating-" + Math.floor(average) + ".png";
-    showReview.setAttribute('style','display:inline; max-width: 100px; height: auto;');
+    showReview.className="review-img";
     reviewBox.appendChild(showReview);
     var reviewCount = document.createTextNode("("+theReview.length+")");
     reviewBox.appendChild(reviewCount);
@@ -464,7 +460,7 @@ function showResult(location, target, row){
       var ratingCount = document.createTextNode("("+theReviewRatings.length+")");
       var showRating = document.createElement('img');
       showRating.src = "images/rating-" + i + ".png";
-      showRating.setAttribute('style','display:inline; max-width: 100px; height: auto;');
+      showRating.className="review-img";
       displayReviews.appendChild(showRating);
       displayReviews.appendChild(ratingCount);
     }
@@ -480,7 +476,7 @@ function showResult(location, target, row){
   }
 
   var brand = document.createElement('p');
-  brand.setAttribute('style','font-size:0.9em;');
+  brand.className = "smaller";
   brand.textContent = "by "
   var brandLink = document.createElement('a');
   brandLink.textContent = target.manufacturer;
@@ -505,10 +501,8 @@ function showResult(location, target, row){
   cartIcon.className="fa fa-cart-plus fa-lg";
   var addToCart = document.createElement('button');
   addToCart.className = "add-to-cart btn btn-success btn-sm btn-block";
-  addToCart.setAttribute('style', 'display:block');
   var addToWishList = document.createElement('button');
   addToWishList.className = "add-to-cart btn btn-default btn-sm btn-block";
-  addToWishList.setAttribute('style', 'display:block');
   addToWishList.textContent = "Add to My Wish List"
   addToWishList.setAttribute('data-type', "add-to-wishlist");
   addToWishList.setAttribute('data-id', target.id);
@@ -516,7 +510,8 @@ function showResult(location, target, row){
 
   // Node Tree
   location.appendChild(outline);
-  outline.appendChild(box);
+  outline.appendChild(boxPadding);
+  boxPadding.appendChild(box);
   box.appendChild(boxImg);
   box.appendChild(boxBody);
   boxImg.appendChild(link);
@@ -552,9 +547,8 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
   cartPanel.className = ' ';
   // Structure
   var box = document.createElement('div');
-  box.className = "col-md-12";
+  box.className = "row cart";
   box.setAttribute('id','product-'+target.id);
-  box.setAttribute('style','padding-top:15px; padding-bottom:15px; border-bottom:1px solid gray')
   var boxImg = document.createElement('div');
   boxImg.className = "col-md-1";
   var boxBody = document.createElement('div');
@@ -570,7 +564,6 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
 
   var boxReview = document.createElement('div');
   boxReview.className = 'col-md-12 well hidden';
-  boxReview.setAttribute('style','transition: 0.5')
   var boxReviewLeft = document.createElement('div');
   boxReviewLeft.className = "col-md-4";
   var boxReviewMid = document.createElement('div');
@@ -584,7 +577,6 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
   reviewComment.setAttribute('rows','3');
   reviewComment.setAttribute('autofocus', true);
   reviewComment.setAttribute('name', 'review');
-  reviewComment.setAttribute('style', 'resize: none');
   reviewComment.setAttribute('placeholder', 'write your review');
   var submitReview = document.createElement('button');
   submitReview.className = "btn btn-warning";
@@ -779,7 +771,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
     var findReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
     var showStars = document.createElement('img');
     showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
-    showStars.setAttribute('style','display:block; width: 100%; height: auto;');
+    showStars.className = "review-img";
     toggleClass('hidden', boxReview);
     removeAllChild(boxRemove);
     boxRemove.appendChild(showStars);
