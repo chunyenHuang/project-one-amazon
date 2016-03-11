@@ -4,25 +4,29 @@ window.addEventListener('load',function(){
 
 // Click events
 document.body.addEventListener('click', function(event){
-  var id = filterInt(event.target.getAttribute('data-id'));
-  var type = event.target.getAttribute('data-type');
-  var typeParent = event.target.parentNode.getAttribute('data-type');
+  if (event.target.hasAttribute('data-type')){
+    var id = filterInt(event.target.getAttribute('data-id'));
+    var type = event.target.getAttribute('data-type');
+  } else {
+    var id = filterInt(event.target.parentNode.getAttribute('data-id'));
+    var type = event.target.parentNode.getAttribute('data-type');
+  }
   var value = event.target.getAttribute('value');
-  // console.log(event.target);
-  // console.log(event.target.parentNode);
+  console.log(event.target);
+  console.log(event.target.parentNode);
   var theProduct = _.where(products, {id: id})[0];
 
-  if(type === "show-wishlist" || typeParent === "show-wishlist"){
+  if(type === "show-wishlist"){
     if (inWishList.length>0){
       showWishList();
     }
   }
-  if(type === "show-cart" || typeParent === "show-cart"){
+  if(type === "show-cart"){
     if (inCart.length>0){
       showCurrentCart();
     }
   }
-  if(type === "show-history" || typeParent === "show-history"){
+  if(type === "show-history"){
     if (pastInCart.length>0){
       showOrderHistory();
     }
@@ -77,6 +81,36 @@ document.body.addEventListener('click', function(event){
     if(added == false){
       inWishList.push(addThis);
     }
+  }
+
+  if(type === "add-wish-to-cart"){
+    var qty = event.target.getAttribute('qty');
+    var addThis = new item(id, qty, theProduct.price);
+    var added = false;
+    for(var x=0; x < inCart.length; x++){
+      if (addThis.id === inCart[x].id){
+        inCart[x].qty = inCart[x].qty + addThis.qty;
+        added = true;
+      }
+    }
+    if(added == false){
+      inCart.push(addThis);
+    }
+    var inCartCount = 0;
+    var inCartTotal = 0;
+    for(var x=0; x<inCart.length; x++){
+      inCartCount = inCartCount + inCart[x].qty;
+      inCartTotal = inCartTotal + (inCart[x].qty * inCart[x].price);
+    }
+    var cartCountValue = document.createTextNode(inCartCount);
+    removeAllChild(cartCount);
+    cartCount.appendChild(cartCountValue);
+    calculate(showBalance, inCartTotal);
+    var find = _.where(inWishList, {id: id})[0];
+    var position = _.indexOf(inWishList, find);
+    inWishList.splice(position, 1);
+
+    showWishList();
   }
 
   if(type === "checkout"){
