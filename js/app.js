@@ -234,9 +234,8 @@ function showDetail(id){
   var brandLink = document.createElement('a');
   brandLink.textContent = target.manufacturer;
   brandLink.href="#";
-  brandLink.addEventListener('click', function(){
-    search(target.manufacturer, "manufacturer", pageYield);
-  })
+  brandLink.setAttribute('data-type', 'search');
+  brandLink.setAttribute('data-value', target.manufacturer);
 
   var recomArray = [];
   var self = [target];
@@ -444,11 +443,8 @@ function showResult(location, target, row){
 
   var link = document.createElement('a');
   link.href="#";
-  link.setAttribute('product-id',target.id);
-  link.addEventListener('click', function(){
-    productId = parseFloat(link.getAttribute('product-id'));
-    showDetail(productId);
-  })
+  link.setAttribute('data-id', target.id);
+  link.setAttribute('data-type', "show-product");
 
   var image = document.createElement('img');
   image.src=target.thumbOne;
@@ -550,7 +546,7 @@ function showResult(location, target, row){
   box.appendChild(boxBody);
   boxImg.appendChild(link);
   link.appendChild(image);
-  boxBody.appendChild(content);
+  link.appendChild(content);
   boxBody.appendChild(brand);
   boxBody.appendChild(commandForm);
   boxBody.appendChild(reviewBox);

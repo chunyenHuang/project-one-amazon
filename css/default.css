@@ -95,16 +95,19 @@ a i:hover {
   background-position: center;
   transition: 1s;
 }
+#main-ads img {
+  width: 100%;
+}
 
 #toward-left {
   position: absolute;
-  top: 40%;
+  top: 30%;
   left:5%;
 }
 
 #toward-right {
   position: absolute;
-  top: 40%;
+  top: 30%;
   right:5%;
 }
 
