@@ -126,7 +126,7 @@ function insertImgGallery(location, element){
 }
 
 function filterInt(value) {
-  if(/^(\-|\+)?([0-9]+|Infinity)$/.test(value)){
+  if (/^(\-|\+)?([0-9]+|Infinity)$/.test(value)){
     return Number(value);
   }
   return NaN;
@@ -210,7 +210,7 @@ function showDetail(id){
   for (var i=0; i<target.tag.length; i++){
     for (var x=0; x<noSelf.length; x++){
       var checkContain = _.contains(noSelf[x].tag, target.tag[i]);
-      if(checkContain === true){
+      if (checkContain === true){
         recomArray.push(noSelf[x]);
       }
     }
@@ -394,7 +394,7 @@ function showDetail(id){
 function showResult(location, target, row){
   // Structure
   var outline = document.createElement('div');
-  if(row == 4){
+  if (row == 4){
     outline.className = "col-xs-12 col-sm-6 col-md-3 no-padding";
   } else {
     outline.className = "col-xs-12 col-sm-4 col-md-2 no-padding";
@@ -673,7 +673,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
       resetCartTotal();
       calculate(showBalance, inCartTotal);
 
-      if(inCartCount==0){
+      if (inCartCount==0){
         checkout.setAttribute('disabled','disabled')
       }
     })
@@ -760,7 +760,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
     e.preventDefault();
     var ratings = document.getElementsByName('rating'+orderCount);
     for (var x=0; x<ratings.length; x++){
-      if(ratings[x].checked){
+      if (ratings[x].checked){
         var ratingValue = ratings[x].value;
         break;
       }
@@ -921,7 +921,7 @@ function search(value, targetProperty, location){
       resultsNames.push({id: products[i].id, weight: 1});
     }
   }
-  if(resultsNames.length == 0){
+  if (resultsNames.length == 0){
     // Search compare with Name
     for (var t=0; t<searchInputArray.length; t++){
       for (var i=0; i<products.length; i++){
@@ -1015,7 +1015,7 @@ function search(value, targetProperty, location){
         colBox.appendChild(row)
         resultsYield.appendChild(colBox);
         take = _.difference(uniqResult, showed);
-        if(take.length >= perRow){
+        if (take.length >= perRow){
           take = _.first(take, perRow);
         }
         for (var x=0; x<take.length; x++){
@@ -1088,13 +1088,13 @@ function search(value, targetProperty, location){
   })
 
   function sorts(array, type){
-    if(type === "relevance"){
+    if (type === "relevance"){
       return array = resultsRelevance;
     } else if (type === "priceLow"){
       return array = _.sortBy(array, "price");
-    } else if(type === "priceHigh"){
+    } else if (type === "priceHigh"){
       return array = _.sortBy(array, "price").reverse();
-    } else if(type === "mostReview"){
+    } else if (type === "mostReview"){
       var newArray =[];
       for (var i=0; i<mostReviews.length; i++){
         var found = _.where(array, {id: filterInt(mostReviews[i][0])});
@@ -1103,7 +1103,7 @@ function search(value, targetProperty, location){
         }
       }
       return array = newArray;
-    } else if(type === "average"){
+    } else if (type === "average"){
       var newArray =[];
       for (var i=0; i<rankReviews.length; i++){
         var found = _.where(array, {id: filterInt(rankReviews[i].productId)});

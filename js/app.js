@@ -82,17 +82,17 @@ document.body.addEventListener('click', function(event){
   var value = event.target.getAttribute('value');
   var theProduct = _.where(products, {id: id})[0];
 
-  if(type === "show-wishlist"){
+   if (type === "show-wishlist"){
     if (inWishList.length>0){
       showWishList();
     }
   }
-  if(type === "show-cart"){
+  if (type === "show-cart"){
     if (inCart.length>0){
       showCurrentCart();
     }
   }
-  if(type === "show-history"){
+  if (type === "show-history"){
     if (pastInCart.length>0){
       showOrderHistory();
     }
@@ -102,11 +102,11 @@ document.body.addEventListener('click', function(event){
     linkHome();
   }
 
-  if(type === "show-product"){
+  if (type === "show-product"){
     showDetail(id);
   }
 
-  if(type === "add-to-cart"){
+  if (type === "add-to-cart"){
     var qty = event.target.getAttribute('qty');
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
@@ -116,14 +116,14 @@ document.body.addEventListener('click', function(event){
         added = true;
       }
     }
-    if(added === false){
+    if (added === false){
       inCart.push(addThis);
     }
     resetCartTotal();
     calculate(showBalance, inCartTotal);
   }
 
-  if(type === "add-to-wishlist"){
+  if (type === "add-to-wishlist"){
     var qty = event.target.getAttribute('qty');
 
     var addThis = new item(id, qty, theProduct.price);
@@ -134,12 +134,12 @@ document.body.addEventListener('click', function(event){
         added = true;
       }
     }
-    if(added == false){
+    if (added == false){
       inWishList.push(addThis);
     }
   }
 
-  if(type === "add-wish-to-cart"){
+  if (type === "add-wish-to-cart"){
     var qty = event.target.getAttribute('qty');
     var addThis = new item(id, qty, theProduct.price);
     var added = false;
@@ -149,7 +149,7 @@ document.body.addEventListener('click', function(event){
         added = true;
       }
     }
-    if(added == false){
+    if (added == false){
       inCart.push(addThis);
     }
 
@@ -162,7 +162,7 @@ document.body.addEventListener('click', function(event){
     showWishList();
   }
 
-  if(type === "checkout"){
+  if (type === "checkout"){
     clearPage();
     printRoute("Shopping Cart", 0);
     checkoutContent.className = '';
@@ -173,13 +173,13 @@ document.body.addEventListener('click', function(event){
     }
   }
 
-  if(type === "use-this-address"){
+  if (type === "use-this-address"){
     toggleClass('hidden', checkoutForm);
     toggleClass('hidden', checkoutPayment);
   }
 
-  if(type === "check-billing-address"){
-    if(paymentAddress.getAttribute('value') === address.value){
+  if (type === "check-billing-address"){
+    if (paymentAddress.getAttribute('value') === address.value){
       paymentAddress.setAttribute('value', ' ');
       paymentAddress.removeAttribute('disabled');
     } else {
@@ -188,7 +188,7 @@ document.body.addEventListener('click', function(event){
     }
   }
 
-  if(type === "confirm-transaction"){
+  if (type === "confirm-transaction"){
     clearPage();
     printRoute("Shopping Cart", 0);
 
@@ -224,7 +224,7 @@ document.body.addEventListener('click', function(event){
     confirmPayment.appendChild(showPaymentAddress);
   }
 
-  if(type === "complete-transaction"){
+  if (type === "complete-transaction"){
     clearPage();
 
     var orderTime = new Date();
@@ -267,7 +267,7 @@ document.body.addEventListener('click', function(event){
     cartPanel.className = 'hidden';
   }
 
-  if(type === "search"){
+  if (type === "search"){
     var searchInput = event.target.getAttribute('data-value');
     search(searchInput, "any", pageYield);
   }
@@ -278,7 +278,7 @@ document.body.addEventListener('submit', function(event){
   var id = filterInt(event.target.getAttribute('data-id'));
   var type = event.target.getAttribute('data-type');
 
-  if(type === "search"){
+  if (type === "search"){
     var searchInput = document.getElementById('search-input').value;
     search(searchInput, "any", pageYield);
   }
