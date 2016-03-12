@@ -756,14 +756,46 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
   // Review Purchased Items
   if (reviewable == true){
     cartPanel.className = 'hidden';
-    var writeReview = document.createElement('button');
-    writeReview.setAttribute('class','btn btn-danger')
-    writeReview.textContent= 'Write My review';
-    boxRemove.appendChild(writeReview);
-    writeReview.addEventListener('click', function(){
-      toggleClass('hidden', boxReview);
-    })
+    var findReview = _.where(reviews, {id: target.reviewId}).reverse();
+    if (findReview.length == 0){
+      var writeReview = document.createElement('button');
+      writeReview.setAttribute('class','btn btn-danger')
+      writeReview.textContent= 'Write My review';
+      boxRemove.appendChild(writeReview);
+      writeReview.addEventListener('click', function(){
+        toggleClass('hidden', boxReview);
+      })
+    } else {
+      var showStars = document.createElement('img');
+      showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
+      showStars.className = "review-img";
+      removeAllChild(boxRemove);
+      boxRemove.appendChild(showStars);
+    }
   }
+  // Review submit
+  reviewForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ratings = document.getElementsByName('rating'+orderCount);
+    for (var x=0; x<ratings.length; x++){
+      if (ratings[x].checked){
+        var ratingValue = ratings[x].value;
+        break;
+      }
+    }
+    var writeReviewDate = new Date();
+    var addNewReview = new review(0, target.id, parseFloat(ratingValue), reviewComment.value, writeReviewDate, currentUser.id);
+    reviews.push(addNewReview);
+    var findReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
+    target.reviewId = findReview[0].id;
+    console.log(target.reviewId);
+    var showStars = document.createElement('img');
+    showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
+    showStars.className = "review-img";
+    toggleClass('hidden', boxReview);
+    removeAllChild(boxRemove);
+    boxRemove.appendChild(showStars);
+  })
 
   // Wish List Items
   if (wishlist == true){
@@ -785,27 +817,7 @@ function showCart(location, target, editable, reviewable, wishlist, orderCount){
       total.appendChild(totalTag);
     })
   }
-  // Review submit
-  reviewForm.addEventListener('submit',function(e){
-    e.preventDefault();
-    var ratings = document.getElementsByName('rating'+orderCount);
-    for (var x=0; x<ratings.length; x++){
-      if (ratings[x].checked){
-        var ratingValue = ratings[x].value;
-        break;
-      }
-    }
-    var writeReviewDate = new Date();
-    var addNewReview = new review(0, target.id, parseFloat(ratingValue), reviewComment.value, writeReviewDate, currentUser.id);
-    reviews.push(addNewReview);
-    var findReview = _.where(reviews, {productId: target.id, userId: currentUser.id}).reverse();
-    var showStars = document.createElement('img');
-    showStars.src = "images/rating-" + Math.floor(parseFloat(findReview[0].rating)) + ".png";
-    showStars.className = "review-img";
-    toggleClass('hidden', boxReview);
-    removeAllChild(boxRemove);
-    boxRemove.appendChild(showStars);
-  })
+
 }
 
 // The Shopping Cart
