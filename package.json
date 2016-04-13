@@ -1,0 +1,22 @@
+{
+  "name": "shopazon",
+  "version": "1.0.0",
+  "description": "Homepage   1. Search.   2. My Orders: Show the order history.    3. Wish List: User can put items in wish list during browsing.    4. Cart: Show the items in cart.    5. You might like: Recommend items is based on the current items in cart or the last order.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chunyenHuang/shopazon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chunyenHuang/shopazon/issues"
+  },
+  "homepage": "https://github.com/chunyenHuang/shopazon#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
